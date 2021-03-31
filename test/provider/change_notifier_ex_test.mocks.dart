@@ -4,7 +4,8 @@
 
 import 'dart:async' as _i2;
 
-import 'package:icapps_architecture/provider/change_notifier_ex.dart' as _i3;
+import 'package:icapps_architecture/src/provider/change_notifier_ex.dart'
+    as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: comment_references
