@@ -34,7 +34,7 @@ stages:
 
 branches:
   only:
-    - master
+    - main
 cache:
   directories:
     - $HOME/.pub-cache
