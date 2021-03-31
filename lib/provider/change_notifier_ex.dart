@@ -65,7 +65,8 @@ mixin ChangeNotifierEx implements ChangeNotifier {
     assert(_debugAssertNotDisposed());
     if (_listeners!.isEmpty) return;
 
-    final List<_ListenerEntry> localListeners = List<_ListenerEntry>.from(_listeners!);
+    final List<_ListenerEntry> localListeners =
+        List<_ListenerEntry>.from(_listeners!);
 
     for (final _ListenerEntry entry in localListeners) {
       try {
@@ -75,7 +76,8 @@ mixin ChangeNotifierEx implements ChangeNotifier {
           exception: exception,
           stack: stack,
           library: 'foundation library',
-          context: ErrorDescription('while dispatching notifications for $runtimeType'),
+          context: ErrorDescription(
+              'while dispatching notifications for $runtimeType'),
           informationCollector: () sync* {
             yield DiagnosticsProperty<ChangeNotifier>(
               'The $runtimeType sending notification was',
