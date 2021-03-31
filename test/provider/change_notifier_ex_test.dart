@@ -114,6 +114,18 @@ void main() {
             ..addListener(() {}),
           throwsA(isInstanceOf<FlutterError>()));
     });
+    test('Throw within listener', () {
+      FlutterError.onError = (details) {
+        throw details.exception;
+      };
+      expect(
+          () => TestableChangeNotifier()
+            ..addListener(() {
+              throw ArgumentError();
+            })
+            ..callListeners(),
+          throwsA(isInstanceOf<ArgumentError>()));
+    });
     test('Listener called', () {
       var counter = 0;
       TestableChangeNotifier()
