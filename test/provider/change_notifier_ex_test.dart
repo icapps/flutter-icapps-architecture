@@ -15,11 +15,6 @@ class TestableChangeNotifier with ChangeNotifierEx {
 
   @visibleForTesting
   bool get testHasListeners => hasListeners;
-
-  @visibleForTesting
-  void callListeners() {
-    notifyListeners();
-  }
 }
 
 @GenerateMocks([StreamSubscription, DisposeAware])
@@ -123,7 +118,7 @@ void main() {
             ..addListener(() {
               throw ArgumentError();
             })
-            ..callListeners(),
+            ..notifyListeners(),
           throwsA(isInstanceOf<ArgumentError>()));
     });
     test('Listener called', () {
@@ -132,7 +127,7 @@ void main() {
         ..addListener(() {
           ++counter;
         })
-        ..callListeners();
+        ..notifyListeners();
       expect(counter, 1);
     });
     test('Removed listener not called', () {
@@ -143,7 +138,7 @@ void main() {
       TestableChangeNotifier()
         ..addListener(listener)
         ..removeListener(listener)
-        ..callListeners();
+        ..notifyListeners();
       expect(counter, 0);
     });
   });
