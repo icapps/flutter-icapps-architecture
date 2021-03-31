@@ -14,9 +14,9 @@ extension IterableExtension<T> on Iterable<T> {
 
   /// Sums the result of [valueProvider] for each item
   E sum<E extends num>(E Function(T) valueProducer) {
-    E value = 0 as E;
+    num value = 0;
     forEach((e) => value = (value + valueProducer(e)) as E);
-    return value;
+    return value as E;
   }
 
   /// Finds the first item that matches [where], if no such item could be found
