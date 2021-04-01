@@ -5,3 +5,5 @@ export 'src/extension/map_extensions.dart';
 export 'src/interceptor/combining_smart_interceptor.dart';
 export 'src/provider/change_notifier_ex.dart';
 export 'src/util/environment_util.dart';
+export 'src/route/fade_in_route.dart';
+export 'src/widget/mixin/after_layout.dart';
