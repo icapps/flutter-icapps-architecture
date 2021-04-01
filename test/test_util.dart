@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -130,5 +131,17 @@ class TestWrapper extends StatelessWidget {
         child: child,
       ),
     );
+  }
+}
+
+extension WidgetControllerExtension on WidgetController {
+  Future<void> touchAndCancel(Finder finder,
+      {int? pointer, int buttons = kPrimaryButton}) {
+    final location = getCenter(finder);
+    return TestAsyncUtils.guard<void>(() async {
+      final TestGesture gesture =
+          await startGesture(location, pointer: pointer, buttons: buttons);
+      await gesture.cancel();
+    });
   }
 }
