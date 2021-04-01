@@ -4,3 +4,4 @@ export 'src/extension/list_extensions.dart';
 export 'src/extension/map_extensions.dart';
 export 'src/interceptor/combining_smart_interceptor.dart';
 export 'src/provider/change_notifier_ex.dart';
+export 'src/util/environment_util.dart';
