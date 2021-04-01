@@ -7,3 +7,4 @@ export 'src/provider/change_notifier_ex.dart';
 export 'src/util/environment_util.dart';
 export 'src/route/fade_in_route.dart';
 export 'src/widget/mixin/after_layout.dart';
+export 'src/util/connectivity/connectivity.dart';
