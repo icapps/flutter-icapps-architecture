@@ -128,25 +128,24 @@ void main() {
           tester, 'provider_widget_consumer_and_consumer_child');
     });
 
-    testWidgets(
-        'ProviderWidget should show childbuilder with childBuilder',
-            (tester) async {
-          final sut = ProviderWidget<TestViewModel>(
-            childBuilder: (context, viewModel, locale) => Material(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('Hello'),
-                ],
-              ),
-            ),
-            create: () => TestViewModel(),
-          );
+    testWidgets('ProviderWidget should show childbuilder with childBuilder',
+        (tester) async {
+      final sut = ProviderWidget<TestViewModel>(
+        childBuilder: (context, viewModel, locale) => Material(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text('Hello'),
+            ],
+          ),
+        ),
+        create: () => TestViewModel(),
+      );
 
-          await TestUtil.loadWidgetWithText(tester, sut);
-          await TestUtil.takeScreenshot(
-              tester, 'provider_widget_consumer_childbuilder');
-        });
+      await TestUtil.loadWidgetWithText(tester, sut);
+      await TestUtil.takeScreenshot(
+          tester, 'provider_widget_consumer_childbuilder');
+    });
   });
 }
