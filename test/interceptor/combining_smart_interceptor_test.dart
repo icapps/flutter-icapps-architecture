@@ -94,6 +94,39 @@ void main() {
     await sut.onError(error, handler);
     expect((await handler.future).data, isInstanceOf<Response>());
   });
+
+  test('CombiningSmartInterceptor test onRequest returns error', () async {
+    final interceptor1 = TestInterceptor(
+      requestResponse: DioError(requestOptions: RequestOptions(path: '/')),
+    );
+    sut..addInterceptor(interceptor1);
+    final requestOptions = RequestOptions(path: '');
+    final handler = RequestInterceptorHandler();
+    await sut.onRequest(requestOptions, handler);
+    try {
+      await handler.future;
+      // ignore: nullable_type_in_catch_clause
+    } on dynamic catch (e) {
+      expect(e.data, isInstanceOf<DioError>());
+    }
+  });
+
+  test('CombiningSmartInterceptor test onResponse returns error', () async {
+    final interceptor1 = TestInterceptor(
+      responseResponse: DioError(requestOptions: RequestOptions(path: '/')),
+    );
+    sut..addInterceptor(interceptor1);
+
+    final response = Response<void>(requestOptions: RequestOptions(path: ''));
+    final handler = ResponseInterceptorHandler();
+    await sut.onResponse(response, handler);
+    try {
+      await handler.future;
+      // ignore: nullable_type_in_catch_clause
+    } on dynamic catch (e) {
+      expect(e.data, isInstanceOf<DioError>());
+    }
+  });
 }
 
 class TestInterceptor extends SimpleInterceptor {
@@ -102,21 +135,25 @@ class TestInterceptor extends SimpleInterceptor {
   late DateTime onErrorCalled;
 
   final Object? errorResponse;
+  final Object? requestResponse;
+  final Object? responseResponse;
 
   TestInterceptor({
     this.errorResponse,
+    this.requestResponse,
+    this.responseResponse,
   });
 
   @override
-  Future onRequest(RequestOptions options) {
+  Future onRequest(RequestOptions options) async {
     onRequestCalled = DateTime.now();
-    return super.onRequest(options);
+    return requestResponse ?? super.onRequest(options);
   }
 
   @override
-  Future onResponse(Response response) {
+  Future onResponse(Response response) async {
     onResponseCalled = DateTime.now();
-    return super.onResponse(response);
+    return responseResponse ?? super.onResponse(response);
   }
 
   @override
