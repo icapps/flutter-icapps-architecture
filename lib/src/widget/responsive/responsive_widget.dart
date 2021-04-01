@@ -9,9 +9,12 @@ import 'package:flutter/widgets.dart';
 /// specified builder. Order: [tabletLandscapeBuilder] => [tabletBuilder] =>
 /// [landscapeBuilder] => [builder]
 class ResponsiveWidget extends StatelessWidget {
-  final WidgetBuilder? tabletBuilder;
-  final WidgetBuilder? landscapeBuilder;
-  final WidgetBuilder? tabletLandscapeBuilder;
+  final Function(BuildContext context, SizeInformation sizeInformation)?
+      tabletBuilder;
+  final Function(BuildContext context, SizeInformation sizeInformation)?
+      landscapeBuilder;
+  final Function(BuildContext context, SizeInformation sizeInformation)?
+      tabletLandscapeBuilder;
   final Widget Function(BuildContext context, SizeInformation sizeInformation)?
       builder;
 
@@ -40,13 +43,13 @@ class ResponsiveWidget extends StatelessWidget {
       if (info.orientation == Orientation.landscape &&
           info.deviceType == DeviceScreenType.Tablet &&
           tabletLandscapeB != null) {
-        return tabletLandscapeB(context);
+        return tabletLandscapeB(context, info);
       } else if (info.deviceType == DeviceScreenType.Tablet &&
           tabletB != null) {
-        return tabletB(context);
+        return tabletB(context, info);
       } else if (info.orientation == Orientation.landscape &&
           landscapeB != null) {
-        return landscapeB(context);
+        return landscapeB(context, info);
       } else if (portraitBuilder != null) {
         return portraitBuilder(context, info);
       }

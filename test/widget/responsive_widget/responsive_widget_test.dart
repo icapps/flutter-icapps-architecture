@@ -57,7 +57,7 @@ void main() {
         size: Size(phoneSize.height, phoneSize.width), //trigger landscape
       ),
       child: ResponsiveWidget(
-        landscapeBuilder: (context) => const Text('landscapeBuilder'),
+        landscapeBuilder: (context, _) => const Text('landscapeBuilder'),
         builder: (context, sizeInfo) => const Text('builder'),
       ),
     );
@@ -74,7 +74,7 @@ void main() {
         size: Size(tabletSize.height, tabletSize.width), //trigger landscape
       ),
       child: ResponsiveWidget(
-        landscapeBuilder: (context) => const Text('landscapeBuilder'),
+        landscapeBuilder: (context, _) => const Text('landscapeBuilder'),
         builder: (context, sizeInfo) => const Text('builder'),
       ),
     );
@@ -88,8 +88,8 @@ void main() {
     final sut = MediaQuery(
       data: const MediaQueryData(size: phoneSize),
       child: ResponsiveWidget(
-        tabletBuilder: (context) => const Text('tabletBuilder'),
-        landscapeBuilder: (context) => const Text('landscapeBuilder'),
+        tabletBuilder: (context, _) => const Text('tabletBuilder'),
+        landscapeBuilder: (context, _) => const Text('landscapeBuilder'),
         builder: (context, sizeInfo) => const Text('builder'),
       ),
     );
@@ -104,8 +104,8 @@ void main() {
     final sut = MediaQuery(
       data: const MediaQueryData(size: tabletSize),
       child: ResponsiveWidget(
-        tabletBuilder: (context) => const Text('tabletBuilder'),
-        landscapeBuilder: (context) => const Text('landscapeBuilder'),
+        tabletBuilder: (context, _) => const Text('tabletBuilder'),
+        landscapeBuilder: (context, _) => const Text('landscapeBuilder'),
         builder: (context, sizeInfo) => const Text('builder'),
       ),
     );
@@ -121,10 +121,10 @@ void main() {
         size: Size(phoneSize.height, phoneSize.width), //trigger landscape
       ),
       child: ResponsiveWidget(
-        tabletLandscapeBuilder: (context) =>
+        tabletLandscapeBuilder: (context, _) =>
             const Text('tabletLandscapeBuilder'),
-        tabletBuilder: (context) => const Text('tabletBuilder'),
-        landscapeBuilder: (context) => const Text('landscapeBuilder'),
+        tabletBuilder: (context, _) => const Text('tabletBuilder'),
+        landscapeBuilder: (context, _) => const Text('landscapeBuilder'),
         builder: (context, sizeInfo) => const Text('builder'),
       ),
     );
@@ -141,10 +141,10 @@ void main() {
         size: Size(tabletSize.height, tabletSize.width), //trigger landscape
       ),
       child: ResponsiveWidget(
-        tabletLandscapeBuilder: (context) =>
+        tabletLandscapeBuilder: (context, _) =>
             const Text('tabletLandscapeBuilder'),
-        tabletBuilder: (context) => const Text('tabletBuilder'),
-        landscapeBuilder: (context) => const Text('landscapeBuilder'),
+        tabletBuilder: (context, _) => const Text('tabletBuilder'),
+        landscapeBuilder: (context, _) => const Text('landscapeBuilder'),
         builder: (context, sizeInfo) => const Text('builder'),
       ),
     );
