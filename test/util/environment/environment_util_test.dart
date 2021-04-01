@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:icapps_architecture/icapps_architecture.dart';
-import 'package:icapps_architecture/src/util/environment/environment_util_stub.dart'
+import 'package:icapps_architecture/src/util/environment/impl/environment_util_stub.dart'
     as stub;
 
 void main() {
