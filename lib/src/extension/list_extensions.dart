@@ -5,38 +5,49 @@ extension ListExtensions<T> on List<T> {
     addAll(newData);
   }
 
-  /// Sorts the list based on the comparable returned by [by]
-  void sortBy<R>(Comparable<R>? by(T item)) {
+  /// Sorts the list based on the comparable returned by [by]. By default
+  /// the sorting is [ascending]
+  void sortBy<R>(Comparable<R>? by(T item), {bool ascending = true}) {
     sort((a, b) {
       final byA = by(a);
       final byB = by(b);
-      if (byA == null) return -1;
-      if (byB == null) return 1;
-      return _compareValues(byA, byB);
+      if (byA == null) return ascending ? -1 : 1;
+      if (byB == null) return ascending ? 1 : -1;
+      return _compareValues(byA, byB, ascending);
     });
   }
 
   /// Sorts the list by comparing first comparing using [by] and if the items
-  /// are equal, by comparing them using [by2]
-  void sortBy2<R>(Comparable<R>? by(T item), Comparable<R>? by2(T item)) {
+  /// are equal, by comparing them using [by2]. By default
+  /// the sorting is [ascending]
+  void sortBy2<R>(
+    Comparable<R>? by(T item),
+    Comparable<R>? by2(T item), {
+    bool ascending = true,
+  }) {
     sort((a, b) {
       final byA = by(a);
       final byB = by(b);
-      if (byA == null) return -1;
-      if (byB == null) return 1;
-      final result = _compareValues(byA, byB);
-      if (result != 0) return result;
+      if (byA == null && byB != null) return ascending ? -1 : 1;
+      if (byB == null && byA != null) return ascending ? 1 : -1;
+      if (byA != null && byB != null) {
+        final result = _compareValues(byA, byB, ascending);
+        if (result != 0) return result;
+      }
 
       final byA2 = by2(a);
       final byB2 = by2(b);
-      if (byA2 == null) return -1;
-      if (byB2 == null) return 1;
-      return _compareValues(byA2, byB2);
+      if (byA2 == null && byB2 == null) return 0;
+      if (byA2 == null) return ascending ? -1 : 1;
+      if (byB2 == null) return ascending ? 1 : -1;
+      return _compareValues(byA2, byB2, ascending);
     });
   }
 }
 
-int _compareValues<T extends Comparable<dynamic>>(T a, T b) {
+int _compareValues<T extends Comparable<dynamic>>(T a, T b, bool ascending) {
   if (identical(a, b)) return 0;
-  return a.compareTo(b);
+  if (ascending)
+    return a.compareTo(b);
+  return -a.compareTo(b);
 }

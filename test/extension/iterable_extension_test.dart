@@ -45,5 +45,15 @@ void main() {
       expect(result.item1, [1, 2, 3, 4, 5, 6, 7]);
       expect(result.item2, [8, 9, 10]);
     });
+    test('Test map indexed', () {
+      final seenIndexes = <int>[];
+      final seenValues = <int>[];
+      sut.mapIndexed((index, e) {
+        seenIndexes.add(index);
+        seenValues.add(e);
+      }).toList(growable: false);
+      expect(seenIndexes, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+      expect(seenValues, sut);
+    });
   });
 }
