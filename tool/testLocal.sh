@@ -10,5 +10,5 @@ echo "" >> $file
 echo "void main(){}" >> $file
 echo "==="
 
-flutter test --coverage || exit -1;
+fvm flutter test --coverage || exit -1;
 genhtml coverage/lcov.info -o coverage/html
