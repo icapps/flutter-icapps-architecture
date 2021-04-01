@@ -1,11 +1,13 @@
 export 'src/exception/network_error.dart';
+export 'src/extension/context_extensions.dart';
 export 'src/extension/iterable_extensions.dart';
 export 'src/extension/list_extensions.dart';
 export 'src/extension/map_extensions.dart';
 export 'src/interceptor/combining_smart_interceptor.dart';
 export 'src/provider/change_notifier_ex.dart';
-export 'src/util/environment_util.dart';
 export 'src/route/fade_in_route.dart';
-export 'src/widget/mixin/after_layout.dart';
 export 'src/util/connectivity/connectivity.dart';
+export 'src/util/environment_util.dart';
+export 'src/widget/mixin/after_layout.dart';
 export 'src/widget/provider/provider_widget.dart';
+export 'src/widget/touch_feedback/touch_feedback.dart';
