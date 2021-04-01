@@ -3,11 +3,17 @@ import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
 
+/// Extended version of the foundation's [ChangeNotifier].
+///
+/// Has helper methods to determine if it has been disposed ([disposed]) and
+/// convenience methods to register listeners that will be cleaned up when the
+/// change notifier is disposed [registerDispose()] and [registerDisposeStream()]
 mixin ChangeNotifierEx implements ChangeNotifier {
   LinkedList<_ListenerEntry>? _listeners = LinkedList<_ListenerEntry>();
   var _disposed = false;
   final _cleanupList = <DisposeAware>[];
 
+  /// Returns `true` if this change notifier has been disposed
   @protected
   bool get disposed => _disposed;
 
@@ -47,6 +53,10 @@ mixin ChangeNotifierEx implements ChangeNotifier {
     }
   }
 
+  /// Registers an item for automatic cleanup when this item is [disposed]
+  ///
+  /// If this ChangeNotifier has already been [disposed], [DisposeAware.dispose()]
+  /// will be called immediately before returning from this method
   void registerDispose(DisposeAware toDispose) {
     if (_disposed) {
       toDispose.dispose();
@@ -55,10 +65,17 @@ mixin ChangeNotifierEx implements ChangeNotifier {
     _cleanupList.add(toDispose);
   }
 
+  /// Registers a stream for automatic cleanup when this item is [disposed].
+  ///
+  /// In this case, cleanup refers to calling [StreamSubscription.cancel()]
+  ///
+  /// If this ChangeNotifier has already been [disposed], [StreamSubscription.cancel()]
+  /// will be called immediately before returning from this method
   void registerDisposeStream<T>(StreamSubscription<T> subscription) {
     registerDispose(_StreamDisposer(subscription));
   }
 
+  @override
   @protected
   @visibleForTesting
   void notifyListeners() {

@@ -278,3 +278,4 @@ gradle-app.setting
 **/build/
 
 # End of https://www.toptal.com/developers/gitignore/api/dart,flutter,intellij+all,git,macos,windows,linux,gradle
+/test/coverage_helper_test.dart
