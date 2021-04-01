@@ -47,7 +47,6 @@ extension ListExtensions<T> on List<T> {
 
 int _compareValues<T extends Comparable<dynamic>>(T a, T b, bool ascending) {
   if (identical(a, b)) return 0;
-  if (ascending)
-    return a.compareTo(b);
+  if (ascending) return a.compareTo(b);
   return -a.compareTo(b);
 }
