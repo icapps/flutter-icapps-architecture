@@ -1,5 +1,5 @@
 name: icapps_architecture
-description: icapps architecture components for flutter projects
+description: icapps architecture components for flutter projects. Contains commonly used code for logging, extensions, ...
 
 version: 0.1.0
 
