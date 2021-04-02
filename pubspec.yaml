@@ -1,5 +1,7 @@
 name: icapps_architecture
 description: icapps architecture components for flutter projects. Contains commonly used code for logging, extensions, ...
+homepage: https://github.com/icapps/flutter-icapps-architecture
+repository: https://github.com/icapps/flutter-icapps-architecture
 
 version: 0.1.0
 
@@ -21,5 +23,7 @@ dev_dependencies:
   build_runner: ^1.11.0
   flutter_test:
     sdk: flutter
+  connectivity_platform_interface: ^2.0.0
+  device_info_platform_interface: ^2.0.1
 
 flutter:
