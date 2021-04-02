@@ -1,3 +1,5 @@
+library icapps_architecture;
+
 export 'src/exception/network_error.dart';
 export 'src/extension/context_extensions.dart';
 export 'src/extension/iterable_extensions.dart';
@@ -16,3 +18,4 @@ export 'src/widget/provider/provider_widget.dart';
 export 'src/widget/provider/theme_provider_widget.dart';
 export 'src/widget/responsive/responsive_widget.dart';
 export 'src/widget/touch_feedback/touch_feedback.dart';
+export 'src/util/logging/logging.dart';
