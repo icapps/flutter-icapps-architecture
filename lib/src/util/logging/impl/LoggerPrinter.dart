@@ -31,8 +31,6 @@ class OurPrettyPrinter extends LogPrinter {
   static final _deviceStackTraceRegex =
       RegExp(r'#[0-9]+[\s]+(.+) \(([^\s]+)\)');
 
-  static DateTime? _startTime;
-
   /// The index which to begin the stack trace at
   ///
   /// This can be useful if, for instance, Logger is wrapped in another class and
@@ -53,9 +51,7 @@ class OurPrettyPrinter extends LogPrinter {
     this.colors = true,
     this.printEmojis = true,
     this.printTime = false,
-  }) {
-    _startTime ??= DateTime.now();
-  }
+  });
 
   @override
   List<String> log(LogEvent event) {
@@ -127,8 +123,7 @@ class OurPrettyPrinter extends LogPrinter {
     var min = _twoDigits(now.minute);
     var sec = _twoDigits(now.second);
     var ms = _threeDigits(now.millisecond);
-    var timeSinceStart = now.difference(_startTime!).toString();
-    return '$h:$min:$sec.$ms (+$timeSinceStart)';
+    return '$h:$min:$sec.$ms';
   }
 
   String stringifyMessage(dynamic message) {
@@ -179,12 +174,14 @@ class OurPrettyPrinter extends LogPrinter {
     // ignore: omit_local_variable_types
     List<String> buffer = [];
     var color = _getLevelColor(level);
+    final timeInfix = time != null ? '$time ' : '';
 
     if (error != null) {
       var errorColor = _getErrorColor(level);
       for (var line in error.split('\n')) {
         buffer.add(
-          errorColor.resetForeground +
+          (time == null ? '' : color(timeInfix)) +
+              errorColor.resetForeground +
               errorColor(line) +
               errorColor.resetBackground,
         );
@@ -193,17 +190,13 @@ class OurPrettyPrinter extends LogPrinter {
 
     if (stacktrace != null) {
       for (var line in stacktrace.split('\n')) {
-        buffer.add('$color $line');
+        buffer.add('$color $timeInfix$line');
       }
-    }
-
-    if (time != null) {
-      buffer..add(color(' $time'));
     }
 
     var emoji = _getEmoji(level);
     for (var line in message.split('\n')) {
-      buffer.add(color(' $emoji$line'));
+      buffer.add(color(' $timeInfix$emoji$line'));
     }
 
     return buffer;

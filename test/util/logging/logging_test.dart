@@ -72,23 +72,29 @@ void main() {
           error: ArgumentError(), trace: StackTrace.current);
       final messages = buffer.buffer.toList(growable: false);
       expect(messages[0].lines.join(" "),
-          matches(' \\d+:\\d+:\\d+\\.\\d+\\s+\\(.+\\)\\s+Verbose message'));
+          matches(' \\d+:\\d+:\\d+\\.\\d+\\s+Verbose message'));
       expect(messages[1].lines.join(" "),
-          matches(' \\d+:\\d+:\\d+\\.\\d+\\s+\\(.+\\)\\s+🐛 Debug message'));
+          matches(' \\d+:\\d+:\\d+\\.\\d+\\s+🐛 Debug message'));
       expect(messages[2].lines.join(" "),
-          matches(' \\d+:\\d+:\\d+\\.\\d+\\s+\\(.+\\)\\s+💡 Info message'));
+          matches(' \\d+:\\d+:\\d+\\.\\d+\\s+💡 Info message'));
       expect(messages[3].lines.join(" "),
-          matches(' \\d+:\\d+:\\d+\\.\\d+\\s+\\(.+\\)\\s+⚠️ Warning message'));
-      expect(messages[4].lines[0], 'Invalid argument(s)');
-      expect(messages[4].lines[1],
-          ' #0   Declarer.test.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/declarer.dart:200:19)');
-      expect(messages[4].lines[2], ' #1   <asynchronous suspension>');
-      expect(messages[4].lines[3],
-          ' #2   StackZoneSpecification._registerUnaryCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart)');
-      expect(messages[4].lines[4], ' #3   <asynchronous suspension>');
+          matches(' \\d+:\\d+:\\d+\\.\\d+\\s+⚠️ Warning message'));
+      expect(messages[4].lines[0],
+          matches('\\d+:\\d+:\\d+\\.\\d+\\s+Invalid argument\\(s\\)'));
       expect(
-          messages[4].lines[5], matches(' \\d+:\\d+:\\d+\\.\\d+\\s+\\(.+\\)'));
-      expect(messages[4].lines[6], ' ⛔ Error message');
+          messages[4].lines[1],
+          matches(
+              '\\d+:\\d+:\\d+\\.\\d+\\s+#0   Declarer.test.<anonymous closure>.<anonymous closure> \\(package:test_api/src/backend/declarer.dart:\\d+:\\d+\\)'));
+      expect(messages[4].lines[2],
+          matches(' \\d+:\\d+:\\d+\\.\\d+\\s+#1   <asynchronous suspension>'));
+      expect(
+          messages[4].lines[3],
+          matches(
+              '\\d+:\\d+:\\d+\\.\\d+\\s+#2   StackZoneSpecification._registerUnaryCallback.<anonymous closure> \\(package:stack_trace/src/stack_zone_specification.dart\\)'));
+      expect(messages[4].lines[4],
+          matches('\\d+:\\d+:\\d+\\.\\d+\\s+#3   <asynchronous suspension>'));
+      expect(messages[4].lines[5],
+          matches(' \\d+:\\d+:\\d+\\.\\d+\\s+⛔ Error message'));
     });
     test('Test logger methods default pretty include method', () {
       final buffer = MemoryOutput();
@@ -100,16 +106,16 @@ void main() {
             lineLength: 50,
             colors: false,
             printEmojis: true,
-            printTime: true),
+            printTime: false),
         output: buffer,
       )));
       logger.d('Debug message');
       final messages = buffer.buffer.toList(growable: false);
-      expect(messages[0].lines[0],
-          ' #0   OurPrettyPrinter.log (package:icapps_architecture/src/util/logging/impl/LoggerPrinter.dart:67:53)');
       expect(
-          messages[0].lines[1], matches(' \\d+:\\d+:\\d+\\.\\d+\\s+\\(.+\\)'));
-      expect(messages[0].lines[2], ' 🐛 Debug message');
+          messages[0].lines[0],
+          matches(
+              ' #0   OurPrettyPrinter.log \\(package:icapps_architecture/src/util/logging/impl/LoggerPrinter.dart:\\d+:\\d+\\)'));
+      expect(messages[0].lines[1], ' 🐛 Debug message');
     });
     test('Test logger methods default json', () {
       final lines = OurPrettyPrinter(
@@ -119,14 +125,13 @@ void main() {
               lineLength: 50,
               colors: true,
               printEmojis: true,
-              printTime: true)
+              printTime: false)
           .log(LogEvent(Level.wtf, ['Some', 'body'], null, null));
 
-      expect(lines[0], matches(' \\d+:\\d+:\\d+\\.\\d+\\s+\\(.+\\)'));
-      expect(lines[1], '\x1B[38;5;199m 👾 [\x1B[0m');
-      expect(lines[2], '\x1B[38;5;199m 👾   "Some",\x1B[0m');
-      expect(lines[3], '\x1B[38;5;199m 👾   "body"\x1B[0m');
-      expect(lines[4], '\x1B[38;5;199m 👾 ]\x1B[0m');
+      expect(lines[0], '\x1B[38;5;199m 👾 [\x1B[0m');
+      expect(lines[1], '\x1B[38;5;199m 👾   "Some",\x1B[0m');
+      expect(lines[2], '\x1B[38;5;199m 👾   "body"\x1B[0m');
+      expect(lines[3], '\x1B[38;5;199m 👾 ]\x1B[0m');
     });
     test('Test logger methods default error color', () {
       final lines = OurPrettyPrinter(
@@ -136,13 +141,12 @@ void main() {
               lineLength: 50,
               colors: true,
               printEmojis: true,
-              printTime: true)
+              printTime: false)
           .log(LogEvent(Level.error, 'Error', ArgumentError(), null));
 
       expect(
           lines[0], '\x1B[39m\x1B[48;5;196mInvalid argument(s)\x1B[0m\x1B[49m');
-      expect(lines[1], matches(' \\d+:\\d+:\\d+\\.\\d+\\s+\\(.+\\)'));
-      expect(lines[2], '\x1B[38;5;196m ⛔ Error\x1B[0m');
+      expect(lines[1], '\x1B[38;5;196m ⛔ Error\x1B[0m');
     });
     test('Test logger methods default error color wtf', () {
       final lines = OurPrettyPrinter(
@@ -152,13 +156,12 @@ void main() {
               lineLength: 50,
               colors: true,
               printEmojis: true,
-              printTime: true)
+              printTime: false)
           .log(LogEvent(Level.wtf, 'WTF', ArgumentError(), null));
 
       expect(
           lines[0], '\x1B[39m\x1B[48;5;199mInvalid argument(s)\x1B[0m\x1B[49m');
-      expect(lines[1], matches(' \\d+:\\d+:\\d+\\.\\d+\\s+\\(.+\\)'));
-      expect(lines[2], '\x1B[38;5;199m 👾 WTF\x1B[0m');
+      expect(lines[1], '\x1B[38;5;199m 👾 WTF\x1B[0m');
     });
     test('Test logger methods default build stack trace', () {
       final formatted = OurPrettyPrinter(

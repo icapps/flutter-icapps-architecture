@@ -1,0 +1,30 @@
+name: example
+description: Example flutter project consuming the library
+
+publish_to: 'none'
+version: 1.0.0
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  icapps_architecture:
+    path: ..
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  locale_gen: ^3.2.1
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/locale/
+
+locale_gen:
+  default_language: 'en'
+  languages: [ 'en' ]
