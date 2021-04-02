@@ -45,8 +45,10 @@ LocaleT getLocale<LocaleT>(BuildContext _) => Locale() as LocaleT;
 ThemeT getTheme<ThemeT>(BuildContext _) => Theme() as ThemeT;
 
 void main() {
-  BaseProviderWidget.localizationLookup = getLocale;
-  BaseProviderWidget.themeLookup = getTheme;
+  setUp(() {
+    localizationLookup = getLocale;
+    themeLookup = getTheme;
+  });
 
   group('Provider widget tests', () {
     testWidgets('ProviderWidget throw exception', (tester) async {
