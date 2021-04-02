@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:icapps_architecture/src/util/environment_util.dart';
+import 'package:icapps_architecture/src/util/environment/environment_util.dart';
 
 /// Page route that fades in the child page
 class FadeInRoute<T> extends PageRouteBuilder<T> {
