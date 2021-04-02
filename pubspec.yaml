@@ -12,6 +12,7 @@ dependencies:
   dio: ^4.0.0
   flutter:
     sdk: flutter
+  logger: ^1.0.0
   provider: ^5.0.0
   mockito: ^5.0.3
   tuple: ^2.0.0
