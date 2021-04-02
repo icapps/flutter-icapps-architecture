@@ -18,12 +18,16 @@ void main() {
       expect(OsInfo.instance.isWeb, false);
       expect(OsInfo.instance.androidSdk, 0);
       expect(OsInfo.instance.iosVersion, 0);
+      expect(OsInfo.instance.isAndroid, false);
+      expect(OsInfo.instance.isIOS, false);
     });
     test('OS config is at least', () async {
       await OsInfo.init();
-      expect(OsInfo.isAtLeastAndroid10, false);
-      expect(OsInfo.isAtLeastPie, false);
-      expect(OsInfo.isIOS13OrAbove, false);
+      expect(OsInfo.instance.isAtLeastAndroid10, false);
+      expect(OsInfo.instance.isAtLeastPie, false);
+      expect(OsInfo.instance.isIOS13OrAbove, false);
+      expect(OsInfo.instance.isAndroid, false);
+      expect(OsInfo.instance.isIOS, false);
     });
     test('OS config from stub', () async {
       final info = await stub.initOsConfig();

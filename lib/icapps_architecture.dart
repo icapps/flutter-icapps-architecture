@@ -14,3 +14,4 @@ export 'src/widget/provider/provider_widget.dart';
 export 'src/widget/responsive/responsive_widget.dart';
 export 'src/widget/touch_feedback/touch_feedback.dart';
 export 'src/util/future/future_helper.dart';
+export 'src/theming/base_theme.dart';
