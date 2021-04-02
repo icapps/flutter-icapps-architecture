@@ -1,14 +1,9 @@
 import 'package:flutter/widgets.dart';
+import 'package:icapps_architecture/src/widget/provider/theme_provider_widget.dart';
 import 'package:provider/provider.dart';
-
-typedef LookupFunction = A Function<A>(BuildContext);
 
 abstract class BaseProviderWidget<T extends ChangeNotifier, Theme, Localization>
     extends StatelessWidget {
-  static late Theme Function<Theme>(BuildContext context) themeLookup;
-  static late Localization Function<Localization>(BuildContext context)
-      localizationLookup;
-
   final T Function() create;
   final Widget? child;
   final Widget Function(
