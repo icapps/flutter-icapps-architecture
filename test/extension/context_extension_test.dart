@@ -24,5 +24,41 @@ void main() {
         }),
       ));
     });
+
+    testWidgets('Is Tablet on phone', (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(builder: (context, _) {
+          expect(context.isTablet, false);
+          return Placeholder();
+        }),
+      );
+    });
+    testWidgets('Is Tablet on tablet', (tester) async {
+      await tester.pumpWidget(MediaQuery(
+        data: MediaQueryData(size: Size.square(700)),
+        child: Builder(builder: (context) {
+          expect(context.isTablet, true);
+          return Placeholder();
+        }),
+      ));
+    });
+    testWidgets('Is portrait', (tester) async {
+      await tester.pumpWidget(MediaQuery(
+        data: MediaQueryData(size: Size(400, 500)),
+        child: Builder(builder: (context) {
+          expect(context.isLandscape, false);
+          return Placeholder();
+        }),
+      ));
+    });
+    testWidgets('Is landscape', (tester) async {
+      await tester.pumpWidget(MediaQuery(
+        data: MediaQueryData(size: Size(500, 400)),
+        child: Builder(builder: (context) {
+          expect(context.isLandscape, true);
+          return Placeholder();
+        }),
+      ));
+    });
   });
 }

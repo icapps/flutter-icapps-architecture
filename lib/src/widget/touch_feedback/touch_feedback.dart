@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:icapps_architecture/icapps_architecture.dart';
 
+/// Helper class for platform-specific touch feedback
+///
+/// On devices running with the android theme, this will create a ripple effect,
+/// on other devices, this will create a scaling touch down effect
 class TouchFeedBack extends StatelessWidget {
   final Widget child;
   final VoidCallback? onClick;
