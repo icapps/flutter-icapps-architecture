@@ -1,7 +1,15 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:icapps_architecture/icapps_architecture.dart';
 import 'package:icapps_architecture/src/util/logging/impl/LoggerPrinter.dart';
 import 'package:logger/logger.dart';
+
+class MockNetworkError extends NetworkError {
+  MockNetworkError(DioError dioError) : super(dioError);
+
+  @override
+  String? get getErrorCode => throw UnimplementedError();
+}
 
 void main() {
   group('Logging tests', () {
@@ -22,10 +30,12 @@ void main() {
     });
     test('Test logger methods default', () {
       final buffer = MemoryOutput();
-      LoggingFactory.resetWithLogger(LoggerLogImpl(Logger(
-        printer: SimplePrinter(printTime: false, colors: false),
-        output: buffer,
-      )));
+      LoggingFactory.resetWithLogger(LoggerLogImpl(
+          Logger(
+            printer: SimplePrinter(printTime: false, colors: false),
+            output: buffer,
+          ),
+          logNetworkInfo: false));
       logger.v('Verbose message');
       logger.d('Debug message');
       logger.i('Info message');
@@ -50,20 +60,27 @@ void main() {
       logger.info('Info message');
       logger.warning('Warning message');
       logger.error('Error message');
+      logger.logNetworkRequest(RequestOptions(path: '/'));
+      logger.logNetworkResponse(
+          Response(requestOptions: RequestOptions(path: '/')));
+      logger.logNetworkError(MockNetworkError(
+          DioError(requestOptions: RequestOptions(path: '/'))));
     });
     test('Test logger methods default pretty', () {
       final buffer = MemoryOutput();
-      LoggingFactory.resetWithLogger(LoggerLogImpl(Logger(
-        printer: OurPrettyPrinter(
-            methodCount: 0,
-            errorMethodCount: 5,
-            stackTraceBeginIndex: 1,
-            lineLength: 50,
-            colors: false,
-            printEmojis: true,
-            printTime: true),
-        output: buffer,
-      )));
+      LoggingFactory.resetWithLogger(LoggerLogImpl(
+          Logger(
+            printer: OurPrettyPrinter(
+                methodCount: 0,
+                errorMethodCount: 5,
+                stackTraceBeginIndex: 1,
+                lineLength: 50,
+                colors: false,
+                printEmojis: true,
+                printTime: true),
+            output: buffer,
+          ),
+          logNetworkInfo: false));
       logger.v('Verbose message');
       logger.d('Debug message');
       logger.i('Info message');
@@ -98,17 +115,19 @@ void main() {
     });
     test('Test logger methods default pretty include method', () {
       final buffer = MemoryOutput();
-      LoggingFactory.resetWithLogger(LoggerLogImpl(Logger(
-        printer: OurPrettyPrinter(
-            methodCount: 1,
-            errorMethodCount: 5,
-            stackTraceBeginIndex: 0,
-            lineLength: 50,
-            colors: false,
-            printEmojis: true,
-            printTime: false),
-        output: buffer,
-      )));
+      LoggingFactory.resetWithLogger(LoggerLogImpl(
+          Logger(
+            printer: OurPrettyPrinter(
+                methodCount: 1,
+                errorMethodCount: 5,
+                stackTraceBeginIndex: 0,
+                lineLength: 50,
+                colors: false,
+                printEmojis: true,
+                printTime: false),
+            output: buffer,
+          ),
+          logNetworkInfo: false));
       logger.d('Debug message');
       final messages = buffer.buffer.toList(growable: false);
       expect(
@@ -179,6 +198,71 @@ void main() {
 
       expect(formatted,
           '#0   packages/logger/src/printers/pretty_printer.dart 91:37\n#1   package:logger/lib');
+    });
+  });
+  group('Test network logging', () {
+    test('Test logger network disabled', () {
+      final buffer = MemoryOutput();
+      LoggingFactory.resetWithLogger(LoggerLogImpl(
+          Logger(
+            printer: SimplePrinter(printTime: false, colors: false),
+            output: buffer,
+          ),
+          logNetworkInfo: false));
+      logger.logNetworkRequest(RequestOptions(path: '/'));
+      logger.logNetworkResponse(
+          Response(requestOptions: RequestOptions(path: '/')));
+      logger.logNetworkError(MockNetworkError(
+          DioError(requestOptions: RequestOptions(path: '/'))));
+      expect(buffer.buffer.isEmpty, true);
+    });
+    test('Test logger network enabled', () {
+      final buffer = MemoryOutput();
+      LoggingFactory.resetWithLogger(LoggerLogImpl(
+          Logger(
+            printer: SimplePrinter(printTime: false, colors: false),
+            output: buffer,
+          ),
+          logNetworkInfo: true));
+      logger.logNetworkRequest(
+          RequestOptions(path: '/', baseUrl: 'https://www.example.com'));
+      logger.logNetworkResponse(Response(
+          requestOptions:
+              RequestOptions(path: '/', baseUrl: 'https://www.example.com')));
+      logger.logNetworkResponse(Response(
+          requestOptions:
+              RequestOptions(path: '/', baseUrl: 'https://www.example.com'),
+          statusCode: 404));
+      logger.logNetworkError(MockNetworkError(DioError(
+          requestOptions:
+              RequestOptions(path: '/', baseUrl: 'https://www.example.com'))));
+      logger.logNetworkError(MockNetworkError(DioError(
+          requestOptions:
+              RequestOptions(path: '/', baseUrl: 'https://www.example.com'),
+          response: Response(
+              requestOptions: RequestOptions(
+                  path: '/', baseUrl: 'https://www.example.com')))));
+      logger.logNetworkError(MockNetworkError(DioError(
+          requestOptions:
+              RequestOptions(path: '/', baseUrl: 'https://www.example.com'),
+          response: Response(
+              requestOptions:
+                  RequestOptions(path: '/', baseUrl: 'https://www.example.com'),
+              statusCode: 404))));
+
+      final messages = buffer.buffer.toList(growable: false);
+      expect(messages[0].lines[0],
+          '[D]  ---------------> GET - url: https://www.example.com/');
+      expect(messages[1].lines[0],
+          '[D]  <--------------- GET - url: https://www.example.com/ - status code: N/A');
+      expect(messages[2].lines[0],
+          '[D]  <--------------- GET - url: https://www.example.com/ - status code: 404');
+      expect(messages[3].lines[0],
+          '[E]  request | GET - url: https://www.example.com/\nmessage | \n<--------------- GET - url: https://www.example.com/ - status code: N/A\n');
+      expect(messages[4].lines[0],
+          '[E]  response.data | null\nresponse.headers | \n<--------------- GET - url: https://www.example.com/ - status code: N/A\n');
+      expect(messages[5].lines[0],
+          '[E]  response.data | null\nresponse.headers | \n<--------------- GET - url: https://www.example.com/ - status code: 404\n');
     });
   });
 }

@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:icapps_architecture/icapps_architecture.dart';
 import 'package:logger/logger.dart';
@@ -25,6 +26,12 @@ abstract class Log {
 
   void e(String message, {dynamic? error, StackTrace? trace}) =>
       this.error(message, error: error, trace: trace);
+
+  void logNetworkError(NetworkError error);
+
+  void logNetworkRequest(RequestOptions request);
+
+  void logNetworkResponse(Response response);
 }
 
 Log get logger => LoggingFactory.provide();
@@ -36,9 +43,13 @@ class LoggingFactory {
     return _instance ?? reset();
   }
 
-  static Log reset({bool enabled = isInDebug}) {
-    return resetWithLogger(
-        enabled ? LoggerLogImpl(_makeLogger()) : VoidLogger());
+  static Log reset({bool enabled = isInDebug, bool logNetworkInfo = false}) {
+    return resetWithLogger(enabled
+        ? LoggerLogImpl(
+            _makeLogger(),
+            logNetworkInfo: logNetworkInfo,
+          )
+        : VoidLogger());
   }
 
   static Log resetWithLogger(Log logger) {
@@ -63,8 +74,9 @@ class LoggingFactory {
 @visibleForTesting
 class LoggerLogImpl extends Log {
   final Logger logger;
+  final bool logNetworkInfo;
 
-  LoggerLogImpl(this.logger);
+  LoggerLogImpl(this.logger, {required this.logNetworkInfo});
 
   @override
   void debug(String message) => logger.d(message);
@@ -81,6 +93,41 @@ class LoggerLogImpl extends Log {
 
   @override
   void warning(String message) => logger.w(message);
+
+  @override
+  void logNetworkError(NetworkError error) {
+    if (!logNetworkInfo) return;
+
+    final dioError = error;
+    final message = StringBuffer();
+    final response = dioError.response;
+    final request = dioError.requestOptions;
+    if (response == null) {
+      message
+        ..writeln('request | ${request.method} - url: ${request.uri}')
+        ..writeln('message | ${dioError.message}');
+    } else {
+      message
+        ..writeln('response.data | ${response.data}')
+        ..writeln('response.headers | ${response.headers}');
+    }
+    message.writeln(
+        '<--------------- ${request.method} - url: ${request.uri} - status code: ${response?.statusCode ?? 'N/A'}');
+    this.error(message.toString());
+  }
+
+  @override
+  void logNetworkRequest(RequestOptions request) {
+    if (!logNetworkInfo) return;
+    debug('---------------> ${request.method} - url: ${request.uri}');
+  }
+
+  @override
+  void logNetworkResponse(Response response) {
+    if (!logNetworkInfo) return;
+    debug(
+        '<--------------- ${response.requestOptions.method} - url: ${response.requestOptions.uri} - status code: ${response.statusCode ?? 'N/A'}');
+  }
 }
 
 @visibleForTesting
@@ -114,4 +161,13 @@ class VoidLogger implements Log {
 
   @override
   void warning(String message) {}
+
+  @override
+  void logNetworkError(NetworkError error) {}
+
+  @override
+  void logNetworkRequest(RequestOptions request) {}
+
+  @override
+  void logNetworkResponse(Response<dynamic> response) {}
 }
