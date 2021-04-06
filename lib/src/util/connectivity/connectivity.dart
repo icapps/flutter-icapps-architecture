@@ -1,4 +1,4 @@
-import 'package:connectivity/connectivity.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 /// Helper to determine if a device has connectivity
 class ConnectivityHelper {
