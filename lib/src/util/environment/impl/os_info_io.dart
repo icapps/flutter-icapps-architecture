@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:device_info/device_info.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 
 Future<OsConfigInfo> initOsConfig({
   DeviceInfoPlugin? Function()? deviceInfoPluginProvider,
@@ -11,14 +11,17 @@ Future<OsConfigInfo> initOsConfig({
     final deviceInfo = deviceInfoPluginProvider?.call() ?? DeviceInfoPlugin();
     final androidInfo = await deviceInfo.androidInfo;
     final androidSdk = androidInfo.version.sdkInt;
-    return OsConfigInfo(androidSdk: androidSdk, iosVersion: 0, isWeb: false);
+    return OsConfigInfo(
+        androidSdk: androidSdk ?? 0, iosVersion: 0, isWeb: false);
   } else if (isIOSOverride ?? Platform.isIOS) {
     final deviceInfo = deviceInfoPluginProvider?.call() ?? DeviceInfoPlugin();
     final iosInfo = await deviceInfo.iosInfo;
-    final iosVersion = iosInfo.systemVersion;
+    final iosVersion = iosInfo.systemVersion ?? '';
     final lastIndexPoint = iosVersion.lastIndexOf('.');
     final versionLength = iosVersion.length;
-    final version = iosVersion.replaceRange(lastIndexPoint, versionLength, '');
+    final version = lastIndexPoint != -1
+        ? iosVersion.replaceRange(lastIndexPoint, versionLength, '')
+        : iosVersion;
     final iosVersionValue = double.tryParse(version) ?? 0;
     return OsConfigInfo(
         androidSdk: 0, iosVersion: iosVersionValue, isWeb: false);

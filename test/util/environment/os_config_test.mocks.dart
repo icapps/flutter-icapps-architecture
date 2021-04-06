@@ -2,13 +2,21 @@
 // in icapps_architecture/test/util/environment/os_config_test.dart.
 // Do not manually edit this file.
 
-import 'dart:async' as _i5;
+import 'dart:async' as _i9;
 
-import 'package:device_info/device_info.dart' as _i4;
-import 'package:device_info_platform_interface/model/android_device_info.dart'
+import 'package:device_info_plus/device_info_plus.dart' as _i8;
+import 'package:device_info_plus_platform_interface/model/android_device_info.dart'
     as _i2;
-import 'package:device_info_platform_interface/model/ios_device_info.dart'
+import 'package:device_info_plus_platform_interface/model/ios_device_info.dart'
     as _i3;
+import 'package:device_info_plus_platform_interface/model/linux_device_info.dart'
+    as _i4;
+import 'package:device_info_plus_platform_interface/model/macos_device_info.dart'
+    as _i6;
+import 'package:device_info_plus_platform_interface/model/web_browser_info.dart'
+    as _i5;
+import 'package:device_info_plus_platform_interface/model/windows_device_info.dart'
+    as _i7;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: comment_references
@@ -19,24 +27,53 @@ class _FakeAndroidDeviceInfo extends _i1.Fake implements _i2.AndroidDeviceInfo {
 
 class _FakeIosDeviceInfo extends _i1.Fake implements _i3.IosDeviceInfo {}
 
+class _FakeLinuxDeviceInfo extends _i1.Fake implements _i4.LinuxDeviceInfo {}
+
+class _FakeWebBrowserInfo extends _i1.Fake implements _i5.WebBrowserInfo {}
+
+class _FakeMacOsDeviceInfo extends _i1.Fake implements _i6.MacOsDeviceInfo {}
+
+class _FakeWindowsDeviceInfo extends _i1.Fake implements _i7.WindowsDeviceInfo {
+}
+
 /// A class which mocks [DeviceInfoPlugin].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockDeviceInfoPlugin extends _i1.Mock implements _i4.DeviceInfoPlugin {
+class MockDeviceInfoPlugin extends _i1.Mock implements _i8.DeviceInfoPlugin {
   MockDeviceInfoPlugin() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i5.Future<_i2.AndroidDeviceInfo> get androidInfo =>
+  _i9.Future<_i2.AndroidDeviceInfo> get androidInfo =>
       (super.noSuchMethod(Invocation.getter(#androidInfo),
               returnValue: Future.value(_FakeAndroidDeviceInfo()))
-          as _i5.Future<_i2.AndroidDeviceInfo>);
+          as _i9.Future<_i2.AndroidDeviceInfo>);
   @override
-  _i5.Future<_i3.IosDeviceInfo> get iosInfo =>
+  _i9.Future<_i3.IosDeviceInfo> get iosInfo =>
       (super.noSuchMethod(Invocation.getter(#iosInfo),
               returnValue: Future.value(_FakeIosDeviceInfo()))
-          as _i5.Future<_i3.IosDeviceInfo>);
+          as _i9.Future<_i3.IosDeviceInfo>);
+  @override
+  _i9.Future<_i4.LinuxDeviceInfo> get linuxInfo =>
+      (super.noSuchMethod(Invocation.getter(#linuxInfo),
+              returnValue: Future.value(_FakeLinuxDeviceInfo()))
+          as _i9.Future<_i4.LinuxDeviceInfo>);
+  @override
+  _i9.Future<_i5.WebBrowserInfo> get webBrowserInfo =>
+      (super.noSuchMethod(Invocation.getter(#webBrowserInfo),
+              returnValue: Future.value(_FakeWebBrowserInfo()))
+          as _i9.Future<_i5.WebBrowserInfo>);
+  @override
+  _i9.Future<_i6.MacOsDeviceInfo> get macOsInfo =>
+      (super.noSuchMethod(Invocation.getter(#macOsInfo),
+              returnValue: Future.value(_FakeMacOsDeviceInfo()))
+          as _i9.Future<_i6.MacOsDeviceInfo>);
+  @override
+  _i9.Future<_i7.WindowsDeviceInfo> get windowsInfo =>
+      (super.noSuchMethod(Invocation.getter(#windowsInfo),
+              returnValue: Future.value(_FakeWindowsDeviceInfo()))
+          as _i9.Future<_i7.WindowsDeviceInfo>);
 }
 
 /// A class which mocks [AndroidBuildVersion].
@@ -47,22 +84,6 @@ class MockAndroidBuildVersion extends _i1.Mock
   MockAndroidBuildVersion() {
     _i1.throwOnMissingStub(this);
   }
-
-  @override
-  String get codename =>
-      (super.noSuchMethod(Invocation.getter(#codename), returnValue: '')
-          as String);
-  @override
-  String get incremental =>
-      (super.noSuchMethod(Invocation.getter(#incremental), returnValue: '')
-          as String);
-  @override
-  String get release =>
-      (super.noSuchMethod(Invocation.getter(#release), returnValue: '')
-          as String);
-  @override
-  int get sdkInt =>
-      (super.noSuchMethod(Invocation.getter(#sdkInt), returnValue: 0) as int);
 }
 
 /// A class which mocks [IosUtsname].
@@ -72,25 +93,4 @@ class MockIosUtsname extends _i1.Mock implements _i3.IosUtsname {
   MockIosUtsname() {
     _i1.throwOnMissingStub(this);
   }
-
-  @override
-  String get sysname =>
-      (super.noSuchMethod(Invocation.getter(#sysname), returnValue: '')
-          as String);
-  @override
-  String get nodename =>
-      (super.noSuchMethod(Invocation.getter(#nodename), returnValue: '')
-          as String);
-  @override
-  String get release =>
-      (super.noSuchMethod(Invocation.getter(#release), returnValue: '')
-          as String);
-  @override
-  String get version =>
-      (super.noSuchMethod(Invocation.getter(#version), returnValue: '')
-          as String);
-  @override
-  String get machine =>
-      (super.noSuchMethod(Invocation.getter(#machine), returnValue: '')
-          as String);
 }

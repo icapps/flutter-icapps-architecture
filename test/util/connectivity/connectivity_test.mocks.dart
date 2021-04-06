@@ -4,8 +4,8 @@
 
 import 'dart:async' as _i3;
 
-import 'package:connectivity/connectivity.dart' as _i2;
-import 'package:connectivity_platform_interface/src/enums.dart' as _i4;
+import 'package:connectivity_plus/connectivity_plus.dart' as _i2;
+import 'package:connectivity_plus_platform_interface/src/enums.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: comment_references
