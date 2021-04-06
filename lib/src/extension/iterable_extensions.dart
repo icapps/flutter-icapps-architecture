@@ -71,3 +71,13 @@ extension IterableExtension<T> on Iterable<T> {
     return map((element) => mapper(c++, element));
   }
 }
+
+/// Extension on lists
+extension ListIterableExtension<T> on Iterable<Iterable<T>> {
+  /// Flattens the list of lists to a single flat list of items
+  List<T> flatten() {
+    final newList = <T>[];
+    forEach(newList.addAll);
+    return newList;
+  }
+}
