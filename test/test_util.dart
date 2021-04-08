@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
 
 enum ScreenType { IPHONE11, IPADPRO }
 
@@ -144,4 +145,14 @@ extension WidgetControllerExtension on WidgetController {
       await gesture.cancel();
     });
   }
+}
+
+extension MockExtensions on VerificationResult {
+  void calledOnce() => called(1);
+
+  void calledTwice() => called(2);
+
+  void called3Times() => called(3);
+
+  void called4Times() => called(4);
 }
