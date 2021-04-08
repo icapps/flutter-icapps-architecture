@@ -15,4 +15,11 @@ class ConnectivityHelper {
             .checkConnectivity() !=
         ConnectivityResult.none;
   }
+
+  /// Returns a stream that monitors the connectivity state of the device
+  Stream<bool> monitorConnection() {
+    return (_connectivityProvider?.call() ?? Connectivity())
+        .onConnectivityChanged
+        .map((event) => event != ConnectivityResult.none);
+  }
 }
