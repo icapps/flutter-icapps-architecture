@@ -1,4 +1,11 @@
 # Changelog
+## [0.2.0] - 2021-04-08
+### Added
+- Localized error added to get a localization key.
+- Connectivity stream to check if the user is connected to wifi or mobile services.
+### Breaking
+- Network error implements now Localized error [#33](https://github.com/icapps/flutter-icapps-architecture/issues/33)
+
 ## [0.1.2] - 2021-04-06
 ### Updated
 - Updated dependencies to support desktop too
