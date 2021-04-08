@@ -22,7 +22,10 @@ void main() {
   setUp(() {
     source = DioError(
       requestOptions: RequestOptions(path: '/'),
-      response: Response(requestOptions: RequestOptions(path: '/'), statusCode: 404, statusMessage: "Not found"),
+      response: Response(
+          requestOptions: RequestOptions(path: '/'),
+          statusCode: 404,
+          statusMessage: "Not found"),
       error: ArgumentError('Test'),
       type: DioErrorType.other,
     );
