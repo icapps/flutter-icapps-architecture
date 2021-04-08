@@ -11,6 +11,9 @@ class TestableNetworkError extends NetworkError {
 
   @override
   String? get getErrorCode => "Test";
+
+  @override
+  String getLocalizedKey() => 'testable_network_error';
 }
 
 void main() {
@@ -39,6 +42,7 @@ void main() {
       expect(sut.response, source.response);
       expect(sut.requestOptions, source.requestOptions);
       expect(sut.type, source.type);
+      expect(sut.getLocalizedKey(), 'testable_network_error');
     });
   });
 }
