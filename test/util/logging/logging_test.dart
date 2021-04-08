@@ -9,6 +9,9 @@ class MockNetworkError extends NetworkError {
 
   @override
   String? get getErrorCode => throw UnimplementedError();
+
+  @override
+  String getLocalizedKey() => 'mock_network_error';
 }
 
 void main() {
