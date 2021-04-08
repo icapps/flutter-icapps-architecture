@@ -1,5 +1,6 @@
 library icapps_architecture;
 
+export 'src/exception/localized_error.dart';
 export 'src/exception/network_error.dart';
 export 'src/extension/context_extensions.dart';
 export 'src/extension/iterable_extensions.dart';
