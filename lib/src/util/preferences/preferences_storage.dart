@@ -2,7 +2,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 /// Utility class to facilitate storing shared preferences
 abstract class SharedPreferenceStorage {
-
   /// Create a new instance of SharedPreferenceStorage
   factory SharedPreferenceStorage(SharedPreferences preferences) =>
       _SharedPreferenceStorage(preferences);
