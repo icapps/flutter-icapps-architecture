@@ -1,4 +1,9 @@
 # Changelog
+## [0.2.1] - 2021-04-12
+### Added
+- Extension function on null
+- Shared preferences
+
 ## [0.2.0] - 2021-04-08
 ### Added
 - Localized error added to get a localization key.
