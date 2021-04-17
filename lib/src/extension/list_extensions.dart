@@ -1,8 +1,19 @@
+import 'package:icapps_architecture/src/extension/iterable_extensions.dart';
+
 extension ListExtensions<T> on List<T> {
   ///Replaces all data in the list with [newData]
   void replaceAll(List<T> newData) {
     clear();
     addAll(newData);
+  }
+
+  ///Replaces first item that matches where with [newData]
+  void replaceFirstWhere(bool Function(T) where, T newData) {
+    final result = find(where);
+    if (result == null) return;
+    final index = indexOf(result);
+    removeAt(index);
+    insert(index, newData);
   }
 
   /// Sorts the list based on the comparable returned by [by]. By default
