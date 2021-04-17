@@ -16,6 +16,18 @@ extension ListExtensions<T> on List<T> {
     insert(index, newData);
   }
 
+  ///Replaces all items that matches where  with [newData]
+  void replaceWhere(bool Function(T) where, T newData) {
+    final whereResult = this.where(where);
+    print(whereResult);
+    whereResult.forEach((result) {
+      if (result == null) return;
+      final index = indexOf(result);
+      removeAt(index);
+      insert(index, newData);
+    });
+  }
+
   /// Sorts the list based on the comparable returned by [by]. By default
   /// the sorting is [ascending]
   void sortBy<R>(Comparable<R>? by(T item), {bool ascending = true}) {
