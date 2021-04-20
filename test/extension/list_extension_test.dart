@@ -13,6 +13,25 @@ void main() {
       expect(sut, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
       expect(sut..replaceAll([11, 12, 13]), [11, 12, 13]);
     });
+    test('Test replaceWhere count 1', () {
+      expect(sut, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+      expect(sut..replaceWhere((item) => item == 2, 100, count: 1),
+          [1, 100, 3, 4, 5, 6, 7, 8, 9, 10]);
+    });
+    test('Test replaceWhere count 0', () {
+      expect(sut, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+      expect(sut..replaceWhere((item) => item == 2, 100, count: 0),
+          [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+    });
+    test('Test replaceWhere', () {
+      expect(sut, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+      expect(
+          sut
+            ..replaceWhere(
+                (item) => item == 2 || item == 4 || item == 1 || item == 9,
+                100),
+          [100, 100, 3, 100, 5, 6, 7, 8, 100, 10]);
+    });
     test('Test sort by', () {
       sut.sortBy((e) => 10 - e);
       expect(sut, [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]);
