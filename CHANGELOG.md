@@ -1,4 +1,8 @@
 # Changelog
+## [0.2.2] - 2021-04-20
+### Added
+- Disable logger colors on all except android devices
+
 ## [0.2.1] - 2021-04-12
 ### Added
 - Extension function on null
