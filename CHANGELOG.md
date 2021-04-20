@@ -1,4 +1,9 @@
 # Changelog
+## [0.2.3] - 2021-04-20
+### Added
+- replaceWhere
+- forEachIndexed
+
 ## [0.2.2] - 2021-04-20
 ### Added
 - Disable logger colors on all except android devices
