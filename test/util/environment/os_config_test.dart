@@ -92,5 +92,11 @@ void main() {
       expect(info.androidSdk, 0);
       expect(info.iosVersion, 14.4);
     });
+    test('IsDevice Android or IOS', () {
+      expect(isDeviceIOS, false);
+      expect(isDeviceAndroid, false);
+      expect(stub.platformIsAndroid, false);
+      expect(stub.platformIsIOS, false);
+    });
   });
 }

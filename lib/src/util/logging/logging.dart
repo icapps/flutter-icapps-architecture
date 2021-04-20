@@ -62,12 +62,13 @@ class LoggingFactory {
 
   static LogPrinter _makeLogPrinter() {
     return OurPrettyPrinter(
-        methodCount: 0,
-        errorMethodCount: 5,
-        lineLength: 50,
-        colors: true,
-        printEmojis: true,
-        printTime: true);
+      methodCount: 0,
+      errorMethodCount: 5,
+      lineLength: 50,
+      colors: isDeviceAndroid,
+      printEmojis: true,
+      printTime: true,
+    );
   }
 }
 
