@@ -55,6 +55,16 @@ void main() {
       expect(seenIndexes, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
       expect(seenValues, sut);
     });
+    test('Test foreach indexed', () {
+      final seenIndexes = <int>[];
+      final seenValues = <int>[];
+      sut.forEachIndexed((index, e) {
+        seenIndexes.add(index);
+        seenValues.add(e);
+      });
+      expect(seenIndexes, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+      expect(seenValues, sut);
+    });
     test('Test flatten', () {
       final Iterable<Iterable<String>> list = [
         ['1', '2'],

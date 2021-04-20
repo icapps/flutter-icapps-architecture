@@ -7,24 +7,15 @@ extension ListExtensions<T> on List<T> {
     addAll(newData);
   }
 
-  ///Replaces first item that matches where with [newData]
-  void replaceFirstWhere(bool Function(T) where, T newData) {
-    final result = find(where);
-    if (result == null) return;
-    final index = indexOf(result);
-    removeAt(index);
-    insert(index, newData);
-  }
-
   ///Replaces all items that matches where  with [newData]
-  void replaceWhere(bool Function(T) where, T newData) {
+  void replaceWhere(bool Function(T) where, T newData, {int? count}) {
     final whereResult = this.where(where);
-    print(whereResult);
-    whereResult.forEach((result) {
+    whereResult.forEachIndexed((index, result) {
+      if (count != null && index >= count) return;
       if (result == null) return;
-      final index = indexOf(result);
-      removeAt(index);
-      insert(index, newData);
+      final originalIndex = indexOf(result);
+      removeAt(originalIndex);
+      insert(originalIndex, newData);
     });
   }
 
