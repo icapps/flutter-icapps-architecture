@@ -1,5 +1,3 @@
-import 'package:icapps_architecture/src/extension/iterable_extensions.dart';
-
 extension ListExtensions<T> on List<T> {
   ///Replaces all data in the list with [newData]
   void replaceAll(List<T> newData) {
@@ -9,14 +7,13 @@ extension ListExtensions<T> on List<T> {
 
   ///Replaces all items that matches where  with [newData]
   void replaceWhere(bool Function(T) where, T newData, {int? count}) {
-    final whereResult = this.where(where);
-    whereResult.forEachIndexed((index, result) {
-      if (count != null && index >= count) return;
-      if (result == null) return;
-      final originalIndex = indexOf(result);
-      removeAt(originalIndex);
-      insert(originalIndex, newData);
-    });
+    final replaceCount = count ?? length;
+    final whereResult = this.where(where).toList();
+    for (var i = 0; i < whereResult.length; ++i) {
+      if (i >= replaceCount) break;
+      final result = whereResult[i];
+      this[indexOf(result)] = newData;
+    }
   }
 
   /// Sorts the list based on the comparable returned by [by]. By default
