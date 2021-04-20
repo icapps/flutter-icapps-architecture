@@ -15,3 +15,6 @@ class OsConfigInfo {
     required this.isWeb,
   });
 }
+
+final bool platformIsAndroid = false;
+final bool platformIsIOS = false;

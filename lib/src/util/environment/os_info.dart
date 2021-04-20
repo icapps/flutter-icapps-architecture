@@ -45,3 +45,6 @@ class OsInfo {
   /// Returns the [OsInfo] instance. Call [init] first!
   static OsInfo get instance => _instance!;
 }
+
+final bool isDeviceAndroid = platformIsAndroid;
+final bool isDeviceIOS = platformIsIOS;
