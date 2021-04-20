@@ -8,11 +8,13 @@ extension ListExtensions<T> on List<T> {
   ///Replaces all items that matches where  with [newData]
   void replaceWhere(bool Function(T) where, T newData, {int? count}) {
     final replaceCount = count ?? length;
-    final whereResult = this.where(where).toList();
-    for (var i = 0; i < whereResult.length; ++i) {
-      if (i >= replaceCount) break;
-      final result = whereResult[i];
-      this[indexOf(result)] = newData;
+    var currentReplaceCount = 0;
+    for (var i = 0; i < length; ++i) {
+      if (where(this[i])) {
+        this[i] = newData;
+        ++currentReplaceCount;
+      }
+      if (currentReplaceCount >= replaceCount) break;
     }
   }
 
