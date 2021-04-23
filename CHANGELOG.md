@@ -1,4 +1,13 @@
 # Changelog
+## [0.3.1] - 2021-04-23
+### Fixed
+- Fixed issue with release not containing all code
+
+## [0.3.0] - 2021-04-23
+### BREAKING
+- `logger` is now an extension property on `Object` and will include `[$ClassName] ` as prefix to log messages
+- `staticLogger` static getter has replaced `logger` to use in top level functions where we do not have an object to extend from
+
 ## [0.2.3] - 2021-04-20
 ### Added
 - replaceWhere
