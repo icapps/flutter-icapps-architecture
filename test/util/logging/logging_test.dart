@@ -3,6 +3,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:icapps_architecture/icapps_architecture.dart';
 import 'package:icapps_architecture/src/util/logging/impl/LoggerPrinter.dart';
 import 'package:logger/logger.dart';
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
+
+import 'logging_test.mocks.dart';
 
 class MockNetworkError extends NetworkError {
   MockNetworkError(DioError dioError) : super(dioError);
@@ -14,22 +18,65 @@ class MockNetworkError extends NetworkError {
   String getLocalizedKey() => 'mock_network_error';
 }
 
+class TestPrefixHelper {
+  Log get getLogger => logger;
+}
+
+@GenerateMocks([], customMocks: [
+  MockSpec<Log>(returnNullOnMissingStub: true),
+])
 void main() {
+  group('Static logger', () {
+    testWithLogger();
+  });
+  group('Prefix logger', () {
+    test('Test logs with prefix', () {
+      final mock = MockLog();
+      final log = PrefixLogger('TestPrefix', mock);
+      log.v('Test');
+      log.d('Test');
+      log.w('Test');
+      log.i('Test');
+      log.e('Test');
+      log.logNetworkRequest(RequestOptions(path: '/'));
+      log.logNetworkResponse(
+          Response(requestOptions: RequestOptions(path: '/')));
+      log.logNetworkError(MockNetworkError(
+          DioError(requestOptions: RequestOptions(path: '/'))));
+
+      verify(mock.verbose(argThat(startsWith('[TestPrefix] ')))).called(1);
+      verify(mock.debug(argThat(startsWith('[TestPrefix] ')))).called(1);
+      verify(mock.info(argThat(startsWith('[TestPrefix] ')))).called(1);
+      verify(mock.warning(argThat(startsWith('[TestPrefix] ')))).called(1);
+      verify(mock.error(argThat(startsWith('[TestPrefix] ')),
+              trace: anyNamed('trace'), error: anyNamed('error')))
+          .called(1);
+      verify(mock.logNetworkResponse(any)).called(1);
+      verify(mock.logNetworkRequest(any)).called(1);
+      verify(mock.logNetworkError(any)).called(1);
+    });
+    test('Get prefix', () {
+      expect(TestPrefixHelper().getLogger, isInstanceOf<PrefixLogger>());
+    });
+  });
+}
+
+void testWithLogger() {
   group('Logging tests', () {
     test('Test get logger, unset', () {
-      expect(logger, isInstanceOf<LoggerLogImpl>());
+      expect(staticLogger, isInstanceOf<LoggerLogImpl>());
     });
     test('Test get logger, custom set', () {
       LoggingFactory.resetWithLogger(VoidLogger());
-      expect(logger, isInstanceOf<VoidLogger>());
+      expect(staticLogger, isInstanceOf<VoidLogger>());
     });
     test('Test get logger, reset disable', () {
       LoggingFactory.reset(enabled: false);
-      expect(logger, isInstanceOf<VoidLogger>());
+      expect(staticLogger, isInstanceOf<VoidLogger>());
     });
     test('Test get logger, reset enable', () {
       LoggingFactory.reset(enabled: true);
-      expect(logger, isInstanceOf<LoggerLogImpl>());
+      expect(staticLogger, isInstanceOf<LoggerLogImpl>());
     });
     test('Test logger methods default', () {
       final buffer = MemoryOutput();
@@ -39,11 +86,11 @@ void main() {
             output: buffer,
           ),
           logNetworkInfo: false));
-      logger.v('Verbose message');
-      logger.d('Debug message');
-      logger.i('Info message');
-      logger.w('Warning message');
-      logger.e('Error message');
+      staticLogger.v('Verbose message');
+      staticLogger.d('Debug message');
+      staticLogger.i('Info message');
+      staticLogger.w('Warning message');
+      staticLogger.e('Error message');
       final messages = buffer.buffer.toList(growable: false);
       expect(messages[0].lines[0], '[V]  Verbose message');
       expect(messages[1].lines[0], '[D]  Debug message');
@@ -53,20 +100,20 @@ void main() {
     });
     test('Test logger methods void', () {
       LoggingFactory.resetWithLogger(VoidLogger());
-      logger.v('Verbose message');
-      logger.d('Debug message');
-      logger.i('Info message');
-      logger.w('Warning message');
-      logger.e('Error message');
-      logger.verbose('Verbose message');
-      logger.debug('Debug message');
-      logger.info('Info message');
-      logger.warning('Warning message');
-      logger.error('Error message');
-      logger.logNetworkRequest(RequestOptions(path: '/'));
-      logger.logNetworkResponse(
+      staticLogger.v('Verbose message');
+      staticLogger.d('Debug message');
+      staticLogger.i('Info message');
+      staticLogger.w('Warning message');
+      staticLogger.e('Error message');
+      staticLogger.verbose('Verbose message');
+      staticLogger.debug('Debug message');
+      staticLogger.info('Info message');
+      staticLogger.warning('Warning message');
+      staticLogger.error('Error message');
+      staticLogger.logNetworkRequest(RequestOptions(path: '/'));
+      staticLogger.logNetworkResponse(
           Response(requestOptions: RequestOptions(path: '/')));
-      logger.logNetworkError(MockNetworkError(
+      staticLogger.logNetworkError(MockNetworkError(
           DioError(requestOptions: RequestOptions(path: '/'))));
     });
     test('Test logger methods default pretty', () {
@@ -84,11 +131,11 @@ void main() {
             output: buffer,
           ),
           logNetworkInfo: false));
-      logger.v('Verbose message');
-      logger.d('Debug message');
-      logger.i('Info message');
-      logger.w('Warning message');
-      logger.e('Error message',
+      staticLogger.v('Verbose message');
+      staticLogger.d('Debug message');
+      staticLogger.i('Info message');
+      staticLogger.w('Warning message');
+      staticLogger.e('Error message',
           error: ArgumentError(), trace: StackTrace.current);
       final messages = buffer.buffer.toList(growable: false);
       expect(messages[0].lines.join(" "),
@@ -131,7 +178,7 @@ void main() {
             output: buffer,
           ),
           logNetworkInfo: false));
-      logger.d('Debug message');
+      staticLogger.d('Debug message');
       final messages = buffer.buffer.toList(growable: false);
       expect(
           messages[0].lines[0],
@@ -212,10 +259,10 @@ void main() {
             output: buffer,
           ),
           logNetworkInfo: false));
-      logger.logNetworkRequest(RequestOptions(path: '/'));
-      logger.logNetworkResponse(
+      staticLogger.logNetworkRequest(RequestOptions(path: '/'));
+      staticLogger.logNetworkResponse(
           Response(requestOptions: RequestOptions(path: '/')));
-      logger.logNetworkError(MockNetworkError(
+      staticLogger.logNetworkError(MockNetworkError(
           DioError(requestOptions: RequestOptions(path: '/'))));
       expect(buffer.buffer.isEmpty, true);
     });
@@ -227,25 +274,25 @@ void main() {
             output: buffer,
           ),
           logNetworkInfo: true));
-      logger.logNetworkRequest(
+      staticLogger.logNetworkRequest(
           RequestOptions(path: '/', baseUrl: 'https://www.example.com'));
-      logger.logNetworkResponse(Response(
+      staticLogger.logNetworkResponse(Response(
           requestOptions:
               RequestOptions(path: '/', baseUrl: 'https://www.example.com')));
-      logger.logNetworkResponse(Response(
+      staticLogger.logNetworkResponse(Response(
           requestOptions:
               RequestOptions(path: '/', baseUrl: 'https://www.example.com'),
           statusCode: 404));
-      logger.logNetworkError(MockNetworkError(DioError(
+      staticLogger.logNetworkError(MockNetworkError(DioError(
           requestOptions:
               RequestOptions(path: '/', baseUrl: 'https://www.example.com'))));
-      logger.logNetworkError(MockNetworkError(DioError(
+      staticLogger.logNetworkError(MockNetworkError(DioError(
           requestOptions:
               RequestOptions(path: '/', baseUrl: 'https://www.example.com'),
           response: Response(
               requestOptions: RequestOptions(
                   path: '/', baseUrl: 'https://www.example.com')))));
-      logger.logNetworkError(MockNetworkError(DioError(
+      staticLogger.logNetworkError(MockNetworkError(DioError(
           requestOptions:
               RequestOptions(path: '/', baseUrl: 'https://www.example.com'),
           response: Response(

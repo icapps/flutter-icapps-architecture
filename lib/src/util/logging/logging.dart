@@ -34,7 +34,14 @@ abstract class Log {
   void logNetworkResponse(Response response);
 }
 
-Log get logger => LoggingFactory.provide();
+extension LoggerExtension on Object {
+  Log get logger => PrefixLogger(
+        runtimeType.toString(),
+        LoggingFactory.provide(),
+      );
+}
+
+Log get staticLogger => LoggingFactory.provide();
 
 class LoggingFactory {
   static Log? _instance;
@@ -171,4 +178,40 @@ class VoidLogger implements Log {
 
   @override
   void logNetworkResponse(Response<dynamic> response) {}
+}
+
+@visibleForTesting
+class PrefixLogger extends Log {
+  final Log _delegate;
+  final String _name;
+
+  @visibleForTesting
+  PrefixLogger(this._name, this._delegate);
+
+  @override
+  void debug(String message) => _delegate.debug('[$_name] $message');
+
+  @override
+  void error(String message, {Object? error, StackTrace? trace}) =>
+      _delegate.error('[$_name] $message', error: error, trace: trace);
+
+  @override
+  void info(String message) => _delegate.info('[$_name] $message');
+
+  @override
+  void logNetworkError(NetworkError error) => _delegate.logNetworkError(error);
+
+  @override
+  void logNetworkRequest(RequestOptions request) =>
+      _delegate.logNetworkRequest(request);
+
+  @override
+  void logNetworkResponse(Response<dynamic> response) =>
+      _delegate.logNetworkResponse(response);
+
+  @override
+  void verbose(String message) => _delegate.verbose('[$_name] $message');
+
+  @override
+  void warning(String message) => _delegate.warning('[$_name] $message');
 }
