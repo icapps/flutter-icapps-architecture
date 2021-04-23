@@ -5,6 +5,19 @@ extension ListExtensions<T> on List<T> {
     addAll(newData);
   }
 
+  ///Replaces all items that matches where  with [newData]
+  void replaceWhere(bool Function(T) where, T newData, {int? count}) {
+    final replaceCount = count ?? length;
+    var currentReplaceCount = 0;
+    for (var i = 0; i < length; ++i) {
+      if (where(this[i])) {
+        this[i] = newData;
+        ++currentReplaceCount;
+      }
+      if (currentReplaceCount >= replaceCount) break;
+    }
+  }
+
   /// Sorts the list based on the comparable returned by [by]. By default
   /// the sorting is [ascending]
   void sortBy<R>(Comparable<R>? by(T item), {bool ascending = true}) {

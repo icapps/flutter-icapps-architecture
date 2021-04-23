@@ -70,6 +70,13 @@ extension IterableExtension<T> on Iterable<T> {
     var c = 0;
     return map((element) => mapper(c++, element));
   }
+
+  /// Same as [Iterable.foreach] except that the [f] function also receives
+  /// the index of the item
+  void forEachIndexed(Function(int, T) f) {
+    var index = 0;
+    return forEach((element) => f(index++, element));
+  }
 }
 
 /// Extension on lists
