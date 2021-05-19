@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:icapps_architecture/src/widget/provider/theme_provider_widget.dart';
 import 'package:provider/provider.dart';
 
-abstract class BaseProviderWidget<T extends ChangeNotifier, Theme, Localization>
+class BaseProviderWidget<T extends ChangeNotifier, Theme, Localization>
     extends StatelessWidget {
   final T Function() create;
   final Widget? child;

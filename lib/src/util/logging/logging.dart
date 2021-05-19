@@ -14,7 +14,7 @@ abstract class Log {
 
   void warning(String message);
 
-  void error(String message, {dynamic? error, StackTrace? trace});
+  void error(String message, {dynamic error, StackTrace? trace});
 
   void v(String message) => verbose(message);
 
@@ -24,7 +24,7 @@ abstract class Log {
 
   void w(String message) => warning(message);
 
-  void e(String message, {dynamic? error, StackTrace? trace}) =>
+  void e(String message, {dynamic error, StackTrace? trace}) =>
       this.error(message, error: error, trace: trace);
 
   void logNetworkError(NetworkError error);
