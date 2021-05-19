@@ -1,4 +1,8 @@
 # Changelog
+## [0.3.2] - 2021-05-19
+### Fixed
+- Made `BaseProviderWidget` and `BaseThemeProviderWidget` non-abstract to take advantage of dart 2.13's typedef
+
 ## [0.3.1] - 2021-04-23
 ### Fixed
 - Fixed issue with release not containing all code

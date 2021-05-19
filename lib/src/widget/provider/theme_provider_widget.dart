@@ -4,7 +4,7 @@ late Theme Function<Theme>(BuildContext context) themeLookup;
 late Localization Function<Localization>(BuildContext context)
     localizationLookup;
 
-abstract class BaseThemeProviderWidget<Theme, Localization>
+class BaseThemeProviderWidget<Theme, Localization>
     extends StatelessWidget {
   final Widget Function(BuildContext context, Theme theme)? childBuilderTheme;
   final Widget Function(BuildContext context, Localization localization)?
