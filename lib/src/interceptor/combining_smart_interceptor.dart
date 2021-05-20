@@ -65,14 +65,24 @@ class CombiningSmartInterceptor implements Interceptor {
   Future<void> onError(DioError err, ErrorInterceptorHandler handler) async {
     NetworkError? finalResult;
     for (final interceptor in _interceptors.reversed) {
-      final dynamic res = await interceptor
-          .onError(finalResult is DioError ? finalResult! : err);
-      if (res is Response) {
-        handler.resolve(res);
+      try {
+        final dynamic res = await interceptor
+            .onError(finalResult is DioError ? finalResult! : err);
+        if (res is Response) {
+          handler.resolve(res);
+          return;
+        }
+        if (res is NetworkError) {
+          finalResult = res;
+        }
+      } on NetworkError catch (e) {
+        finalResult = e;
+      } on DioError catch (e) {
+        handler.next(e);
         return;
-      }
-      if (res is NetworkError) {
-        finalResult = res;
+      } catch (e) {
+        handler.next(DioError(requestOptions: err.requestOptions, error: e));
+        return;
       }
     }
     handler.next(finalResult ?? err);
@@ -83,12 +93,20 @@ class CombiningSmartInterceptor implements Interceptor {
       RequestOptions options, RequestInterceptorHandler handler) async {
     var intermediate = options;
     for (final interceptor in _interceptors) {
-      final dynamic res = await interceptor.onRequest(intermediate);
-      if (res is RequestOptions) {
-        intermediate = res;
-        continue;
-      } else if (res is DioError) {
-        handler.reject(res, false);
+      try {
+        final dynamic res = await interceptor.onRequest(intermediate);
+        if (res is RequestOptions) {
+          intermediate = res;
+          continue;
+        } else if (res is DioError) {
+          handler.reject(res, false);
+          return;
+        }
+      } on DioError catch (e) {
+        handler.reject(e, false);
+        return;
+      } catch (e) {
+        handler.reject(DioError(requestOptions: options, error: e));
         return;
       }
     }
@@ -100,12 +118,21 @@ class CombiningSmartInterceptor implements Interceptor {
       Response response, ResponseInterceptorHandler handler) async {
     var intermediate = response;
     for (final interceptor in _interceptors.reversed) {
-      final dynamic res = await interceptor.onResponse(intermediate);
-      if (res is Response) {
-        intermediate = res;
-        continue;
-      } else if (res is DioError) {
-        handler.reject(res, false);
+      try {
+        final dynamic res = await interceptor.onResponse(intermediate);
+        if (res is Response) {
+          intermediate = res;
+          continue;
+        } else if (res is DioError) {
+          handler.reject(res, false);
+          return;
+        }
+      } on DioError catch (e) {
+        handler.reject(e, false);
+        return;
+      } catch (e) {
+        handler.reject(
+            DioError(requestOptions: response.requestOptions, error: e));
         return;
       }
     }
