@@ -1,4 +1,8 @@
 # Changelog
+## [0.3.5] - 2021-05-27
+### Fixed
+- null child when onClick is null (Android)
+
 ## [0.3.4] - 2021-05-27
 ### Fixed
 - Exclude Inkwel from widget three if onClick is null
