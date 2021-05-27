@@ -38,12 +38,14 @@ class TouchFeedBack extends StatelessWidget {
     return Material(
       borderRadius: borderRadius,
       color: color,
-      child: InkWell(
-        borderRadius: borderRadius,
-        splashColor: androidSplashColor,
-        onTap: onClick,
-        child: child,
-      ),
+      child: onClick == null
+          ? null
+          : InkWell(
+              borderRadius: borderRadius,
+              splashColor: androidSplashColor,
+              onTap: onClick,
+              child: child,
+            ),
     );
   }
 }
@@ -73,6 +75,7 @@ class _TouchFeedBackIOSState extends State<TouchFeedBackIOS> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      excludeFromSemantics: widget.onClick == null,
       onTapDown: (details) => _setTouched(true),
       onTap: widget.onClick,
       onTapCancel: () => _setTouched(false),
