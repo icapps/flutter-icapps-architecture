@@ -39,7 +39,7 @@ class TouchFeedBack extends StatelessWidget {
       borderRadius: borderRadius,
       color: color,
       child: onClick == null
-          ? null
+          ? child
           : InkWell(
               borderRadius: borderRadius,
               splashColor: androidSplashColor,
