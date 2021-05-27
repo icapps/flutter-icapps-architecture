@@ -1,9 +1,4 @@
 # Changelog
-## [0.3.4] - 2021-05-27
-### Fixed
-- Exclude Inkwel from widget three if onClick is null
-- Exclude gesture detector from semantics three if onClick is null
-
 ## [0.3.3] - 2021-05-25
 ### Fixed
 - Throw from a simple interceptor
