@@ -1,4 +1,8 @@
 # Changelog
+## [0.3.6] - 2021-07-07
+### Fixed
+- Allow different return types for `sortBy2`
+
 ## [0.3.5] - 2021-05-27
 ### Fixed
 - null child when onClick is null (Android)
