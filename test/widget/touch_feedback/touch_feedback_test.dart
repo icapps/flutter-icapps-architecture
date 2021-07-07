@@ -19,6 +19,20 @@ void main() {
     await TestUtil.takeScreenshot(tester, 'touch_feedback_android');
   });
 
+  testWidgets('TouchFeedBack on Android empty', (tester) async {
+    final sut = Theme(
+      data: ThemeData(platform: TargetPlatform.android),
+      child: TouchFeedBack(
+        child: Container(
+          color: Colors.amber.withOpacity(0.5),
+        ),
+        onClick: null,
+      ),
+    );
+    await TestUtil.loadWidgetWithText(tester, sut);
+    await TestUtil.takeScreenshot(tester, 'touch_feedback_android_empty');
+  });
+
   testWidgets('TouchFeedBack on iOS', (tester) async {
     final sut = Theme(
       data: ThemeData(platform: TargetPlatform.iOS),

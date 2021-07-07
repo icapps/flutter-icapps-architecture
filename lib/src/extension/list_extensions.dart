@@ -33,9 +33,9 @@ extension ListExtensions<T> on List<T> {
   /// Sorts the list by comparing first comparing using [by] and if the items
   /// are equal, by comparing them using [by2]. By default
   /// the sorting is [ascending]
-  void sortBy2<R>(
+  void sortBy2<R, V>(
     Comparable<R>? by(T item),
-    Comparable<R>? by2(T item), {
+    Comparable<V>? by2(T item), {
     bool ascending = true,
   }) {
     sort((a, b) {
