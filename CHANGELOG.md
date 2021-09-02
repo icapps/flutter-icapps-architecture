@@ -1,4 +1,8 @@
 # Changelog
+## [0.4.0] - 2021-09-02
+### Fixed
+- Upgrade to latest version of libraries
+
 ## [0.3.6] - 2021-07-07
 ### Fixed
 - Allow different return types for `sortBy2`
