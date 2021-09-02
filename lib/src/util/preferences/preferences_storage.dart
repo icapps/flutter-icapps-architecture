@@ -1,7 +1,8 @@
+import 'package:icapps_architecture/src/util/storage/simple_key_value_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Utility class to facilitate storing shared preferences
-abstract class SharedPreferenceStorage {
+abstract class SharedPreferenceStorage implements SimpleKeyValueStorage {
   /// Create a new instance of SharedPreferenceStorage
   factory SharedPreferenceStorage(SharedPreferences preferences) =>
       _SharedPreferenceStorage(preferences);
@@ -79,4 +80,19 @@ class _SharedPreferenceStorage implements SharedPreferenceStorage {
 
   @override
   bool containsKey(String key) => _sharedPreferences.containsKey(key);
+
+  @override
+  Future<String?> getValue({required String key}) =>
+      Future.value(getString(key));
+
+  @override
+  Future<bool> hasValue({required String key}) =>
+      Future.value(containsKey(key));
+
+  @override
+  Future<void> removeValue({required String key}) => deleteKey(key);
+
+  @override
+  Future<void> setValue({required String key, required String value}) =>
+      saveString(key: key, value: value);
 }

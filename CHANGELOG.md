@@ -1,4 +1,9 @@
 # Changelog
+## [0.4.1] - 2021-09-02
+### Added
+- SimpleKeyValueStorage storage added as a generic interface for storing/retrieving strings
+- SharedPreferenceStorage updated to implement SimpleKeyValueStorage
+
 ## [0.4.0] - 2021-09-02
 ### Fixed
 - Upgrade to latest version of libraries

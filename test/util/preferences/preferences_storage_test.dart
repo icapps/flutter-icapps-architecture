@@ -41,8 +41,18 @@ void main() {
       verify(sharedPreferences.setString('Key', 'Value')).calledOnce();
       verifyNoMoreInteractions(sharedPreferences);
     });
+    test('SharedPrefsStorage should write string with setValue', () {
+      sut.setValue(key: 'Key', value: 'Value');
+      verify(sharedPreferences.setString('Key', 'Value')).calledOnce();
+      verifyNoMoreInteractions(sharedPreferences);
+    });
     test('SharedPrefsStorage should read string', () {
       sut.getString('Key');
+      verify(sharedPreferences.getString('Key')).calledOnce();
+      verifyNoMoreInteractions(sharedPreferences);
+    });
+    test('SharedPrefsStorage should read string with getValue', () {
+      sut.getValue(key: 'Key');
       verify(sharedPreferences.getString('Key')).calledOnce();
       verifyNoMoreInteractions(sharedPreferences);
     });
@@ -107,8 +117,20 @@ void main() {
     verifyNoMoreInteractions(sharedPreferences);
   });
 
+  test('SharedPrefsStorage should removeValue', () {
+    sut.removeValue(key: 'KEY');
+    verify(sharedPreferences.remove('KEY')).calledOnce();
+    verifyNoMoreInteractions(sharedPreferences);
+  });
+
   test('SharedPrefsStorage containsKey', () {
     sut.containsKey('KEY');
+    verify(sharedPreferences.containsKey('KEY')).calledOnce();
+    verifyNoMoreInteractions(sharedPreferences);
+  });
+
+  test('SharedPrefsStorage hasValue', () {
+    sut.hasValue(key: 'KEY');
     verify(sharedPreferences.containsKey('KEY')).calledOnce();
     verifyNoMoreInteractions(sharedPreferences);
   });
