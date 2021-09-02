@@ -1,4 +1,8 @@
 # Changelog
+## [0.4.2] - 2021-09-02
+### Fixed
+- Expose the SimpleKeyValueStorage interface
+
 ## [0.4.1] - 2021-09-02
 ### Added
 - SimpleKeyValueStorage storage added as a generic interface for storing/retrieving strings

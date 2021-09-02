@@ -17,6 +17,7 @@ export 'src/util/environment/os_info.dart';
 export 'src/util/future/future_helper.dart';
 export 'src/util/logging/logging.dart';
 export 'src/util/preferences/preferences_storage.dart';
+export 'src/util/storage/simple_key_value_storage.dart';
 export 'src/widget/mixin/after_layout.dart';
 export 'src/widget/provider/provider_widget.dart';
 export 'src/widget/provider/theme_provider_widget.dart';
