@@ -38,6 +38,29 @@ class ProviderWidget<T extends ChangeNotifier>
           consumerWithThemeAndLocalization: consumerWithThemeAndLocalization,
           lazy: lazy,
         );
+
+  ProviderWidget.value({
+    required T value,
+    Widget? child,
+    Widget Function(BuildContext context, Theme theme, Locale localization)?
+        childBuilder,
+    Widget Function(BuildContext context, T viewModel, Theme theme,
+            Locale localization)?
+        childBuilderWithViewModel,
+    Widget? consumerChild,
+    Widget Function(BuildContext context, T viewModel, Widget? child)? consumer,
+    Widget Function(BuildContext context, T viewModel, Widget? child,
+            Theme theme, Locale localization)?
+        consumerWithThemeAndLocalization,
+  }) : super.value(
+          value: value,
+          child: child,
+          childBuilder: childBuilder,
+          childBuilderWithViewModel: childBuilderWithViewModel,
+          consumerChild: consumerChild,
+          consumer: consumer,
+          consumerWithThemeAndLocalization: consumerWithThemeAndLocalization,
+        );
 }
 
 LocaleT getLocale<LocaleT>(BuildContext _) => Locale() as LocaleT;
@@ -80,6 +103,30 @@ void main() {
       await TestUtil.loadWidgetWithText(tester, sut);
       await TestUtil.takeScreenshot(tester, 'provider_widget_child_builder');
     });
+
+    testWidgets('ProviderWidget.value should show childbuilder with viewmodel',
+        (tester) async {
+      final sut = ProviderWidget<TestViewModel>.value(
+        childBuilderWithViewModel: (context, item, _, __) =>
+            const Material(child: Text('Test')),
+        value: TestViewModel(),
+      );
+
+      await TestUtil.loadWidgetWithText(tester, sut);
+      await TestUtil.takeScreenshot(
+          tester, 'provider_widget_value_child_builder');
+    });
+
+    testWidgets('ProviderWidget.value create should throw',
+            (tester) async {
+          final sut = ProviderWidget<TestViewModel>.value(
+            childBuilderWithViewModel: (context, item, _, __) =>
+            const Material(child: Text('Test')),
+            value: TestViewModel(),
+          );
+
+          expect(() => sut.create(), throwsA(isInstanceOf<UnimplementedError>()));
+        });
 
     testWidgets('ProviderWidget should show childbuilder with consumer',
         (tester) async {
