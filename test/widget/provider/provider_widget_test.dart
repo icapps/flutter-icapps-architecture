@@ -117,16 +117,15 @@ void main() {
           tester, 'provider_widget_value_child_builder');
     });
 
-    testWidgets('ProviderWidget.value create should throw',
-            (tester) async {
-          final sut = ProviderWidget<TestViewModel>.value(
-            childBuilderWithViewModel: (context, item, _, __) =>
+    testWidgets('ProviderWidget.value create should throw', (tester) async {
+      final sut = ProviderWidget<TestViewModel>.value(
+        childBuilderWithViewModel: (context, item, _, __) =>
             const Material(child: Text('Test')),
-            value: TestViewModel(),
-          );
+        value: TestViewModel(),
+      );
 
-          expect(() => sut.create(), throwsA(isInstanceOf<UnimplementedError>()));
-        });
+      expect(() => sut.create(), throwsA(isInstanceOf<UnimplementedError>()));
+    });
 
     testWidgets('ProviderWidget should show childbuilder with consumer',
         (tester) async {
