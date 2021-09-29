@@ -81,7 +81,10 @@ void main() {
       verify(subscription.cancel()).called(1);
     });
     test('Double dispose throws', () {
-      expect(() => TestableChangeNotifier()..dispose()..dispose(),
+      expect(
+          () => TestableChangeNotifier()
+            ..dispose()
+            ..dispose(),
           throwsA(isInstanceOf<FlutterError>()));
     });
   });
