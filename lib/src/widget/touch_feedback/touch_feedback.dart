@@ -11,6 +11,8 @@ class TouchFeedBack extends StatelessWidget {
   final Color? androidSplashColor;
   final Color color;
   final BorderRadius? borderRadius;
+  final double elevation;
+  final ShapeBorder? shapeBorder;
 
   const TouchFeedBack({
     required this.child,
@@ -18,6 +20,8 @@ class TouchFeedBack extends StatelessWidget {
     this.borderRadius,
     this.androidSplashColor,
     this.color = Colors.transparent,
+    this.elevation = 0,
+    this.shapeBorder,
     Key? key,
   }) : super(key: key);
 
@@ -31,6 +35,8 @@ class TouchFeedBack extends StatelessWidget {
       onClick: onClick,
       color: color,
       borderRadius: borderRadius,
+      elevation: elevation,
+      shapeBorder: shapeBorder,
     );
   }
 
@@ -38,9 +44,12 @@ class TouchFeedBack extends StatelessWidget {
     return Material(
       borderRadius: borderRadius,
       color: color,
+      elevation: elevation,
+      shape: shapeBorder,
       child: onClick == null
           ? child
           : InkWell(
+              customBorder: shapeBorder,
               borderRadius: borderRadius,
               splashColor: androidSplashColor,
               onTap: onClick,
@@ -55,13 +64,18 @@ class TouchFeedBackIOS extends StatefulWidget {
   final VoidCallback? onClick;
   final Color color;
   final BorderRadius? borderRadius;
+  final ShapeBorder? shapeBorder;
+  final double elevation;
 
-  const TouchFeedBackIOS({
-    required this.child,
-    required this.onClick,
-    this.borderRadius,
-    this.color = Colors.transparent,
-  });
+  const TouchFeedBackIOS(
+      {required this.child,
+      required this.onClick,
+      this.borderRadius,
+      this.color = Colors.transparent,
+      this.shapeBorder,
+      this.elevation = 0,
+      Key? key})
+      : super(key: key);
 
   @override
   _TouchFeedBackIOSState createState() => _TouchFeedBackIOSState();
@@ -86,6 +100,8 @@ class _TouchFeedBackIOSState extends State<TouchFeedBackIOS> {
           borderRadius: widget.borderRadius,
           color: widget.color,
           child: widget.child,
+          shape: widget.shapeBorder,
+          elevation: widget.elevation,
         ),
       ),
     );
