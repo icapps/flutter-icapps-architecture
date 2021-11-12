@@ -1,4 +1,8 @@
 # Changelog
+## [0.4.4] - 2021-10-11
+### Added
+- Adds more options to the TouchFeedback widget to control the material layer
+
 ## [0.4.3] - 2021-09-29
 ### Added
 - Add .value constructor for BaseProviderWidget
