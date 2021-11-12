@@ -1,1 +1,20 @@
 include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  errors:
+    missing_required_param: error
+    missing_return: error
+    todo: ignore
+    sdk_version_async_exported_from_core: ignore
+  strong-mode:
+    implicit-casts: false
+    implicit-dynamic: false
+  exclude:
+    - '**.mocks.dart'
+    - 'test/coverage_helper_test.dart'
+
+linter:
+  rules:
+    - cancel_subscriptions
+    - unawaited_futures
+    - always_declare_return_types
