@@ -67,15 +67,15 @@ class TouchFeedBackIOS extends StatefulWidget {
   final ShapeBorder? shapeBorder;
   final double elevation;
 
-  const TouchFeedBackIOS(
-      {required this.child,
-      required this.onClick,
-      this.borderRadius,
-      this.color = Colors.transparent,
-      this.shapeBorder,
-      this.elevation = 0,
-      Key? key})
-      : super(key: key);
+  const TouchFeedBackIOS({
+    required this.child,
+    required this.onClick,
+    this.borderRadius,
+    this.color = Colors.transparent,
+    this.shapeBorder,
+    this.elevation = 0,
+    Key? key,
+  }) : super(key: key);
 
   @override
   _TouchFeedBackIOSState createState() => _TouchFeedBackIOSState();
