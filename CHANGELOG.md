@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.1] - 2021-11-16
+### Added
+
+- Is null or empty extension on `String?`
+
 ## [0.5.0] - 2021-11-12
 ### Added
 
