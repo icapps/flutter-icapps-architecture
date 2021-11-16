@@ -12,7 +12,7 @@ extension NullExtension2<T> on T? {
   }
 }
 
-extension NullStringExtension2<T> on String? {
+extension NullStringExtension<T> on String? {
   /// Will return if the string is null or empty
   bool get isNullOrEmpty => this == null || this?.isEmpty == true;
 
