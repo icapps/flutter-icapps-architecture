@@ -17,17 +17,17 @@ void main() {
     test('Test isNullOrEmpty null', () {
       String? value;
       expect(value.isNullOrEmpty, true);
-      expect(value.isNotNullAndNotEmpty, false);
+      expect(value.isNotNullOrEmpty, false);
     });
     test('Test isNullOrEmpty empty', () {
       String? value = '';
       expect(value.isNullOrEmpty, true);
-      expect(value.isNotNullAndNotEmpty, false);
+      expect(value.isNotNullOrEmpty, false);
     });
     test('Test isNullOrEmpty not empty & not null', () {
       String? value = 'Hello World';
       expect(value.isNullOrEmpty, false);
-      expect(value.isNotNullAndNotEmpty, true);
+      expect(value.isNotNullOrEmpty, true);
     });
   });
 }

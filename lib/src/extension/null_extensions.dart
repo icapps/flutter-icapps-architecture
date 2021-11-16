@@ -17,5 +17,5 @@ extension NullStringExtension<T> on String? {
   bool get isNullOrEmpty => this == null || this?.isEmpty == true;
 
   /// Will return if the string is not null and not empty
-  bool get isNotNullAndNotEmpty => !isNullOrEmpty;
+  bool get isNotNullOrEmpty => !isNullOrEmpty;
 }
