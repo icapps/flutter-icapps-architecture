@@ -11,3 +11,11 @@ extension NullExtension2<T> on T? {
     return lambda(copy);
   }
 }
+
+extension NullStringExtension2<T> on String? {
+  /// Will return if the string is null or empty
+  bool get isNullOrEmpty => this == null || this?.isEmpty == true;
+
+  /// Will return if the string is not null and not empty
+  bool get isNotNullAndNotEmpty => !isNullOrEmpty;
+}
