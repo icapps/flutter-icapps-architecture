@@ -14,6 +14,7 @@ export 'src/theming/base_theme.dart';
 export 'src/util/connectivity/connectivity.dart';
 export 'src/util/environment/environment_util.dart';
 export 'src/util/environment/os_info.dart';
+export 'src/util/future/compute_pool.dart';
 export 'src/util/future/future_helper.dart';
 export 'src/util/logging/logging.dart';
 export 'src/util/preferences/preferences_storage.dart';
