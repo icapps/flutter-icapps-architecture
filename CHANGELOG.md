@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.6.0] - 2021-12-02
+### Added
+
+- `ComputePool`: A pool of background isolates to dispatch work to. Falls back to microtasks on web
+
 ## [0.5.1] - 2021-11-16
 ### Added
 
