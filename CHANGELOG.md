@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.2] - 2021-12-14
+### Added
+
+- Ensure console log output is split into 800 long chunks to prevent lost data. (Fixes #63)
+
 ## [0.5.1] - 2021-11-16
 ### Added
 

@@ -64,7 +64,10 @@ class LoggingFactory {
   }
 
   static Logger _makeLogger() {
-    return Logger(printer: _makeLogPrinter());
+    return Logger(
+      printer: _makeLogPrinter(),
+      output: WrappingOutput(print),
+    );
   }
 
   static LogPrinter _makeLogPrinter() {
@@ -76,6 +79,23 @@ class LoggingFactory {
       printEmojis: true,
       printTime: true,
     );
+  }
+}
+
+@visibleForTesting
+class WrappingOutput extends LogOutput {
+  final void Function(String) printer;
+
+  WrappingOutput(this.printer);
+
+  @override
+  void output(OutputEvent event) {
+    event.lines.forEach(_printWrapped);
+  }
+
+  void _printWrapped(String line) {
+    final pattern = RegExp('.{1,800}');
+    pattern.allMatches(line).forEach((match) => printer(match.group(0)!));
   }
 }
 
