@@ -5,6 +5,10 @@
 
 - Ensure console log output is split into 800 long chunks to prevent lost data. (Fixes #63)
 
+### Fixed
+
+- Place message from error logger before stack trace information. (Fixes #69)
+
 ## [0.6.0] - 2021-12-02
 ### Added
 

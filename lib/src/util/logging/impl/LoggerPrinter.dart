@@ -176,6 +176,11 @@ class OurPrettyPrinter extends LogPrinter {
     var color = _getLevelColor(level);
     final timeInfix = time != null ? '$time ' : '';
 
+    final emoji = _getEmoji(level);
+    for (final line in message.split('\n')) {
+      buffer.add(color(' $timeInfix$emoji$line'));
+    }
+
     if (error != null) {
       var errorColor = _getErrorColor(level);
       for (var line in error.split('\n')) {
@@ -192,11 +197,6 @@ class OurPrettyPrinter extends LogPrinter {
       for (var line in stacktrace.split('\n')) {
         buffer.add('$color $timeInfix$line');
       }
-    }
-
-    var emoji = _getEmoji(level);
-    for (var line in message.split('\n')) {
-      buffer.add(color(' $timeInfix$emoji$line'));
     }
 
     return buffer;
