@@ -18,3 +18,5 @@ linter:
     - cancel_subscriptions
     - unawaited_futures
     - always_declare_return_types
+    - prefer_final_fields
+    - prefer_final_in_for_each

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:icapps_architecture/icapps_architecture.dart';
@@ -57,6 +59,28 @@ void main() {
     });
     test('Get prefix', () {
       expect(TestPrefixHelper().getLogger, isInstanceOf<PrefixLogger>());
+    });
+  });
+  group('Logging output', () {
+    test('Output logger does not split short items', () {
+      final lines = <String>[];
+      final output = WrappingOutput((str) => lines.add(str));
+      output.output(OutputEvent(Level.info,
+          ['Short string', 'Longer string that does not need to be split']));
+      expect(lines,
+          ['Short string', 'Longer string that does not need to be split']);
+    });
+    test('Output logger does splits long items', () {
+      final inputString =
+          base64Encode(List<int>.generate(1000, (i) => i % 255));
+      final lines = <String>[];
+      final output = WrappingOutput((str) => lines.add(str));
+      output.output(OutputEvent(Level.info, ['Short string', inputString]));
+      expect(lines, [
+        'Short string',
+        'AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0+P0BBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWltcXV5fYGFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6e3x9fn+AgYKDhIWGh4iJiouMjY6PkJGSk5SVlpeYmZqbnJ2en6ChoqOkpaanqKmqq6ytrq+wsbKztLW2t7i5uru8vb6/wMHCw8TFxsfIycrLzM3Oz9DR0tPU1dbX2Nna29zd3t/g4eLj5OXm5+jp6uvs7e7v8PHy8/T19vf4+fr7/P3+AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0+P0BBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWltcXV5fYGFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6e3x9fn+AgYKDhIWGh4iJiouMjY6PkJGSk5SVlpeYmZqbnJ2en6ChoqOkpaanqKmqq6ytrq+wsbKztLW2t7i5uru8vb6/wMHCw8TFxsfIycrLzM3Oz9DR0tPU1dbX2Nna29zd3t/g4eLj5OXm5+jp6uvs7e7v8PHy8/T19vf4+fr7/P3+AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0+P0BBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZ',
+        'WltcXV5fYGFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6e3x9fn+AgYKDhIWGh4iJiouMjY6PkJGSk5SVlpeYmZqbnJ2en6ChoqOkpaanqKmqq6ytrq+wsbKztLW2t7i5uru8vb6/wMHCw8TFxsfIycrLzM3Oz9DR0tPU1dbX2Nna29zd3t/g4eLj5OXm5+jp6uvs7e7v8PHy8/T19vf4+fr7/P3+AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0+P0BBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWltcXV5fYGFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6e3x9fn+AgYKDhIWGh4iJiouMjY6PkJGSk5SVlpeYmZqbnJ2en6ChoqOkpaanqKmqq6ytrq+wsbKztLW2t7i5uru8vb6/wMHCw8TFxsfIycrLzM3Oz9DR0tPU1dbX2Nna29zd3t/g4eLj5OXm5+jp6g=='
+      ]);
     });
   });
 }
@@ -146,21 +170,21 @@ void testWithLogger() {
           matches(' \\d+:\\d+:\\d+\\.\\d+\\s+💡 Info message'));
       expect(messages[3].lines.join(" "),
           matches(' \\d+:\\d+:\\d+\\.\\d+\\s+⚠️ Warning message'));
-      expect(messages[4].lines[0],
+      expect(messages[4].lines[1],
           matches('\\d+:\\d+:\\d+\\.\\d+\\s+Invalid argument\\(s\\)'));
       expect(
-          messages[4].lines[1],
+          messages[4].lines[2],
           matches(
               '\\d+:\\d+:\\d+\\.\\d+\\s+#0   Declarer.test.<anonymous closure>.<anonymous closure> \\(package:test_api/src/backend/declarer.dart:\\d+:\\d+\\)'));
-      expect(messages[4].lines[2],
+      expect(messages[4].lines[3],
           matches(' \\d+:\\d+:\\d+\\.\\d+\\s+#1   <asynchronous suspension>'));
       expect(
-          messages[4].lines[3],
+          messages[4].lines[4],
           matches(
               '\\d+:\\d+:\\d+\\.\\d+\\s+#2   StackZoneSpecification._registerUnaryCallback.<anonymous closure> \\(package:stack_trace/src/stack_zone_specification.dart\\)'));
-      expect(messages[4].lines[4],
-          matches('\\d+:\\d+:\\d+\\.\\d+\\s+#3   <asynchronous suspension>'));
       expect(messages[4].lines[5],
+          matches('\\d+:\\d+:\\d+\\.\\d+\\s+#3   <asynchronous suspension>'));
+      expect(messages[4].lines[0],
           matches(' \\d+:\\d+:\\d+\\.\\d+\\s+⛔ Error message'));
     });
     test('Test logger methods default pretty include method', () {
@@ -181,10 +205,10 @@ void testWithLogger() {
       staticLogger.d('Debug message');
       final messages = buffer.buffer.toList(growable: false);
       expect(
-          messages[0].lines[0],
+          messages[0].lines[1],
           matches(
               ' #0   OurPrettyPrinter.log \\(package:icapps_architecture/src/util/logging/impl/LoggerPrinter.dart:\\d+:\\d+\\)'));
-      expect(messages[0].lines[1], ' 🐛 Debug message');
+      expect(messages[0].lines[0], ' 🐛 Debug message');
     });
     test('Test logger methods default json', () {
       final lines = OurPrettyPrinter(
@@ -214,8 +238,8 @@ void testWithLogger() {
           .log(LogEvent(Level.error, 'Error', ArgumentError(), null));
 
       expect(
-          lines[0], '\x1B[39m\x1B[48;5;196mInvalid argument(s)\x1B[0m\x1B[49m');
-      expect(lines[1], '\x1B[38;5;196m ⛔ Error\x1B[0m');
+          lines[1], '\x1B[39m\x1B[48;5;196mInvalid argument(s)\x1B[0m\x1B[49m');
+      expect(lines[0], '\x1B[38;5;196m ⛔ Error\x1B[0m');
     });
     test('Test logger methods default error color wtf', () {
       final lines = OurPrettyPrinter(
@@ -229,8 +253,8 @@ void testWithLogger() {
           .log(LogEvent(Level.wtf, 'WTF', ArgumentError(), null));
 
       expect(
-          lines[0], '\x1B[39m\x1B[48;5;199mInvalid argument(s)\x1B[0m\x1B[49m');
-      expect(lines[1], '\x1B[38;5;199m 👾 WTF\x1B[0m');
+          lines[1], '\x1B[39m\x1B[48;5;199mInvalid argument(s)\x1B[0m\x1B[49m');
+      expect(lines[0], '\x1B[38;5;199m 👾 WTF\x1B[0m');
     });
     test('Test logger methods default build stack trace', () {
       final formatted = OurPrettyPrinter(
