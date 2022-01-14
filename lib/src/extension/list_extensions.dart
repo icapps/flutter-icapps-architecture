@@ -1,11 +1,11 @@
 extension ListExtensions<T> on List<T> {
-  ///Replaces all data in the list with [newData]
+  /// Replaces all data in the list with [newData]
   void replaceAll(List<T> newData) {
     clear();
     addAll(newData);
   }
 
-  ///Replaces all items that matches where  with [newData]
+  /// Replaces all items that matches where with [newData]
   void replaceWhere(bool Function(T) where, T newData, {int? count}) {
     final replaceCount = count ?? length;
     var currentReplaceCount = 0;

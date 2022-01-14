@@ -13,6 +13,7 @@ This error can be used to map a localization key/localization to an Exception. S
 A NetworkError is used simplify the DioErrors. A NetworkError is also a LocalizedError so it is easy to get the correct localization/localizationKey
 
 ### Extensions
+
 #### Context
 - `isAndroidTheme` (Returns true if the current theme is targeting the android platform)
 - `isIOSTheme` (Returns true if the current theme is targeting the ios platform)
@@ -32,5 +33,12 @@ A NetworkError is used simplify the DioErrors. A NetworkError is also a Localize
 - `Tuple2<List<T>, List<T>> split(bool Function(T) on)` (Splits the elements according to [on]. Items for which [on] is true will be stored in [Tuple2.item1], other items in [Tuple2.item2])
 - `Iterable<R> mapIndexed<R>(R Function(int, T) mapper)` (Same as [Iterable.map] except that the [mapper] function also receives the index of the item being mapped)
 - `void forEachIndexed(Function(int, T) f)` (Same as [Iterable.foreach] except that the [f] function also receives the index of the item)
+
 ##### Iterable<Iterable<T>>
 - `List<T> flatten()` (Flattens the list of lists to a single flat list of items)
+
+#### List<T>
+- `void replaceAll(List<T> newData)` (Replaces all data in the list with [newData])
+- `void replaceWhere(bool Function(T) where, T newData, {int? count})` (Replaces all items that matches where with [newData])
+- `void sortBy<R>(Comparable<R>? by(T item), {bool ascending = true})` (Sorts the list based on the comparable returned by [by]. By default the sorting is [ascending])
+- `void sortBy2<R, V>( Comparable<R>? by(T item), Comparable<V>? by2(T item), {bool ascending = true})` (Sorts the list by comparing first comparing using [by] and if the items are equal, by comparing them using [by2]. By default the sorting is [ascending])
