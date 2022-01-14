@@ -66,5 +66,5 @@ Extended version of the foundation's [ChangeNotifier].
 Has helper methods to determine if it has been disposed ([disposed]) and convenience methods to register listeners that will be cleaned up when the change notifier is disposed [registerDispose()] and [registerDisposeStream()]
 
 ### Routes
-### FadinRoute
+### FadeInRoute
 Page route that fades in the child page
