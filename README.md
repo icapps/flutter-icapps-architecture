@@ -80,3 +80,9 @@ Holder class for the theme base. Fills in basic shared properties
 Helper to determine if a device has connectivity
 - `Future<bool> hasConnection()` (Returns true if the device is connected to an IP network)
 - `Stream<bool> monitorConnection()` (Returns a stream that monitors the connectivity state of the device)
+
+### Environment global variables
+- `bool isInTest` (Returns true if the code is currently being execute by unit tests)
+- `bool isInRelease` (Returns true if the current code is executing in release mode)
+- `bool isInDebug` (Returns true if the current code is executing in debug mode)
+- `bool isInProfile` (Returns true if the current code is executing in profile mode)
