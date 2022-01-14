@@ -167,6 +167,9 @@ Wrapper for storing generic values based on keys. The contained values are all s
 Base class for restorable change view models
 - `void restoreState(Bundle? data)` (Called when the system is restoring or creating a new instance. If the passed bundle is null, it is assumed to be a clean restoration without previous state)
 - `void saveState(Bundle target)` (Called when the system needs to prepare data for later restoration. You should save all relevant required data to restore from later. Keep in mind that the system has only a limited amount of space reserved for this data: avoid storing large objects.)
+#### RestorableViewModelHolder
+Holder class for restorable view models, use with the flutter restoration
+Provies you with some helper functions to make sure you can
 
 ### SimpleKeyValueStorage
 - `Future<String?> getValue({required String key})` (Get the value associated with the given key. Returns null if the value does not exist.)
