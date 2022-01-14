@@ -115,3 +115,11 @@ Waits for n futures and returns a future containing a [TupleN] with the results 
 - `await5`
 - `await6`
 - `await7`
+
+### Logger
+Send logs, via the `staticLogger` or `logger`
+You can specific when you you want to actualy print someting using the `Level`
+- `void debug(String message)`
+- `void info(String message)`
+- `void warning(String message)`
+- `void error(String message, {dynamic error, StackTrace? trace})`
