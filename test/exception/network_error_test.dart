@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:dio/src/dio_error.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:icapps_architecture/icapps_architecture.dart';
+import 'package:icapps_architecture/src/exception/network_error.dart';
 
 class TestableNetworkError extends NetworkError {
   TestableNetworkError(
