@@ -15,14 +15,14 @@ A NetworkError is used simplify the DioErrors. A NetworkError is also a Localize
 ### Extensions
 
 #### Context
-- `isAndroidTheme` (Returns true if the current theme is targeting the android platform)
-- `isIOSTheme` (Returns true if the current theme is targeting the ios platform)
-- `isTablet` (Returns true if the device indicates it is a tablet.)
-- `isLandscape` (Returns true if the device indicates it is in landscape mode.)
+- `bool isAndroidTheme` (Returns true if the current theme is targeting the android platform)
+- `bool isIOSTheme` (Returns true if the current theme is targeting the ios platform)
+- `bool isTablet` (Returns true if the device indicates it is a tablet.)
+- `bool isLandscape` (Returns true if the device indicates it is in landscape mode.)
 
 #### MediaQueryData
-- `isTablet` (Returns true if the device indicates it is a tablet.)
-- `isLandscap` (Returns true if the device indicates it is in landscape mode.)
+- `bool isTablet` (Returns true if the device indicates it is a tablet.)
+- `bool isLandscap` (Returns true if the device indicates it is in landscape mode.)
 
 #### Iterable<T>
 - `int count(bool Function(T) where)` (Counts all elements for which [where] returns true)
@@ -48,3 +48,10 @@ A NetworkError is used simplify the DioErrors. A NetworkError is also a Localize
 
 #### Map<K,V?>
 - `Map<K, V> removeNullValues()` (Removes all null values from the map)
+
+#### T?
+- `R? let<R>(R? Function(T) lambda)` (Execute the given lambda and return a result)
+
+#### String?
+- `bool isNullOrEmpty` (Will return if the string is null or empty)
+- `bool isNotNullOrEmpty` (Will return if the string is not null and not empty)
