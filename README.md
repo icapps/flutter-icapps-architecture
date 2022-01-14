@@ -86,3 +86,16 @@ Helper to determine if a device has connectivity
 - `bool isInRelease` (Returns true if the current code is executing in release mode)
 - `bool isInDebug` (Returns true if the current code is executing in debug mode)
 - `bool isInProfile` (Returns true if the current code is executing in profile mode)
+
+### OsInfo
+- `int androidSdk` (The android sdk version int (if the app is running native). Eg: 21)
+- `double iosVersion` (The ios major and minor version (if the app is running native). Eg: 14.4)
+- `bool isWeb` (Indicates that this is a non-native application)
+- `bool isAndroid` (Returns true if the app is running natively on android)
+- `bool isIOS` (Returns true if the app is running natively on ios)
+- `bool isAtLeastAndroid10` (Returns true if the app is running natively on android 10 and higher)
+- `bool isAtLeastPie` (Returns true if the app is running natively on android P and higher)
+- `bool isIOS13OrAbove` (Returns true if the app is running natively on at least ios 13)
+- `Future<void> init` (Initializes the os info)
+- `bool isDeviceAndroid` (Platform.isAndroid)
+- `bool isDeviceIOS` (Platform.isIOS)
