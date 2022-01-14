@@ -11,4 +11,12 @@ echo "===="
 echo "Finished testing"
 echo "===="
 
-genhtml coverage/lcov.info -o coverage/html
+echo ""
+echo "===="
+echo "Start coveralls upload"
+echo "===="
+coveralls-lcov coverage/lcov.info
+echo "===="
+echo "Finished coveralls upload"
+echo "===="
+
