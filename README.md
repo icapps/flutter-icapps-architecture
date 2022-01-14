@@ -167,3 +167,9 @@ Wrapper for storing generic values based on keys. The contained values are all s
 Base class for restorable change view models
 - `void restoreState(Bundle? data)` (Called when the system is restoring or creating a new instance. If the passed bundle is null, it is assumed to be a clean restoration without previous state)
 - `void saveState(Bundle target)` (Called when the system needs to prepare data for later restoration. You should save all relevant required data to restore from later. Keep in mind that the system has only a limited amount of space reserved for this data: avoid storing large objects.)
+
+### SimpleKeyValueStorage
+- `Future<String?> getValue({required String key})` (Get the value associated with the given key. Returns null if the value does not exist.)
+- `Future<void> setValue({required String key, required String value})` (Sets the value to be associated with the given key)
+- `Future<bool> hasValue({required String key})`` (Check if there is a value associated with the given key)
+- `Future<void> removeValue({required String key})` (Removes the value associated with the given key)
