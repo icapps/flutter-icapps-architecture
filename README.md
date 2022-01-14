@@ -74,3 +74,9 @@ Page route that fades in the child page
 Holder class for the theme base. Fills in basic shared properties
 - `baseTheme` (Gets the base theme to use to build new themes on)
 - `PageTransitionsBuilder getCorrectPageTransitionBuilder(OsInfo info)` (Builds the correct page transition based on the current OS)
+
+### Connectivity
+#### ConnectivityHelper
+Helper to determine if a device has connectivity
+- `Future<bool> hasConnection()` (Returns true if the device is connected to an IP network)
+- `Stream<bool> monitorConnection()` (Returns a stream that monitors the connectivity state of the device)
