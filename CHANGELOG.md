@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.6.2] - 2022-01-14
+### Added
+
+- Docs in the README.md
+
 ## [0.6.1] - 2021-12-14
 ### Added
 
