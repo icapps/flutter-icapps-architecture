@@ -99,3 +99,10 @@ Helper to determine if a device has connectivity
 - `Future<void> init` (Initializes the os info)
 - `bool isDeviceAndroid` (Platform.isAndroid)
 - `bool isDeviceIOS` (Platform.isIOS)
+
+### ComputePool
+A pool of isolate workers that will handle passed work.
+Using a compute pool will greatly reduce the dart isolate startup overhead
+- `ComputePool.createWith({int workersCount = 2})` (Create a new compute pool with the requested number of worker isolates)
+- `void shutdown()` (Shuts down the compute pool. Submitting new work will result in an error future being returned)
+- `ComputePool.createWith({int workersCount = 2})` (Submit a task to be executed on an isolate in this pool)
