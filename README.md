@@ -123,3 +123,47 @@ You can specific when you you want to actualy print someting using the `Level`
 - `void info(String message)`
 - `void warning(String message)`
 - `void error(String message, {dynamic error, StackTrace? trace})`
+
+### SharedPreferenceStorage
+Utility class to facilitate storing shared preferences
+- `Future<void> saveString({required String key, required String value})` (Saves the given string [value] to the storage with [key])
+- `Future<void> saveBoolean({required String key, required bool value})` (Saves the given boolean [value] to the storage with [key])
+- `Future<void> saveInt({required String key, required int value})` (Saves the given integer [value] to the storage with [key])
+- `Future<void> saveDouble({required String key, required double value})` (Saves the given double [value] to the storage with [key])
+- `String? getString(String key)` (Retrieves the stored string value for [key]/ Returns null if the value is not found)
+- `bool? getBoolean(String key)` (Retrieves the stored boolean value for [key]. Returns null if the value is not found)
+- `int? getInt(String key)` (Retrieves the stored integer value for [key]. Returns null if the value is not found)
+- `double? getDouble(String key)` (Retrieves the stored double value for [key]. Returns null if the value is not found)
+- `Future<void> deleteKey(String key)` (Deletes the value stored for [key])
+- `bool containsKey(String key)` (Returns true if there is a value for [key])
+
+### Restorable state
+#### Bundle
+Wrapper for storing generic values based on keys. The contained values are all serializable using platform channels
+- `Bundle.from(Object data)` (Creates a bundle from the provided map. The map is assumed to be of type: `Map<Object?, Object?>`. See: [asFlatStructure])
+- `void putBoolean(String key, bool? value)` (Saves the given value to the map for the given key. If the value is null, the previous mapping is removed (if any))
+- `void putInt(String key, int? value)` (Saves the given value to the map for the given key. If the value is null, the previous mapping is removed (if any))
+- `void putString(String key, String? value)` (Saves the given value to the map for the given key. If the value is null, the previous mapping is removed (if any))
+- `void putBundle(String key, Bundle? bundle)` (Saves the given value to the map for the given key. If the value is null, the previous mapping is removed (if any))
+- `void putDouble(String key, double? value)` (Saves the given value to the map for the given key. If the value is null, the previous mapping is removed (if any))
+- `void putStringList(String key, List<String>? values)` (Saves the given value to the map for the given key. If the value is null, the previous mapping is removed (if any))
+- `void remove(String key)` (Removes the mapping for the given key (if any))
+- `bool getBoolean(String key)` (Force-gets the value for the given key, throws if null or wrong type)
+- `bool hasKey(String key)` (Checks if the bundle contains a value with the given key)
+- `int getInt(String key)` (Force-gets the value for the given key, throws if null or wrong type)
+- `String getString(String key)` (Force-gets the value for the given key, throws if null or wrong type)
+- `double getDouble(String key)` (Force-gets the value for the given key, throws if null or wrong type)
+- `List<String> getStringList(String key)` (Force-gets the value for the given key, throws if null or wrong type)
+- `Bundle getBundle(String key)` (Force-gets the value for the given key, throws if null or wrong type)
+- `bool? optBoolean(String key)` (Gets the value for the given key, returns null if null or wrong type)
+- `int? optInt(String key)` (Gets the value for the given key, returns null if null or wrong type)
+- `String? optString(String key)` (Gets the value for the given key, returns null if null or wrong type)
+- `double? optDouble(String key)` (Gets the value for the given key, returns null if null or wrong type)
+- `Bundle? optBundle(String key)` (Gets the value for the given key, returns null if null or wrong type)
+- `List<String>? optStringList(String key)` (Gets the value for the given key, returns null if null or wrong type)
+- `Map<Object?, Object?> asFlatStructure() => _internalMap.map((key, value)` (Serializes the bundle to a flat structure that is used by the restoration framework. See [RestorationMixin])
+
+### Restorable
+Base class for restorable change view models
+- `void restoreState(Bundle? data)` (Called when the system is restoring or creating a new instance. If the passed bundle is null, it is assumed to be a clean restoration without previous state)
+- `void saveState(Bundle target)` (Called when the system needs to prepare data for later restoration. You should save all relevant required data to restore from later. Keep in mind that the system has only a limited amount of space reserved for this data: avoid storing large objects.)
