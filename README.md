@@ -42,3 +42,9 @@ A NetworkError is used simplify the DioErrors. A NetworkError is also a Localize
 - `void replaceWhere(bool Function(T) where, T newData, {int? count})` (Replaces all items that matches where with [newData])
 - `void sortBy<R>(Comparable<R>? by(T item), {bool ascending = true})` (Sorts the list based on the comparable returned by [by]. By default the sorting is [ascending])
 - `void sortBy2<R, V>( Comparable<R>? by(T item), Comparable<V>? by2(T item), {bool ascending = true})` (Sorts the list by comparing first comparing using [by] and if the items are equal, by comparing them using [by2]. By default the sorting is [ascending])
+
+#### Map<K?,V>
+- `Map<K, V> removeNullKeys()` (Removes all null keys from the map)
+
+#### Map<K,V?>
+- `Map<K, V> removeNullValues()` (Removes all null values from the map)
