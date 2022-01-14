@@ -55,3 +55,8 @@ A NetworkError is used simplify the DioErrors. A NetworkError is also a Localize
 #### String?
 - `bool isNullOrEmpty` (Will return if the string is null or empty)
 - `bool isNotNullOrEmpty` (Will return if the string is not null and not empty)
+
+### Interceptor
+#### CombiningSmartInterceptor
+Base class for simple [Dio] interceptors to be used in conjunction with CombiningSmartInterceptor
+Upon returning an instance of [DioError] from [onRequest] or [onResponse], the error interceptors will NOT be called
