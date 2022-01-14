@@ -66,5 +66,11 @@ Extended version of the foundation's [ChangeNotifier].
 Has helper methods to determine if it has been disposed ([disposed]) and convenience methods to register listeners that will be cleaned up when the change notifier is disposed [registerDispose()] and [registerDisposeStream()]
 
 ### Routes
-### FadeInRoute
+#### FadeInRoute
 Page route that fades in the child page
+
+### Theme
+#### BaseThemeData
+Holder class for the theme base. Fills in basic shared properties
+- `baseTheme` (Gets the base theme to use to build new themes on)
+- `PageTransitionsBuilder getCorrectPageTransitionBuilder(OsInfo info)` (Builds the correct page transition based on the current OS)
