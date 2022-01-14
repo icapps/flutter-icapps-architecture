@@ -60,3 +60,7 @@ A NetworkError is used simplify the DioErrors. A NetworkError is also a Localize
 #### CombiningSmartInterceptor
 Base class for simple [Dio] interceptors to be used in conjunction with CombiningSmartInterceptor
 Upon returning an instance of [DioError] from [onRequest] or [onResponse], the error interceptors will NOT be called
+
+### ChangeNotifierEx
+Extended version of the foundation's [ChangeNotifier].
+Has helper methods to determine if it has been disposed ([disposed]) and convenience methods to register listeners that will be cleaned up when the change notifier is disposed [registerDispose()] and [registerDisposeStream()]
