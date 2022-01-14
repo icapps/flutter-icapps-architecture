@@ -11,3 +11,14 @@ This error can be used to map a localization key/localization to an Exception. S
 
 #### Network Error
 A NetworkError is used simplify the DioErrors. A NetworkError is also a LocalizedError so it is easy to get the correct localization/localizationKey
+
+### Extensions
+#### Context
+- `isAndroidTheme`
+- `isIOSTheme`
+- `isTablet` (This will query the `MediaQueryData.isTablet`)
+- `isLandscape` (This will query the `MediaQueryData.isLandscap`)
+
+#### MediaQueryData
+- `isTablet` (Will use the ResponsiveWidget.getDeviceType to check if your current screen is tablet)
+- `isLandscap` (Check if your current orientation is landscape)
