@@ -106,3 +106,12 @@ Using a compute pool will greatly reduce the dart isolate startup overhead
 - `ComputePool.createWith({int workersCount = 2})` (Create a new compute pool with the requested number of worker isolates)
 - `void shutdown()` (Shuts down the compute pool. Submitting new work will result in an error future being returned)
 - `ComputePool.createWith({int workersCount = 2})` (Submit a task to be executed on an isolate in this pool)
+
+### FutureHelpers
+Waits for n futures and returns a future containing a [TupleN] with the results for n futures
+- `await2`
+- `await3`
+- `await4`
+- `await5`
+- `await6`
+- `await7`
