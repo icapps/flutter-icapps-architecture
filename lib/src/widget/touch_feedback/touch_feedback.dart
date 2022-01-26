@@ -12,6 +12,7 @@ class TouchFeedBack extends StatelessWidget {
   final Color color;
   final BorderRadius? borderRadius;
   final double elevation;
+  final Color? shadowColor;
   final ShapeBorder? shapeBorder;
 
   const TouchFeedBack({
@@ -21,6 +22,7 @@ class TouchFeedBack extends StatelessWidget {
     this.androidSplashColor,
     this.color = Colors.transparent,
     this.elevation = 0,
+    this.shadowColor,
     this.shapeBorder,
     Key? key,
   }) : super(key: key);
@@ -36,6 +38,7 @@ class TouchFeedBack extends StatelessWidget {
       color: color,
       borderRadius: borderRadius,
       elevation: elevation,
+      shadowColor: shadowColor,
       shapeBorder: shapeBorder,
     );
   }
@@ -45,6 +48,7 @@ class TouchFeedBack extends StatelessWidget {
       borderRadius: borderRadius,
       color: color,
       elevation: elevation,
+      shadowColor: shadowColor,
       shape: shapeBorder,
       child: onClick == null
           ? child
@@ -66,6 +70,7 @@ class TouchFeedBackIOS extends StatefulWidget {
   final BorderRadius? borderRadius;
   final ShapeBorder? shapeBorder;
   final double elevation;
+  final Color? shadowColor;
 
   const TouchFeedBackIOS({
     required this.child,
@@ -73,6 +78,7 @@ class TouchFeedBackIOS extends StatefulWidget {
     this.borderRadius,
     this.color = Colors.transparent,
     this.shapeBorder,
+    this.shadowColor,
     this.elevation = 0,
     Key? key,
   }) : super(key: key);
@@ -102,6 +108,7 @@ class _TouchFeedBackIOSState extends State<TouchFeedBackIOS> {
           child: widget.child,
           shape: widget.shapeBorder,
           elevation: widget.elevation,
+          shadowColor: widget.shadowColor,
         ),
       ),
     );
