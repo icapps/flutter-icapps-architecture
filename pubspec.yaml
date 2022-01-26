@@ -4,7 +4,7 @@ homepage: https://github.com/icapps/flutter-icapps-architecture
 repository: https://github.com/icapps/flutter-icapps-architecture
 issue_tracker: https://github.com/icapps/flutter-icapps-architecture/issues
 
-version: 0.6.2
+version: 0.6.3
 
 environment:
   sdk: '>=2.14.0 <3.0.0'

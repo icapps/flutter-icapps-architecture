@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.6.3] - 2022-01-26
+### Added
+
+- Custom shadow for TouchFeedback
+
 ## [0.6.2] - 2022-01-14
 ### Added
 
