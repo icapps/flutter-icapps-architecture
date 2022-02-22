@@ -97,6 +97,12 @@ class _TouchFeedBackIOSState extends State<TouchFeedBackIOS> {
   var touched = false;
 
   @override
+  void dispose() {
+    _touchPoints.remove(_key);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       excludeFromSemantics: widget.onClick == null,
