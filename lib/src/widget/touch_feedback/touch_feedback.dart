@@ -120,7 +120,7 @@ class _TouchFeedBackIOSState extends State<TouchFeedBackIOS> {
 
   void _setTouched(bool touched) {
     if (!touched) _touchPoints.remove(_key);
-    if (widget.onClick == null && this.touched == touched) return;
+    if (widget.onClick == null || this.touched == touched) return;
     setState(() => this.touched = touched);
   }
 
