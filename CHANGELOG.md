@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.6.4] - 2022-02-22
+### Fixed
+
+- iOS Touchfeedback when 2 TouchFeedbackIOS widgets are on top of eachother
+
 ## [0.6.3] - 2022-01-26
 ### Added
 
