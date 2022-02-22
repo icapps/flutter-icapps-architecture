@@ -181,7 +181,7 @@ void testWithLogger() {
       expect(
           messages[4].lines[4],
           matches(
-              '\\d+:\\d+:\\d+\\.\\d+\\s+#2   StackZoneSpecification._registerUnaryCallback.<anonymous closure> \\(package:stack_trace/src/stack_zone_specification.dart\\)'));
+              '\\d+:\\d+:\\d+\\.\\d+\\s+#2   StackZoneSpecification._registerUnaryCallback.<anonymous closure> \\(package:stack_trace/src/stack_zone_specification.dart:125:47\\)'));
       expect(messages[4].lines[5],
           matches('\\d+:\\d+:\\d+\\.\\d+\\s+#3   <asynchronous suspension>'));
       expect(messages[4].lines[0],
