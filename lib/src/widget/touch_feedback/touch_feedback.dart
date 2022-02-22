@@ -90,13 +90,17 @@ class TouchFeedBackIOS extends StatefulWidget {
 class _TouchFeedBackIOSState extends State<TouchFeedBackIOS> {
   static const touchScale = 0.98;
   static const defaultScale = 1.0;
+
+  static final _touchPoints = <UniqueKey, Offset>{};
+  final _key = UniqueKey();
+
   var touched = false;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       excludeFromSemantics: widget.onClick == null,
-      onTapDown: (details) => _setTouched(true),
+      onTapDown: _onTapDown,
       onTap: widget.onClick,
       onTapCancel: () => _setTouched(false),
       onTapUp: (details) => _setTouched(false),
@@ -115,7 +119,14 @@ class _TouchFeedBackIOSState extends State<TouchFeedBackIOS> {
   }
 
   void _setTouched(bool touched) {
-    if (widget.onClick == null) return;
+    if (widget.onClick == null && this.touched == touched) return;
     setState(() => this.touched = touched);
+  }
+
+  void _onTapDown(TapDownDetails details) {
+    final touchPosition = details.globalPosition;
+    if (_touchPoints.containsValue(touchPosition)) return;
+    _touchPoints[_key] = touchPosition;
+    _setTouched(true);
   }
 }
