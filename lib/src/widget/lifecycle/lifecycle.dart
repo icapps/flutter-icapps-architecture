@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+/// Helper widget for reacting to lifecycle events.
+///
+/// This widget listens to changes in the [AppLifecycleState].
 class LifecycleWidget extends StatefulWidget {
   final Widget child;
   final VoidCallback? onResume;
