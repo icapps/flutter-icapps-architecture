@@ -48,14 +48,23 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  void _showNativePopup() {
-    NativeDialog.showNativeDialog(
+
+  void _showNativePopup() async {
+    var showConfirmationDialog = await NativeDialog.showNativeDialog(
       context: context,
-      title: "icapps architecture",
-      content: "NativeDialog showcase",
-      textOK: "OK",
-      // textCancel: "Cancel",
+      title: "This is a confirmation dialog.",
+      content: "Show information popup?",
+      textOK: "Yes",
+      textCancel: "No",
     );
+    if(showConfirmationDialog == true){
+      await NativeDialog.showNativeDialog(
+        context: context,
+        title: "This is an information dialog.",
+        content: "You can only agree.",
+        textOK: "OK",
+      );
+    }
   }
 
   @override
