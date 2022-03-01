@@ -48,6 +48,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  void _showNativePopup() {
+    NativeDialog.showNativeDialog(
+        context: context,
+        title: "icapps architecture",
+        content: "NativeDialog showcase",
+        textOK: "OK",
+        textCancel: "Cancel");
+  }
+
   @override
   Widget build(BuildContext context) {
     return ProviderWidget<CounterViewModel>(
@@ -56,6 +65,12 @@ class _MyHomePageState extends State<MyHomePage> {
           Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
+          actions: [
+            IconButton(
+              onPressed: _showNativePopup,
+              icon: Icon(Icons.info),
+            )
+          ],
         ),
         body: Center(
           child: Column(

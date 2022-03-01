@@ -27,3 +27,4 @@ export 'src/widget/provider/provider_widget.dart';
 export 'src/widget/provider/theme_provider_widget.dart';
 export 'src/widget/responsive/responsive_widget.dart';
 export 'src/widget/touch_feedback/touch_feedback.dart';
+export 'src/widget/native_dialog/native_dialog.dart';
