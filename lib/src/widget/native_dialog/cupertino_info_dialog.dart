@@ -1,16 +1,14 @@
 import 'package:flutter/cupertino.dart';
 
-class CupertinoDialog extends StatelessWidget {
+class CupertinoInfoDialog extends StatelessWidget {
   final String title;
   final String content;
   final String textOK;
-  final String textCancel;
 
-  const CupertinoDialog({
+  const CupertinoInfoDialog({
     required this.title,
     required this.content,
     required this.textOK,
-    required this.textCancel,
     Key? key,
   }) : super(key: key);
 
@@ -23,10 +21,6 @@ class CupertinoDialog extends StatelessWidget {
         CupertinoDialogAction(
           onPressed: () => Navigator.of(context).pop(true),
           child: Text(textOK),
-        ),
-        CupertinoDialogAction(
-          onPressed: () => Navigator.of(context).pop(false),
-          child: Text(textCancel),
         ),
       ],
     );
