@@ -64,4 +64,3 @@ class NativeConfirmDialog extends StatelessWidget {
     );
   }
 }
-
