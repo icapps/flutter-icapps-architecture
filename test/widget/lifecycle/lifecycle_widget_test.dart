@@ -3,9 +3,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:icapps_architecture/icapps_architecture.dart';
 
 void main() {
-  testWidgets("Given LifecycleWidget, App lifecycleStateChanges are propagated to the correct callback. ",
+  testWidgets(
+      "Given LifecycleWidget, App lifecycleStateChanges are propagated to the correct callback. ",
       (WidgetTester tester) async {
-
     var onResumeCalled = 0;
     var onPauseCalled = 0;
     var onDetachedCalled = 0;
