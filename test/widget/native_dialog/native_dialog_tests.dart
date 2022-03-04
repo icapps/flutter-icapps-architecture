@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:icapps_architecture/icapps_architecture.dart';
 
 void main() {
-  final labelOK = "OK";
+  final labelOk = "OK";
   final labelCancel = "Cancel";
 
   Widget confirmationDialogWidgetTree = MaterialApp(
@@ -16,7 +16,7 @@ void main() {
               context: context,
               title: "Title",
               content: "Content",
-              textOK: labelOK,
+              textOk: labelOk,
               textCancel: labelCancel,
             );
           },
@@ -35,7 +35,7 @@ void main() {
               context: context,
               title: "Title",
               content: "Content",
-              textOK: labelOK,
+              textOk: labelOk,
             );
           },
         );
@@ -51,7 +51,7 @@ void main() {
     await tester.tap(find.byType(IconButton));
     await tester.pump();
 
-    expect(find.text(labelOK), findsOneWidget);
+    expect(find.text(labelOk), findsOneWidget);
     expect(find.text(labelCancel), findsOneWidget);
   });
 
@@ -63,7 +63,7 @@ void main() {
     await tester.tap(find.byType(IconButton));
     await tester.pump();
 
-    expect(find.text(labelOK), findsOneWidget);
+    expect(find.text(labelOk), findsOneWidget);
     expect(find.text(labelCancel), findsNothing);
   });
 

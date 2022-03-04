@@ -49,11 +49,11 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   void _showNativePopup() async {
-    var showConfirmationDialog = await NativeDialog.showNativeDialog(
+    final showConfirmationDialog = await NativeDialog.showNativeDialog(
       context: context,
       title: "This is a confirmation dialog.",
       content: "Show information popup?",
-      textOK: "Yes",
+      textOk: "Yes",
       textCancel: "No",
     );
     if (showConfirmationDialog == true) {
@@ -61,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
         context: context,
         title: "This is an information dialog.",
         content: "You can only agree.",
-        textOK: "OK",
+        textOk: "OK",
       );
     }
   }
@@ -78,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
             IconButton(
               onPressed: _showNativePopup,
               icon: Icon(Icons.info),
-            )
+            ),
           ],
         ),
         body: Center(

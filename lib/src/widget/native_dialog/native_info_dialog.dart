@@ -3,18 +3,32 @@ import 'package:flutter/material.dart';
 import 'package:icapps_architecture/icapps_architecture.dart';
 import 'package:icapps_architecture/src/widget/native_dialog/cupertino_info_dialog.dart';
 
+/// Widget for displaying an info dialog above the current contents of the app.
+/// On Android devices, this will resolve to a Material dialog, on iOS this to a Cupertino dialog.
 class NativeInfoDialog extends StatelessWidget {
+  // Title of the confirmation dialog.
   final String title;
+
+  // Content text of the confirmation dialog.
   final String content;
-  final String textOK;
+
+  // Label on the confirmation button.
+  final String textOk;
 
   const NativeInfoDialog({
     required this.title,
     required this.content,
-    required this.textOK,
+    required this.textOk,
     Key? key,
   }) : super(key: key);
 
+  /// Displays an info dialog with confirmation button above the current contents of the app.
+  /// On Android devices, this will resolve to a Material dialog, on iOS this to a Cupertino dialog.
+  ///
+  /// The dialog has a title [title] and subtitle [content].
+  /// [textOk] is used for the confirmation button label.
+  ///
+  /// Returns a [Future] that resolves to [True] when the confirmation button was pressed.
   static Future<bool?> showNativeInfoDialog({
     required BuildContext context,
     required String title,
@@ -27,7 +41,7 @@ class NativeInfoDialog extends StatelessWidget {
         builder: (context) => NativeInfoDialog(
           title: title,
           content: content,
-          textOK: textOK,
+          textOk: textOK,
         ),
       );
     }
@@ -36,7 +50,7 @@ class NativeInfoDialog extends StatelessWidget {
       builder: (context) => CupertinoInfoDialog(
         title: title,
         content: content,
-        textOK: textOK,
+        textOk: textOK,
       ),
     );
   }
@@ -49,7 +63,7 @@ class NativeInfoDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(true),
-          child: Text(textOK),
+          child: Text(textOk),
         ),
       ],
     );
