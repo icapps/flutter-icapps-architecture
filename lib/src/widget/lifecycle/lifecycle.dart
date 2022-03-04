@@ -5,12 +5,16 @@ import 'package:flutter/material.dart';
 class LifecycleWidget extends StatefulWidget {
   /// The widget below this widget in the tree.
   final Widget child;
+
   /// [onResume] is triggered when the app goes to the [AppLifecycleState.resumed] state.
   final VoidCallback? onResume;
+
   /// [onPause] is triggered when the app goes to the [AppLifecycleState.paused] state.
   final VoidCallback? onPause;
+
   /// [onDetached] is triggered when the app goes to the [AppLifecycleState.detached] state.
   final VoidCallback? onDetached;
+
   /// [onInactive] is triggered when the app goes to the [AppLifecycleState.inactive] state.
   final VoidCallback? onInactive;
 
