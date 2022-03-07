@@ -35,7 +35,7 @@ class NativeConfirmDialog extends StatelessWidget {
   /// [textOk] is used for the confirmation button label.
   /// [textCancel] is used for the rejection button label.
   ///
-  /// Returns a [Future] that resolves to [True] when the confirmation button was pressed, [False] for rejection.
+  /// Returns a [Future] that resolves to [true] when the confirmation button was pressed, [false] for rejection, [null] when returning without pressing a button.
   static Future<bool?> showNativeConfirmDialog({
     required BuildContext context,
     required String title,

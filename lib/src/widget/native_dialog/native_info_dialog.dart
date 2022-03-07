@@ -28,7 +28,7 @@ class NativeInfoDialog extends StatelessWidget {
   /// The dialog has a title [title] and subtitle [content].
   /// [textOk] is used for the confirmation button label.
   ///
-  /// Returns a [Future] that resolves to [True] when the confirmation button was pressed.
+  /// Returns a [Future] that resolves to [true] when the confirmation button was pressed.
   static Future<bool?> showNativeInfoDialog({
     required BuildContext context,
     required String title,
