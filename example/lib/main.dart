@@ -49,7 +49,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   void _showNativePopup() async {
-    final showConfirmationDialog = await NativeDialog.showNativeDialog(
+    final showConfirmationDialog = await showNativeDialog(
       context: context,
       title: "This is a confirmation dialog.",
       content: "Show information popup?",
@@ -57,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
       textCancel: "No",
     );
     if (showConfirmationDialog == true) {
-      await NativeDialog.showNativeDialog(
+      await showNativeDialog(
         context: context,
         title: "This is an information dialog.",
         content: "You can only agree.",
