@@ -192,3 +192,4 @@ The `create` function will be used to create your viewmodel
 ### Widgets
 `ResponsiveWidget` (Will trigger the correct builder for your screensize)
 `TouchFeedBack` (Will implement inkwell on Android and a scale animation an iOS)
+`NativeDialog` Will show a dialog in the devices native style (Material/Cupertino)

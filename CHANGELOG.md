@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.6.5] - 2022-01-26
+### Added
+
+- Native info and confirmation dialogs
+
 ## [0.6.4] - 2022-02-22
 ### Fixed
 
