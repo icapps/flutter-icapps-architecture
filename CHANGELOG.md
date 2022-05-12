@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.7.0] - 2022-05-12
+- Flutter 3.0 & Dart 2.17 are now supported
+### Updated
+- Dependencies
+
 ## [0.6.4] - 2022-02-22
 ### Fixed
 
