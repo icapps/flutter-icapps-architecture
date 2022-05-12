@@ -2,6 +2,8 @@
 
 ## [0.7.0] - 2022-05-12
 - Flutter 3.0 & Dart 2.17 are now supported
+- Update dart support -> '>=2.17.0 <3.0.0'
+- Updated flutter support -> '>=3.0.0 <4.0.0'
 ### Updated
 - Dependencies
 
