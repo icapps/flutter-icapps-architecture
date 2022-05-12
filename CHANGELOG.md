@@ -6,6 +6,8 @@
 - Updated flutter support -> '>=3.0.0 <4.0.0'
 ### Updated
 - Dependencies
+### Added
+- LifecycleWidget
 
 ## [0.6.4] - 2022-02-22
 ### Fixed
