@@ -58,8 +58,8 @@ class RestorableViewModelHolder<T extends Restorable>
     this.init = _noOp,
     this.whenCreated = _noOp,
   }) {
-    _lastState = WidgetsBinding.instance?.lifecycleState;
-    WidgetsBinding.instance?.addObserver(this);
+    _lastState = WidgetsBinding.instance.lifecycleState;
+    WidgetsBinding.instance.addObserver(this);
   }
 
   late T _viewModel;
@@ -68,7 +68,7 @@ class RestorableViewModelHolder<T extends Restorable>
 
   @override
   void dispose() {
-    WidgetsBinding.instance?.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
