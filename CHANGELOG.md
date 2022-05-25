@@ -1,9 +1,18 @@
 # Changelog
 
-## [0.6.5] - 2022-03-10
+## [0.7.1] - 2022-05-25
 ### Added
 
 - Native info and confirmation dialogs
+
+## [0.7.0] - 2022-05-12
+- Flutter 3.0 & Dart 2.17 are now supported
+- Update dart support -> '>=2.17.0 <3.0.0'
+- Updated flutter support -> '>=3.0.0'
+### Updated
+- Dependencies
+### Added
+- LifecycleWidget
 
 ## [0.6.4] - 2022-02-22
 ### Fixed
