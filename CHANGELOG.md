@@ -1,8 +1,11 @@
 # Changelog
 
+## [0.7.2] - 2022-06-24
+### Updated
+- Dependencies
+
 ## [0.7.1] - 2022-05-25
 ### Added
-
 - Native info and confirmation dialogs
 
 ## [0.7.0] - 2022-05-12
