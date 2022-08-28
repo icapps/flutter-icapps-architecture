@@ -25,7 +25,7 @@ class TestPrefixHelper {
 }
 
 @GenerateMocks([], customMocks: [
-  MockSpec<Log>(returnNullOnMissingStub: true),
+  MockSpec<Log>(onMissingStub: OnMissingStub.returnDefault),
 ])
 void main() {
   group('Static logger', () {
@@ -181,7 +181,7 @@ void testWithLogger() {
       expect(
           messages[4].lines[4],
           matches(
-              '\\d+:\\d+:\\d+\\.\\d+\\s+#2   StackZoneSpecification._registerUnaryCallback.<anonymous closure> \\(package:stack_trace/src/stack_zone_specification.dart:125:47\\)'));
+              '\\d+:\\d+:\\d+\\.\\d+\\s+#2   StackZoneSpecification._registerUnaryCallback.<anonymous closure> \\(package:stack_trace/src/stack_zone_specification.dart:\\d+:\\d+\\)'));
       expect(messages[4].lines[5],
           matches('\\d+:\\d+:\\d+\\.\\d+\\s+#3   <asynchronous suspension>'));
       expect(messages[4].lines[0],

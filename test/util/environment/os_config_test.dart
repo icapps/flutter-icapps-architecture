@@ -14,20 +14,20 @@ import 'os_config_test.mocks.dart';
 void main() {
   group('OS config tests', () {
     test('OS config from io, unknown', () async {
-      await OsInfo.init();
-      expect(OsInfo.instance.isWeb, false);
-      expect(OsInfo.instance.androidSdk, 0);
-      expect(OsInfo.instance.iosVersion, 0);
-      expect(OsInfo.instance.isAndroid, false);
-      expect(OsInfo.instance.isIOS, false);
+      final osInfo = await OsInfo.get();
+      expect(osInfo.isWeb, false);
+      expect(osInfo.androidSdk, 0);
+      expect(osInfo.iosVersion, 0);
+      expect(osInfo.isAndroid, false);
+      expect(osInfo.isIOS, false);
     });
     test('OS config is at least', () async {
-      await OsInfo.init();
-      expect(OsInfo.instance.isAtLeastAndroid10, false);
-      expect(OsInfo.instance.isAtLeastPie, false);
-      expect(OsInfo.instance.isIOS13OrAbove, false);
-      expect(OsInfo.instance.isAndroid, false);
-      expect(OsInfo.instance.isIOS, false);
+      final osInfo = await OsInfo.get();
+      expect(osInfo.isAtLeastAndroid10, false);
+      expect(osInfo.isAtLeastPie, false);
+      expect(osInfo.isIOS13OrAbove, false);
+      expect(osInfo.isAndroid, false);
+      expect(osInfo.isIOS, false);
     });
     test('OS config from stub', () async {
       final info = await stub.initOsConfig();
@@ -44,7 +44,6 @@ void main() {
             board: 'surf',
             supportedAbis: ['x256-powermaxx'],
             systemFeatures: ['fishingrod'],
-            androidId: '4 (chosen by dice roll)',
             display: 'iMAX',
             device: 'yes',
             model: 'hot',

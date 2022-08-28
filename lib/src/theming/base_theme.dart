@@ -6,16 +6,15 @@ import 'package:icapps_architecture/src/util/environment/os_info.dart';
 @immutable
 class BaseThemeData {
   /// Gets the base theme to use to build new themes on
-  static ThemeData get baseTheme {
-    return ThemeData(
-      pageTransitionsTheme: PageTransitionsTheme(
-        builders: {
-          TargetPlatform.iOS: const CupertinoPageTransitionsBuilder(),
-          TargetPlatform.android:
-              getCorrectPageTransitionBuilder(OsInfo.instance),
-        },
-      ),
-    );
+  static Future<ThemeData> get baseTheme {
+    return OsInfo.get().then((osInfo) => ThemeData(
+          pageTransitionsTheme: PageTransitionsTheme(
+            builders: {
+              TargetPlatform.iOS: const CupertinoPageTransitionsBuilder(),
+              TargetPlatform.android: getCorrectPageTransitionBuilder(osInfo),
+            },
+          ),
+        ));
   }
 
   /// Builds the correct page transition based on the current OS

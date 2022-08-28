@@ -14,7 +14,7 @@ class OsInfo {
 
   /// Indicates that this is a non-native application
   final bool isWeb;
-  static OsInfo? _instance;
+  static Future<OsInfo>? _instance;
 
   /// Returns true if the app is running natively on android
   bool get isAndroid => androidSdk > 0;
@@ -32,18 +32,19 @@ class OsInfo {
   bool get isIOS13OrAbove => iosVersion >= 13;
 
   /// Initializes the os info
-  static Future<void> init() async {
+  static Future<OsInfo> get() {
     if (_instance == null) {
-      final config = await initOsConfig();
-      _instance ??= OsInfo(config.androidSdk, config.iosVersion, config.isWeb);
+      _instance ??= initOsConfig().then((config) => OsInfo(
+            config.androidSdk,
+            config.iosVersion,
+            config.isWeb,
+          ));
     }
+    return _instance!;
   }
 
   @visibleForTesting
   OsInfo(this.androidSdk, this.iosVersion, this.isWeb);
-
-  /// Returns the [OsInfo] instance. Call [init] first!
-  static OsInfo get instance => _instance!;
 }
 
 final bool isDeviceAndroid = platformIsAndroid;

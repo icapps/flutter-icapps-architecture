@@ -1,11 +1,12 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:icapps_architecture/icapps_architecture.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'preferences_storage_test.mocks.dart';
 import '../../test_util.dart';
+import 'preferences_storage_test.mocks.dart';
 
 @GenerateMocks([SharedPreferences])
 void main() {
@@ -14,7 +15,7 @@ void main() {
 
   setUp(() {
     sharedPreferences = MockSharedPreferences();
-    sut = SharedPreferenceStorage(sharedPreferences);
+    sut = SharedPreferenceStorage(SynchronousFuture(sharedPreferences));
 
     when(sharedPreferences.setString(any, any))
         .thenAnswer((_) => Future.value(true));
@@ -70,9 +71,9 @@ void main() {
       verifyNoMoreInteractions(sharedPreferences);
     });
 
-    test('SharedPrefsStorage should read bool', () {
+    test('SharedPrefsStorage should read bool', () async {
       when(sharedPreferences.getBool('Key')).thenAnswer((_) => true);
-      final result = sut.getBoolean('Key');
+      final result = await sut.getBoolean('Key');
       expect(result, true);
       verify(sharedPreferences.getBool('Key')).calledOnce();
       verifyNoMoreInteractions(sharedPreferences);
@@ -86,9 +87,9 @@ void main() {
       verifyNoMoreInteractions(sharedPreferences);
     });
 
-    test('SharedPrefsStorage should read double', () {
+    test('SharedPrefsStorage should read double', () async {
       when(sharedPreferences.getDouble('Key')).thenAnswer((_) => 1.23435);
-      final result = sut.getDouble('Key');
+      final result = await sut.getDouble('Key');
       expect(result, 1.23435);
       verify(sharedPreferences.getDouble('Key')).calledOnce();
       verifyNoMoreInteractions(sharedPreferences);
@@ -102,9 +103,9 @@ void main() {
       verifyNoMoreInteractions(sharedPreferences);
     });
 
-    test('SharedPrefsStorage should read double', () {
+    test('SharedPrefsStorage should read double', () async {
       when(sharedPreferences.getInt('Key')).thenAnswer((_) => 21345);
-      final result = sut.getInt('Key');
+      final result = await sut.getInt('Key');
       expect(result, 21345);
       verify(sharedPreferences.getInt('Key')).calledOnce();
       verifyNoMoreInteractions(sharedPreferences);

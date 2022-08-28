@@ -4,7 +4,7 @@ homepage: https://github.com/icapps/flutter-icapps-architecture
 repository: https://github.com/icapps/flutter-icapps-architecture
 issue_tracker: https://github.com/icapps/flutter-icapps-architecture/issues
 
-version: 0.7.2
+version: 0.8.0
 
 environment:
   sdk: '>=2.17.0 <3.0.0'
@@ -13,7 +13,7 @@ environment:
 dependencies:
   computer: ^3.2.1
   connectivity_plus: ^2.3.5
-  device_info_plus: ^4.0.0
+  device_info_plus: ^4.1.2
   dio: ^4.0.6
   flutter:
     sdk: flutter
@@ -28,7 +28,7 @@ dev_dependencies:
     sdk: flutter
   mockito: ^5.2.0
   connectivity_plus_platform_interface: ^1.2.1
-  device_info_plus_platform_interface: ^2.3.0+1
+  device_info_plus_platform_interface: ^3.0.0
   flutter_lints: ^2.0.1
 
 flutter:

@@ -4,12 +4,12 @@ import 'package:icapps_architecture/icapps_architecture.dart';
 
 void main() {
   setUp(() async {
-    await OsInfo.init();
+    await OsInfo.get();
   });
 
   group('Base theme data test', () {
-    test('Test base theme page builders', () {
-      final theme = BaseThemeData.baseTheme;
+    test('Test base theme page builders', () async {
+      final theme = await BaseThemeData.baseTheme;
       expect(theme.pageTransitionsTheme.builders[TargetPlatform.android],
           isInstanceOf<ZoomPageTransitionsBuilder>());
       expect(theme.pageTransitionsTheme.builders[TargetPlatform.iOS],

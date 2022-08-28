@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.0] - 2022-08-29
+### Breaking
+
+- OsInfo.instance has been removed
+- OsInfo.init() has been replaced by OsInfo.get() which will return a future the instance
+- PreferencesStorage now takes a future to the platform preferences and all get methods now return a future instead of a value
+
 ## [0.7.2] - 2022-06-24
 ### Updated
 - Dependencies
@@ -31,6 +38,13 @@
 ### Added
 
 - Docs in the README.md
+
+## [0.7.0] - 2022-09-29
+### Breaking
+
+- OsInfo.instance has been removed
+- OsInfo.init() has been renamed to OsInfo.get() and will now return a future to the instance
+- Cleam
 
 ## [0.6.1] - 2021-12-14
 ### Added
