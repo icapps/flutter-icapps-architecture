@@ -39,13 +39,6 @@
 
 - Docs in the README.md
 
-## [0.7.0] - 2022-09-29
-### Breaking
-
-- OsInfo.instance has been removed
-- OsInfo.init() has been renamed to OsInfo.get() and will now return a future to the instance
-- Cleam
-
 ## [0.6.1] - 2021-12-14
 ### Added
 
