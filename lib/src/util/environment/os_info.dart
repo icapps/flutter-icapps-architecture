@@ -33,13 +33,11 @@ class OsInfo {
 
   /// Initializes the os info
   static Future<OsInfo> get() {
-    if (_instance == null) {
-      _instance ??= initOsConfig().then((config) => OsInfo(
-            config.androidSdk,
-            config.iosVersion,
-            config.isWeb,
-          ));
-    }
+    _instance ??= initOsConfig().then((config) => OsInfo(
+          config.androidSdk,
+          config.iosVersion,
+          config.isWeb,
+        ));
     return _instance!;
   }
 
