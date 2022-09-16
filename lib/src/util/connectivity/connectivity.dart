@@ -11,9 +11,7 @@ class ConnectivityHelper {
 
   /// Returns true if the device is connected to an IP network
   Future<bool> hasConnection() async {
-    return await (_connectivityProvider?.call() ?? Connectivity())
-            .checkConnectivity() !=
-        ConnectivityResult.none;
+    return await getConnectivityResult() != ConnectivityResult.none;
   }
 
   /// Returns a stream that monitors the connectivity state of the device
@@ -21,5 +19,11 @@ class ConnectivityHelper {
     return (_connectivityProvider?.call() ?? Connectivity())
         .onConnectivityChanged
         .map((event) => event != ConnectivityResult.none);
+  }
+
+  /// Returns the method used to connect e.g: Bluetooth, WiFi, Ethernet, Mobile or None
+  Future<ConnectivityResult> getConnectivityResult() async {
+    return await (_connectivityProvider?.call() ?? Connectivity())
+        .checkConnectivity();
   }
 }

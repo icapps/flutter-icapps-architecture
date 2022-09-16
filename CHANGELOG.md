@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.7.3] - 2022-09-16
+
+- Added getConnectivityResult to the ConnectivityHelper class
+
 ## [0.7.2] - 2022-06-24
 ### Updated
 - Dependencies

@@ -25,7 +25,7 @@ class TestPrefixHelper {
 }
 
 @GenerateMocks([], customMocks: [
-  MockSpec<Log>(returnNullOnMissingStub: true),
+  MockSpec<Log>(onMissingStub: OnMissingStub.returnDefault),
 ])
 void main() {
   group('Static logger', () {
