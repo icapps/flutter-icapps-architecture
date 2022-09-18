@@ -184,21 +184,18 @@ class OurPrettyPrinter extends LogPrinter {
     if (error != null) {
       var errorColor = _getErrorColor(level);
       for (var line in error.split('\n')) {
-        buffer.add(
-          (time == null ? '' : color(timeInfix)) +
-              errorColor.resetForeground +
-              errorColor(line) +
-              errorColor.resetBackground,
-        );
+        buffer.add((time == null ? '' : color(timeInfix)) +
+            errorColor.resetForeground +
+            errorColor(line) +
+            errorColor.resetBackground);
       }
     }
 
     if (stacktrace != null) {
       for (var line in stacktrace.split('\n')) {
-        buffer.add('$color $timeInfix$line');
+        buffer.add(color('$timeInfix$line'));
       }
     }
-
     return buffer;
   }
 }
