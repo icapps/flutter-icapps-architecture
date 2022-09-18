@@ -177,7 +177,7 @@ void testWithLogger() {
           matches(
               '\\d+:\\d+:\\d+\\.\\d+\\s+#0   Declarer.test.<anonymous closure>.<anonymous closure> \\(package:test_api/src/backend/declarer.dart:\\d+:\\d+\\)'));
       expect(messages[4].lines[3],
-          matches(' \\d+:\\d+:\\d+\\.\\d+\\s+#1   <asynchronous suspension>'));
+          matches('\\d+:\\d+:\\d+\\.\\d+\\s+#1   <asynchronous suspension>'));
       expect(
           messages[4].lines[4],
           matches(
@@ -207,7 +207,7 @@ void testWithLogger() {
       expect(
           messages[0].lines[1],
           matches(
-              ' #0   OurPrettyPrinter.log \\(package:icapps_architecture/src/util/logging/impl/LoggerPrinter.dart:\\d+:\\d+\\)'));
+              '#0   OurPrettyPrinter.log \\(package:icapps_architecture/src/util/logging/impl/LoggerPrinter.dart:\\d+:\\d+\\)'));
       expect(messages[0].lines[0], ' 🐛 Debug message');
     });
     test('Test logger methods default json', () {

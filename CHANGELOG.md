@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.7.4] - 2022-09-18
+
+- Fix terminal colors not resetting after printing a stack trace (this could break hot restart/reload)
+
 ## [0.7.3] - 2022-09-16
 
 - Added getConnectivityResult to the ConnectivityHelper class
