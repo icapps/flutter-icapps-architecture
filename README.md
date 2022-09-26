@@ -185,9 +185,8 @@ Added the AfterLayout implementation in our plugin
 - `BaseProviderWidget` is a widget that can be used to easily generate the viewmodels for your screen.
 The `create` function will be used to create your viewmodel
 `themeLookup` will be used to get your theme
-`localizationLookup` will be used to get your localization implementation
 
-- `BaseThemeProviderWidget` In some cases you need your theme or localizations you can use this in combination with the right builder function to get just that.
+- `BaseThemeProviderWidget` In some cases you need your theme you can use this in combination with the right builder function to get just that.
 
 ### Widgets
 `ResponsiveWidget` (Will trigger the correct builder for your screensize)
