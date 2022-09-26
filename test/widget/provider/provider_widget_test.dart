@@ -8,23 +8,19 @@ class TestViewModel with ChangeNotifierEx {}
 
 class Theme {}
 
-class Locale {}
-
 class ProviderWidget<T extends ChangeNotifier>
-    extends BaseProviderWidget<T, Theme, Locale> {
+    extends BaseProviderWidget<T, Theme> {
   ProviderWidget({
     required T Function() create,
     Widget? child,
-    Widget Function(BuildContext context, Theme theme, Locale localization)?
-        childBuilder,
-    Widget Function(BuildContext context, T viewModel, Theme theme,
-            Locale localization)?
+    Widget Function(BuildContext context, Theme theme)? childBuilder,
+    Widget Function(BuildContext context, T viewModel, Theme theme)?
         childBuilderWithViewModel,
     Widget? consumerChild,
     Widget Function(BuildContext context, T viewModel, Widget? child)? consumer,
-    Widget Function(BuildContext context, T viewModel, Widget? child,
-            Theme theme, Locale localization)?
-        consumerWithThemeAndLocalization,
+    Widget Function(
+            BuildContext context, T viewModel, Widget? child, Theme theme)?
+        consumerWithTheme,
     bool lazy = true,
   }) : super(
           create: create,
@@ -33,23 +29,21 @@ class ProviderWidget<T extends ChangeNotifier>
           childBuilderWithViewModel: childBuilderWithViewModel,
           consumerChild: consumerChild,
           consumer: consumer,
-          consumerWithThemeAndLocalization: consumerWithThemeAndLocalization,
+          consumerWithTheme: consumerWithTheme,
           lazy: lazy,
         );
 
   ProviderWidget.value({
     required T value,
     Widget? child,
-    Widget Function(BuildContext context, Theme theme, Locale localization)?
-        childBuilder,
-    Widget Function(BuildContext context, T viewModel, Theme theme,
-            Locale localization)?
+    Widget Function(BuildContext context, Theme theme)? childBuilder,
+    Widget Function(BuildContext context, T viewModel, Theme theme)?
         childBuilderWithViewModel,
     Widget? consumerChild,
     Widget Function(BuildContext context, T viewModel, Widget? child)? consumer,
-    Widget Function(BuildContext context, T viewModel, Widget? child,
-            Theme theme, Locale localization)?
-        consumerWithThemeAndLocalization,
+    Widget Function(
+            BuildContext context, T viewModel, Widget? child, Theme theme)?
+        consumerWithTheme,
   }) : super.value(
           value: value,
           child: child,
@@ -57,17 +51,14 @@ class ProviderWidget<T extends ChangeNotifier>
           childBuilderWithViewModel: childBuilderWithViewModel,
           consumerChild: consumerChild,
           consumer: consumer,
-          consumerWithThemeAndLocalization: consumerWithThemeAndLocalization,
+          consumerWithTheme: consumerWithTheme,
         );
 }
-
-LocaleT getLocale<LocaleT>(BuildContext _) => Locale() as LocaleT;
 
 ThemeT getTheme<ThemeT>(BuildContext _) => Theme() as ThemeT;
 
 void main() {
   setUp(() {
-    localizationLookup = getLocale;
     themeLookup = getTheme;
   });
 
@@ -93,7 +84,7 @@ void main() {
     testWidgets('ProviderWidget should show childbuilder with viewmodel',
         (tester) async {
       final sut = ProviderWidget<TestViewModel>(
-        childBuilderWithViewModel: (context, item, _, __) =>
+        childBuilderWithViewModel: (context, item, _) =>
             const Material(child: Text('Test')),
         create: () => TestViewModel(),
       );
@@ -105,7 +96,7 @@ void main() {
     testWidgets('ProviderWidget.value should show childbuilder with viewmodel',
         (tester) async {
       final sut = ProviderWidget<TestViewModel>.value(
-        childBuilderWithViewModel: (context, item, _, __) =>
+        childBuilderWithViewModel: (context, item, _) =>
             const Material(child: Text('Test')),
         value: TestViewModel(),
       );
@@ -117,7 +108,7 @@ void main() {
 
     testWidgets('ProviderWidget.value create should throw', (tester) async {
       final sut = ProviderWidget<TestViewModel>.value(
-        childBuilderWithViewModel: (context, item, _, __) =>
+        childBuilderWithViewModel: (context, item, _) =>
             const Material(child: Text('Test')),
         value: TestViewModel(),
       );
@@ -138,17 +129,17 @@ void main() {
     });
 
     testWidgets(
-        'ProviderWidget should show childbuilder with consumerWithThemeAndLocalization',
+        'ProviderWidget should show childbuilder with consumerWithThemeAnd',
         (tester) async {
       final sut = ProviderWidget<TestViewModel>(
-        consumerWithThemeAndLocalization: (context, viewModel, widget, _, __) =>
+        consumerWithTheme: (context, viewModel, widget, _) =>
             const Material(child: Text('Hello')),
         create: () => TestViewModel(),
       );
 
       await TestUtil.loadWidgetWithText(tester, sut);
       await TestUtil.takeScreenshot(
-          tester, 'provider_widget_consumer_with_theme_and_localization');
+          tester, 'provider_widget_consumer_with_theme');
     });
 
     testWidgets(
@@ -177,7 +168,7 @@ void main() {
     testWidgets('ProviderWidget should show childbuilder with childBuilder',
         (tester) async {
       final sut = ProviderWidget<TestViewModel>(
-        childBuilder: (context, viewModel, locale) => Material(
+        childBuilder: (context, viewModel) => Material(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,

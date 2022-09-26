@@ -1,24 +1,20 @@
 import 'package:example/theme/theme.dart';
-import 'package:example/util/locale/localization.dart';
 import 'package:flutter/widgets.dart';
 import 'package:icapps_architecture/icapps_architecture.dart';
 
 class ProviderWidget<T extends ChangeNotifier>
-    extends BaseProviderWidget<T, AppTheme, Localization> {
+    extends BaseProviderWidget<T, AppTheme> {
   ProviderWidget({
     required T Function() create,
     Widget? child,
-    Widget Function(
-            BuildContext context, AppTheme theme, Localization localization)?
-        childBuilder,
-    Widget Function(BuildContext context, T viewModel, AppTheme theme,
-            Localization localization)?
+    Widget Function(BuildContext context, AppTheme theme)? childBuilder,
+    Widget Function(BuildContext context, T viewModel, AppTheme theme)?
         childBuilderWithViewModel,
     Widget? consumerChild,
     Widget Function(BuildContext context, T viewModel, Widget? child)? consumer,
-    Widget Function(BuildContext context, T viewModel, Widget? child,
-            AppTheme theme, Localization localization)?
-        consumerWithThemeAndLocalization,
+    Widget Function(
+            BuildContext context, T viewModel, Widget? child, AppTheme theme)?
+        consumerWithTheme,
     bool lazy = true,
   }) : super(
           create: create,
@@ -27,7 +23,7 @@ class ProviderWidget<T extends ChangeNotifier>
           childBuilderWithViewModel: childBuilderWithViewModel,
           consumerChild: consumerChild,
           consumer: consumer,
-          consumerWithThemeAndLocalization: consumerWithThemeAndLocalization,
+          consumerWithTheme: consumerWithTheme,
           lazy: lazy,
         );
 }

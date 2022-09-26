@@ -27,7 +27,7 @@ import 'package:icapps_architecture/src/util/restorable/restorable.dart';
 ///      animation: _viewModelHolder,
 ///      builder: (context, _) => ProviderWidget<ContainedViewModel>.value(
 ///        value: _viewModelHolder.viewModel,
-///        childBuilderWithViewModel: (context, viewModel, theme, localization) => ...,
+///        childBuilderWithViewModel: (context, viewModel, theme) => ...,
 ///      ),
 ///   );
 /// }
