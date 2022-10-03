@@ -1,6 +1,6 @@
 # Changelog
 ## [0.7.5] - 2022-09-26
-
+### Breaking
 - removed localization from BaseProviderWidget seeing as localization as of locale_gen [8.0.0](https://github.com/vanlooverenkoen/locale_gen/releases/tag/v8.0.0) no longer needs context to be accessed.
 
 ## [0.7.4] - 2022-09-18
