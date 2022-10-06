@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.7.5] - 2022-10-06
+
+- Updated travis to use linux instead of macOS
+
 ## [0.7.4] - 2022-09-18
 
 - Fix terminal colors not resetting after printing a stack trace (this could break hot restart/reload)
