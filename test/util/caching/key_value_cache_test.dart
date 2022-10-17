@@ -58,7 +58,7 @@ void main() {
       expect(await cache.get(1), 'Value: 1 1');
       expect(await cache.get(0), 'Value: 0 2');
     });
-    test('Calling clear should remove all valuev', () async {
+    test('Calling clear should remove all values', () async {
       var counter = 0;
       final cache = KeyValueCache<int, String>(
           provider: (key) async => 'Value: $key ${counter++}');
@@ -69,6 +69,17 @@ void main() {
       cache.clear();
       expect(await cache.get(1), 'Value: 1 2');
       expect(await cache.get(0), 'Value: 0 3');
+    });
+    test('When a value times out, it should be fetched again', () async {
+      var counter = 0;
+      final cache = KeyValueCache<int, String>(
+          maxAge: const Duration(seconds: 0),
+          provider: (key) async => 'Value: $key ${counter++}');
+
+      expect(await cache.get(0), 'Value: 0 0');
+      await Future.delayed(const Duration(milliseconds: 1));
+      expect(await cache[0], 'Value: 0 1');
+      expect(await cache[1], 'Value: 1 2');
     });
   });
 }

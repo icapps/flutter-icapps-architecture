@@ -33,12 +33,13 @@ A NetworkError is used simplify the DioErrors. A NetworkError is also a Localize
 - `Tuple2<List<T>, List<T>> split(bool Function(T) on)` (Splits the elements according to [on]. Items for which [on] is true will be stored in [Tuple2.item1], other items in [Tuple2.item2])
 - `Iterable<R> mapIndexed<R>(R Function(int, T) mapper)` (Same as [Iterable.map] except that the [mapper] function also receives the index of the item being mapped)
 - `void forEachIndexed(Function(int, T) f)` (Same as [Iterable.foreach] except that the [f] function also receives the index of the item)
+- `Iterable<K> mapNotNull<K>(K? Function(T) f)` (Same as [Iterable.map] except that the [f] function can return `null` and the resulting iterable will not contain `null` values)
 
 ##### Iterable<Iterable<T>>
 - `List<T> flatten()` (Flattens the list of lists to a single flat list of items)
 
 #### List<T>
-- `void replaceAll(List<T> newData)` (Replaces all data in the list with [newData])
+- `void replaceAll(Iterable<T> newData)` (Replaces all data in the list with [newData])
 - `void replaceWhere(bool Function(T) where, T newData, {int? count})` (Replaces all items that matches where with [newData])
 - `void sortBy<R>(Comparable<R>? by(T item), {bool ascending = true})` (Sorts the list based on the comparable returned by [by]. By default the sorting is [ascending])
 - `void sortBy2<R, V>( Comparable<R>? by(T item), Comparable<V>? by2(T item), {bool ascending = true})` (Sorts the list by comparing first comparing using [by] and if the items are equal, by comparing them using [by2]. By default the sorting is [ascending])
@@ -118,10 +119,10 @@ Waits for n futures and returns a future containing a [TupleN] with the results 
 
 ### Logger
 Send logs, via the `staticLogger` or `logger`
-You can specific when you you want to actualy print someting using the `Level`
-- `void debug(String message)`
-- `void info(String message)`
-- `void warning(String message)`
+You can specific when you you want to actually print something using the `Level`
+- `void debug(String message, {dynamic error, StackTrace? trace})`
+- `void info(String message, {dynamic error, StackTrace? trace})`
+- `void warning(String message, {dynamic error, StackTrace? trace})`
 - `void error(String message, {dynamic error, StackTrace? trace})`
 
 ### SharedPreferenceStorage
@@ -194,3 +195,7 @@ The `create` function will be used to create your viewmodel
 `TouchFeedBack` (Will implement inkwell on Android and a scale animation an iOS)
 `NativeDialog` Will show a dialog in the devices native style (Material/Cupertino)
 `LifecycleWidget` is a widget that accepts callback functions that are triggered on various lifecycle events.
+
+### Caching
+`SingleValueCache<T>` can be used to cache single values
+`KeyValueCache<T>` can be sed to cache values by key
