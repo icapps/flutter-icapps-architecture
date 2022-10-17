@@ -1,4 +1,5 @@
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:device_info_plus_platform_interface/model/android_device_info.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:icapps_architecture/icapps_architecture.dart';
 import 'package:icapps_architecture/src/util/environment/impl/os_info_io.dart'
@@ -10,7 +11,12 @@ import 'package:mockito/mockito.dart';
 
 import 'os_config_test.mocks.dart';
 
-@GenerateMocks([DeviceInfoPlugin, AndroidBuildVersion, IosUtsname])
+@GenerateMocks([
+  DeviceInfoPlugin,
+  AndroidBuildVersion,
+  IosUtsname,
+  AndroidDisplayMetrics,
+])
 void main() {
   group('OS config tests', () {
     test('OS config from io, unknown', () async {
@@ -40,28 +46,27 @@ void main() {
       final version = MockAndroidBuildVersion();
       when(version.sdkInt).thenReturn(10);
       when(mock.androidInfo).thenAnswer((_) => Future.value(AndroidDeviceInfo(
-            isPhysicalDevice: true,
-            board: 'surf',
-            supportedAbis: ['x256-powermaxx'],
-            systemFeatures: ['fishingrod'],
-            androidId: '4 (chosen by dice roll)',
-            display: 'iMAX',
-            device: 'yes',
-            model: 'hot',
-            bootloader: 'not loaded',
-            hardware: 'soft',
-            supported64BitAbis: [],
-            product: 'placement',
-            supported32BitAbis: [],
-            tags: 'dog',
-            brand: 'no',
-            manufacturer: 'your m*m',
-            id: '8 (twice the androidId)',
-            type: 'space station',
-            host: 'Joan Calamazzo',
-            fingerprint: '*boop*',
-            version: version,
-          )));
+          isPhysicalDevice: true,
+          board: 'surf',
+          supportedAbis: ['x256-powermaxx'],
+          systemFeatures: ['fishingrod'],
+          display: 'iMAX',
+          device: 'yes',
+          model: 'hot',
+          bootloader: 'not loaded',
+          hardware: 'soft',
+          supported64BitAbis: [],
+          product: 'placement',
+          supported32BitAbis: [],
+          tags: 'dog',
+          brand: 'no',
+          manufacturer: 'your m*m',
+          id: '8 (twice the androidId)',
+          type: 'space station',
+          host: 'Joan Calamazzo',
+          fingerprint: '*boop*',
+          version: version,
+          displayMetrics: MockAndroidDisplayMetrics())));
       final info = await io.initOsConfig(
         deviceInfoPluginProvider: () => mock,
         isAndroidOverride: true,
