@@ -1,4 +1,16 @@
 # Changelog
+## [0.8.0] - 2022-10-17
+### Breaking
+- Removed native dialogs
+### Potentially breaking
+- ChangeNotifierEx is now a class instead of pure mixin
+### Added
+- Iterable.mapNotNull
+- SingleValueCache
+- KeyValueCache
+### Changed
+- log debug, info, warn, verbose now also take errors and stack traces
+- List.replaceAll now takes an Iterable argument
 
 ## [0.7.4] - 2022-09-18
 
