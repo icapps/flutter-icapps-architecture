@@ -11,6 +11,7 @@ export 'src/interceptor/combining_smart_interceptor.dart';
 export 'src/provider/change_notifier_ex.dart';
 export 'src/route/fade_in_route.dart';
 export 'src/theming/base_theme.dart';
+export 'src/util/caching/key_value_cache.dart';
 export 'src/util/caching/single_value_cache.dart';
 export 'src/util/connectivity/connectivity.dart';
 export 'src/util/environment/environment_util.dart';
