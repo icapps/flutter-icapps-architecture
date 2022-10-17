@@ -77,9 +77,20 @@ extension IterableExtension<T> on Iterable<T> {
     var index = 0;
     return forEach((element) => f(index++, element));
   }
+
+  /// Maps every item in this iterable using [mapper] and
+  /// removes any null values emitted by [mapper]
+  Iterable<K> mapNotNull<K>(K? Function(T) mapper) sync* {
+    for (final element in this) {
+      final mapped = mapper(element);
+      if (mapped != null) {
+        yield mapped;
+      }
+    }
+  }
 }
 
-/// Extension on lists
+/// Extension on iterable of iterables
 extension ListIterableExtension<T> on Iterable<Iterable<T>> {
   /// Flattens the list of lists to a single flat list of items
   List<T> flatten() {

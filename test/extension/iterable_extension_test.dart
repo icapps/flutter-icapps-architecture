@@ -72,5 +72,10 @@ void main() {
       ];
       expect(list.flatten(), ['1', '2', '3', '4']);
     });
+    test('Test map not null', () {
+      final items = List.generate(10, (index) => index);
+      final result = items.mapNotNull((p0) => p0 % 2 == 0 ? p0 : null).toList();
+      expect(result, [0, 2, 4, 6, 8]);
+    });
   });
 }

@@ -1,6 +1,6 @@
 extension ListExtensions<T> on List<T> {
   /// Replaces all data in the list with [newData]
-  void replaceAll(List<T> newData) {
+  void replaceAll(Iterable<T> newData) {
     clear();
     addAll(newData);
   }

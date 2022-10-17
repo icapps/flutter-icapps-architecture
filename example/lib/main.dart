@@ -48,24 +48,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  void _showNativePopup() async {
-    final showConfirmationDialog = await showNativeDialog(
-      context: context,
-      title: "This is a confirmation dialog.",
-      content: "Show information popup?",
-      textOk: "Yes",
-      textCancel: "No",
-    );
-    if (showConfirmationDialog == true) {
-      await showNativeDialog(
-        context: context,
-        title: "This is an information dialog.",
-        content: "You can only agree.",
-        textOk: "OK",
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return ProviderWidget<CounterViewModel>(
@@ -74,12 +56,6 @@ class _MyHomePageState extends State<MyHomePage> {
           Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
-          actions: [
-            IconButton(
-              onPressed: _showNativePopup,
-              icon: Icon(Icons.info),
-            ),
-          ],
         ),
         body: Center(
           child: Column(
