@@ -9,7 +9,7 @@ import 'package:mockito/mockito.dart';
 
 import 'change_notifier_ex_test.mocks.dart';
 
-class TestableChangeNotifier with ChangeNotifierEx {
+class TestableChangeNotifier extends ChangeNotifierEx {
   @visibleForTesting
   bool get isDisposed => disposed;
 
