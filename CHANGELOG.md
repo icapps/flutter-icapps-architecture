@@ -1,4 +1,8 @@
 # Changelog
+## [0.8.1] - 2023-01-09
+### Added
+- Semantics to TouchFeedBack
+
 ## [0.8.0] - 2022-10-17
 ### Breaking
 - Removed native dialogs

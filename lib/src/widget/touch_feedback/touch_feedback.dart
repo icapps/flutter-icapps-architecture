@@ -8,6 +8,7 @@ import 'package:icapps_architecture/icapps_architecture.dart';
 class TouchFeedBack extends StatelessWidget {
   final Widget child;
   final VoidCallback? onClick;
+  final String? label;
   final Color? androidSplashColor;
   final Color color;
   final BorderRadius? borderRadius;
@@ -18,6 +19,7 @@ class TouchFeedBack extends StatelessWidget {
   const TouchFeedBack({
     required this.child,
     required this.onClick,
+    this.label,
     this.borderRadius,
     this.androidSplashColor,
     this.color = Colors.transparent,
@@ -35,6 +37,7 @@ class TouchFeedBack extends StatelessWidget {
     return TouchFeedBackIOS(
       child: child,
       onClick: onClick,
+      label: label,
       color: color,
       borderRadius: borderRadius,
       elevation: elevation,
@@ -44,21 +47,25 @@ class TouchFeedBack extends StatelessWidget {
   }
 
   Widget _buildAndroid() {
-    return Material(
-      borderRadius: borderRadius,
-      color: color,
-      elevation: elevation,
-      shadowColor: shadowColor,
-      shape: shapeBorder,
-      child: onClick == null
-          ? child
-          : InkWell(
-              customBorder: shapeBorder,
-              borderRadius: borderRadius,
-              splashColor: androidSplashColor,
-              onTap: onClick,
-              child: child,
-            ),
+    return Semantics(
+      label: label,
+      button: true,
+      child: Material(
+        borderRadius: borderRadius,
+        color: color,
+        elevation: elevation,
+        shadowColor: shadowColor,
+        shape: shapeBorder,
+        child: onClick == null
+            ? child
+            : InkWell(
+                customBorder: shapeBorder,
+                borderRadius: borderRadius,
+                splashColor: androidSplashColor,
+                onTap: onClick,
+                child: child,
+              ),
+      ),
     );
   }
 }
@@ -66,6 +73,7 @@ class TouchFeedBack extends StatelessWidget {
 class TouchFeedBackIOS extends StatefulWidget {
   final Widget child;
   final VoidCallback? onClick;
+  final String? label;
   final Color color;
   final BorderRadius? borderRadius;
   final ShapeBorder? shapeBorder;
@@ -75,6 +83,7 @@ class TouchFeedBackIOS extends StatefulWidget {
   const TouchFeedBackIOS({
     required this.child,
     required this.onClick,
+    this.label,
     this.borderRadius,
     this.color = Colors.transparent,
     this.shapeBorder,
@@ -104,21 +113,25 @@ class _TouchFeedBackIOSState extends State<TouchFeedBackIOS> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      excludeFromSemantics: widget.onClick == null,
-      onTapDown: _onTapDown,
-      onTap: widget.onClick,
-      onTapCancel: () => _setTouched(false),
-      onTapUp: (details) => _setTouched(false),
-      child: Transform.scale(
-        scale: touched ? touchScale : defaultScale,
-        child: Material(
-          borderRadius: widget.borderRadius,
-          color: widget.color,
-          child: widget.child,
-          shape: widget.shapeBorder,
-          elevation: widget.elevation,
-          shadowColor: widget.shadowColor,
+    return Semantics(
+      label: widget.label,
+      button: true,
+      child: GestureDetector(
+        excludeFromSemantics: widget.onClick == null,
+        onTapDown: _onTapDown,
+        onTap: widget.onClick,
+        onTapCancel: () => _setTouched(false),
+        onTapUp: (details) => _setTouched(false),
+        child: Transform.scale(
+          scale: touched ? touchScale : defaultScale,
+          child: Material(
+            borderRadius: widget.borderRadius,
+            color: widget.color,
+            child: widget.child,
+            shape: widget.shapeBorder,
+            elevation: widget.elevation,
+            shadowColor: widget.shadowColor,
+          ),
         ),
       ),
     );
