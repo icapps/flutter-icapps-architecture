@@ -8,7 +8,7 @@ import 'package:icapps_architecture/icapps_architecture.dart';
 class TouchFeedBack extends StatelessWidget {
   final Widget child;
   final VoidCallback? onClick;
-  final String? label;
+  final String? semanticsLabel;
   final Color? androidSplashColor;
   final Color color;
   final BorderRadius? borderRadius;
@@ -19,7 +19,7 @@ class TouchFeedBack extends StatelessWidget {
   const TouchFeedBack({
     required this.child,
     required this.onClick,
-    this.label,
+    this.semanticsLabel,
     this.borderRadius,
     this.androidSplashColor,
     this.color = Colors.transparent,
@@ -37,7 +37,7 @@ class TouchFeedBack extends StatelessWidget {
     return TouchFeedBackIOS(
       child: child,
       onClick: onClick,
-      label: label,
+      semanticsLabel: semanticsLabel,
       color: color,
       borderRadius: borderRadius,
       elevation: elevation,
@@ -48,7 +48,7 @@ class TouchFeedBack extends StatelessWidget {
 
   Widget _buildAndroid() {
     return Semantics(
-      label: label,
+      label: semanticsLabel,
       button: true,
       child: Material(
         borderRadius: borderRadius,
@@ -73,7 +73,7 @@ class TouchFeedBack extends StatelessWidget {
 class TouchFeedBackIOS extends StatefulWidget {
   final Widget child;
   final VoidCallback? onClick;
-  final String? label;
+  final String? semanticsLabel;
   final Color color;
   final BorderRadius? borderRadius;
   final ShapeBorder? shapeBorder;
@@ -83,7 +83,7 @@ class TouchFeedBackIOS extends StatefulWidget {
   const TouchFeedBackIOS({
     required this.child,
     required this.onClick,
-    this.label,
+    this.semanticsLabel,
     this.borderRadius,
     this.color = Colors.transparent,
     this.shapeBorder,
@@ -114,7 +114,7 @@ class _TouchFeedBackIOSState extends State<TouchFeedBackIOS> {
   @override
   Widget build(BuildContext context) {
     return Semantics(
-      label: widget.label,
+      label: widget.semanticsLabel,
       button: true,
       child: GestureDetector(
         excludeFromSemantics: widget.onClick == null,
