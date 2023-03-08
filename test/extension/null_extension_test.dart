@@ -5,6 +5,8 @@ void main() {
   group('Null extension tests', () {
     test('Test let null', () {
       int? value;
+      value = 0;
+      value = null;
       expect(value.let((i) => i * 2) ?? -129, -129);
       expect(value?.let((i) => i * 2) ?? -129, -129);
     });
