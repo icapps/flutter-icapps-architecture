@@ -5,9 +5,9 @@
 import FlutterMacOS
 import Foundation
 
-import connectivity_plus_macos
-import device_info_plus_macos
-import shared_preferences_macos
+import connectivity_plus
+import device_info_plus
+import shared_preferences_foundation
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   ConnectivityPlugin.register(with: registry.registrar(forPlugin: "ConnectivityPlugin"))

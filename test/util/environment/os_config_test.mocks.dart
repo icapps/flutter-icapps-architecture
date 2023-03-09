@@ -3,11 +3,17 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i10;
 
-import 'package:device_info_plus/device_info_plus.dart' as _i3;
+import 'package:device_info_plus/device_info_plus.dart' as _i9;
+import 'package:device_info_plus/src/model/android_device_info.dart' as _i2;
+import 'package:device_info_plus/src/model/ios_device_info.dart' as _i3;
+import 'package:device_info_plus/src/model/linux_device_info.dart' as _i4;
+import 'package:device_info_plus/src/model/macos_device_info.dart' as _i6;
+import 'package:device_info_plus/src/model/web_browser_info.dart' as _i5;
+import 'package:device_info_plus/src/model/windows_device_info.dart' as _i7;
 import 'package:device_info_plus_platform_interface/device_info_plus_platform_interface.dart'
-    as _i2;
+    as _i8;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -32,7 +38,7 @@ class _FakeAndroidDeviceInfo_0 extends _i1.SmartFake
         );
 }
 
-class _FakeIosDeviceInfo_1 extends _i1.SmartFake implements _i2.IosDeviceInfo {
+class _FakeIosDeviceInfo_1 extends _i1.SmartFake implements _i3.IosDeviceInfo {
   _FakeIosDeviceInfo_1(
     Object parent,
     Invocation parentInvocation,
@@ -43,7 +49,7 @@ class _FakeIosDeviceInfo_1 extends _i1.SmartFake implements _i2.IosDeviceInfo {
 }
 
 class _FakeLinuxDeviceInfo_2 extends _i1.SmartFake
-    implements _i2.LinuxDeviceInfo {
+    implements _i4.LinuxDeviceInfo {
   _FakeLinuxDeviceInfo_2(
     Object parent,
     Invocation parentInvocation,
@@ -54,7 +60,7 @@ class _FakeLinuxDeviceInfo_2 extends _i1.SmartFake
 }
 
 class _FakeWebBrowserInfo_3 extends _i1.SmartFake
-    implements _i2.WebBrowserInfo {
+    implements _i5.WebBrowserInfo {
   _FakeWebBrowserInfo_3(
     Object parent,
     Invocation parentInvocation,
@@ -65,7 +71,7 @@ class _FakeWebBrowserInfo_3 extends _i1.SmartFake
 }
 
 class _FakeMacOsDeviceInfo_4 extends _i1.SmartFake
-    implements _i2.MacOsDeviceInfo {
+    implements _i6.MacOsDeviceInfo {
   _FakeMacOsDeviceInfo_4(
     Object parent,
     Invocation parentInvocation,
@@ -76,7 +82,7 @@ class _FakeMacOsDeviceInfo_4 extends _i1.SmartFake
 }
 
 class _FakeWindowsDeviceInfo_5 extends _i1.SmartFake
-    implements _i2.WindowsDeviceInfo {
+    implements _i7.WindowsDeviceInfo {
   _FakeWindowsDeviceInfo_5(
     Object parent,
     Invocation parentInvocation,
@@ -87,7 +93,7 @@ class _FakeWindowsDeviceInfo_5 extends _i1.SmartFake
 }
 
 class _FakeBaseDeviceInfo_6 extends _i1.SmartFake
-    implements _i2.BaseDeviceInfo {
+    implements _i8.BaseDeviceInfo {
   _FakeBaseDeviceInfo_6(
     Object parent,
     Invocation parentInvocation,
@@ -100,71 +106,73 @@ class _FakeBaseDeviceInfo_6 extends _i1.SmartFake
 /// A class which mocks [DeviceInfoPlugin].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockDeviceInfoPlugin extends _i1.Mock implements _i3.DeviceInfoPlugin {
+class MockDeviceInfoPlugin extends _i1.Mock implements _i9.DeviceInfoPlugin {
   MockDeviceInfoPlugin() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<_i2.AndroidDeviceInfo> get androidInfo => (super.noSuchMethod(
+  _i10.Future<_i2.AndroidDeviceInfo> get androidInfo => (super.noSuchMethod(
         Invocation.getter(#androidInfo),
         returnValue:
-            _i4.Future<_i2.AndroidDeviceInfo>.value(_FakeAndroidDeviceInfo_0(
+            _i10.Future<_i2.AndroidDeviceInfo>.value(_FakeAndroidDeviceInfo_0(
           this,
           Invocation.getter(#androidInfo),
         )),
-      ) as _i4.Future<_i2.AndroidDeviceInfo>);
+      ) as _i10.Future<_i2.AndroidDeviceInfo>);
   @override
-  _i4.Future<_i2.IosDeviceInfo> get iosInfo => (super.noSuchMethod(
+  _i10.Future<_i3.IosDeviceInfo> get iosInfo => (super.noSuchMethod(
         Invocation.getter(#iosInfo),
-        returnValue: _i4.Future<_i2.IosDeviceInfo>.value(_FakeIosDeviceInfo_1(
+        returnValue: _i10.Future<_i3.IosDeviceInfo>.value(_FakeIosDeviceInfo_1(
           this,
           Invocation.getter(#iosInfo),
         )),
-      ) as _i4.Future<_i2.IosDeviceInfo>);
+      ) as _i10.Future<_i3.IosDeviceInfo>);
   @override
-  _i4.Future<_i2.LinuxDeviceInfo> get linuxInfo => (super.noSuchMethod(
+  _i10.Future<_i4.LinuxDeviceInfo> get linuxInfo => (super.noSuchMethod(
         Invocation.getter(#linuxInfo),
         returnValue:
-            _i4.Future<_i2.LinuxDeviceInfo>.value(_FakeLinuxDeviceInfo_2(
+            _i10.Future<_i4.LinuxDeviceInfo>.value(_FakeLinuxDeviceInfo_2(
           this,
           Invocation.getter(#linuxInfo),
         )),
-      ) as _i4.Future<_i2.LinuxDeviceInfo>);
+      ) as _i10.Future<_i4.LinuxDeviceInfo>);
   @override
-  _i4.Future<_i2.WebBrowserInfo> get webBrowserInfo => (super.noSuchMethod(
+  _i10.Future<_i5.WebBrowserInfo> get webBrowserInfo => (super.noSuchMethod(
         Invocation.getter(#webBrowserInfo),
-        returnValue: _i4.Future<_i2.WebBrowserInfo>.value(_FakeWebBrowserInfo_3(
+        returnValue:
+            _i10.Future<_i5.WebBrowserInfo>.value(_FakeWebBrowserInfo_3(
           this,
           Invocation.getter(#webBrowserInfo),
         )),
-      ) as _i4.Future<_i2.WebBrowserInfo>);
+      ) as _i10.Future<_i5.WebBrowserInfo>);
   @override
-  _i4.Future<_i2.MacOsDeviceInfo> get macOsInfo => (super.noSuchMethod(
+  _i10.Future<_i6.MacOsDeviceInfo> get macOsInfo => (super.noSuchMethod(
         Invocation.getter(#macOsInfo),
         returnValue:
-            _i4.Future<_i2.MacOsDeviceInfo>.value(_FakeMacOsDeviceInfo_4(
+            _i10.Future<_i6.MacOsDeviceInfo>.value(_FakeMacOsDeviceInfo_4(
           this,
           Invocation.getter(#macOsInfo),
         )),
-      ) as _i4.Future<_i2.MacOsDeviceInfo>);
+      ) as _i10.Future<_i6.MacOsDeviceInfo>);
   @override
-  _i4.Future<_i2.WindowsDeviceInfo> get windowsInfo => (super.noSuchMethod(
+  _i10.Future<_i7.WindowsDeviceInfo> get windowsInfo => (super.noSuchMethod(
         Invocation.getter(#windowsInfo),
         returnValue:
-            _i4.Future<_i2.WindowsDeviceInfo>.value(_FakeWindowsDeviceInfo_5(
+            _i10.Future<_i7.WindowsDeviceInfo>.value(_FakeWindowsDeviceInfo_5(
           this,
           Invocation.getter(#windowsInfo),
         )),
-      ) as _i4.Future<_i2.WindowsDeviceInfo>);
+      ) as _i10.Future<_i7.WindowsDeviceInfo>);
   @override
-  _i4.Future<_i2.BaseDeviceInfo> get deviceInfo => (super.noSuchMethod(
+  _i10.Future<_i8.BaseDeviceInfo> get deviceInfo => (super.noSuchMethod(
         Invocation.getter(#deviceInfo),
-        returnValue: _i4.Future<_i2.BaseDeviceInfo>.value(_FakeBaseDeviceInfo_6(
+        returnValue:
+            _i10.Future<_i8.BaseDeviceInfo>.value(_FakeBaseDeviceInfo_6(
           this,
           Invocation.getter(#deviceInfo),
         )),
-      ) as _i4.Future<_i2.BaseDeviceInfo>);
+      ) as _i10.Future<_i8.BaseDeviceInfo>);
 }
 
 /// A class which mocks [AndroidBuildVersion].
@@ -176,6 +184,26 @@ class MockAndroidBuildVersion extends _i1.Mock
     _i1.throwOnMissingStub(this);
   }
 
+  @override
+  String get codename => (super.noSuchMethod(
+        Invocation.getter(#codename),
+        returnValue: '',
+      ) as String);
+  @override
+  String get incremental => (super.noSuchMethod(
+        Invocation.getter(#incremental),
+        returnValue: '',
+      ) as String);
+  @override
+  String get release => (super.noSuchMethod(
+        Invocation.getter(#release),
+        returnValue: '',
+      ) as String);
+  @override
+  int get sdkInt => (super.noSuchMethod(
+        Invocation.getter(#sdkInt),
+        returnValue: 0,
+      ) as int);
   @override
   Map<String, dynamic> toMap() => (super.noSuchMethod(
         Invocation.method(
@@ -189,7 +217,7 @@ class MockAndroidBuildVersion extends _i1.Mock
 /// A class which mocks [IosUtsname].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIosUtsname extends _i1.Mock implements _i2.IosUtsname {
+class MockIosUtsname extends _i1.Mock implements _i3.IosUtsname {
   MockIosUtsname() {
     _i1.throwOnMissingStub(this);
   }

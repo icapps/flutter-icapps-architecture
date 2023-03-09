@@ -1,4 +1,8 @@
 # Changelog
+## [1.0.0] - 2023-03-08
+### Updated
+- Dependencies
+
 ## [0.8.1] - 2023-01-09
 ### Added
 - Semantics to TouchFeedBack

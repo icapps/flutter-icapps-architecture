@@ -11,8 +11,7 @@ Future<OsConfigInfo> initOsConfig({
     final deviceInfo = deviceInfoPluginProvider?.call() ?? DeviceInfoPlugin();
     final androidInfo = await deviceInfo.androidInfo;
     final androidSdk = androidInfo.version.sdkInt;
-    return OsConfigInfo(
-        androidSdk: androidSdk ?? 0, iosVersion: 0, isWeb: false);
+    return OsConfigInfo(androidSdk: androidSdk, iosVersion: 0, isWeb: false);
   } else if (isIOSOverride ?? Platform.isIOS) {
     final deviceInfo = deviceInfoPluginProvider?.call() ?? DeviceInfoPlugin();
     final iosInfo = await deviceInfo.iosInfo;

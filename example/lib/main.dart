@@ -68,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 '${viewModel.current}',
                 style: Theme.of(context)
                     .textTheme
-                    .headline4!
+                    .headlineMedium!
                     .copyWith(color: theme.baseColor),
               ),
             ],

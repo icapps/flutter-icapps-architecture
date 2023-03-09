@@ -65,7 +65,7 @@ void main() {
     test('Output logger does not split short items', () {
       final lines = <String>[];
       final output = WrappingOutput((str) => lines.add(str));
-      output.output(OutputEvent(Level.info,
+      output.output(OutputEvent(LogEvent(Level.info, 'Short string'),
           ['Short string', 'Longer string that does not need to be split']));
       expect(lines,
           ['Short string', 'Longer string that does not need to be split']);
@@ -75,7 +75,8 @@ void main() {
           base64Encode(List<int>.generate(1000, (i) => i % 255));
       final lines = <String>[];
       final output = WrappingOutput((str) => lines.add(str));
-      output.output(OutputEvent(Level.info, ['Short string', inputString]));
+      output.output(OutputEvent(
+          LogEvent(Level.info, 'Short string'), ['Short string', inputString]));
       expect(lines, [
         'Short string',
         'AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0+P0BBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWltcXV5fYGFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6e3x9fn+AgYKDhIWGh4iJiouMjY6PkJGSk5SVlpeYmZqbnJ2en6ChoqOkpaanqKmqq6ytrq+wsbKztLW2t7i5uru8vb6/wMHCw8TFxsfIycrLzM3Oz9DR0tPU1dbX2Nna29zd3t/g4eLj5OXm5+jp6uvs7e7v8PHy8/T19vf4+fr7/P3+AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0+P0BBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWltcXV5fYGFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6e3x9fn+AgYKDhIWGh4iJiouMjY6PkJGSk5SVlpeYmZqbnJ2en6ChoqOkpaanqKmqq6ytrq+wsbKztLW2t7i5uru8vb6/wMHCw8TFxsfIycrLzM3Oz9DR0tPU1dbX2Nna29zd3t/g4eLj5OXm5+jp6uvs7e7v8PHy8/T19vf4+fr7/P3+AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0+P0BBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZ',
@@ -142,19 +143,22 @@ void testWithLogger() {
     });
     test('Test logger methods default pretty', () {
       final buffer = MemoryOutput();
-      LoggingFactory.resetWithLogger(LoggerLogImpl(
-          Logger(
-            printer: OurPrettyPrinter(
+      LoggingFactory.resetWithLogger(
+        LoggerLogImpl(
+            Logger(
+              printer: OurPrettyPrinter(
                 methodCount: 0,
                 errorMethodCount: 5,
                 stackTraceBeginIndex: 1,
                 lineLength: 50,
                 colors: false,
                 printEmojis: true,
-                printTime: true),
-            output: buffer,
-          ),
-          logNetworkInfo: false));
+                printTime: true,
+              ),
+              output: buffer,
+            ),
+            logNetworkInfo: false),
+      );
       staticLogger.v('Verbose message');
       staticLogger.d('Debug message');
       staticLogger.i('Info message');
@@ -181,7 +185,7 @@ void testWithLogger() {
       expect(
           messages[4].lines[4],
           matches(
-              '\\d+:\\d+:\\d+\\.\\d+\\s+#2   StackZoneSpecification._registerUnaryCallback.<anonymous closure> \\(package:stack_trace/src/stack_zone_specification.dart:125:47\\)'));
+              '\\d+:\\d+:\\d+\\.\\d+\\s+#2   StackZoneSpecification._registerUnaryCallback.<anonymous closure> \\(package:stack_trace/src/stack_zone_specification.dart:\\d+:\\d+\\)'));
       expect(messages[4].lines[5],
           matches('\\d+:\\d+:\\d+\\.\\d+\\s+#3   <asynchronous suspension>'));
       expect(messages[4].lines[0],
