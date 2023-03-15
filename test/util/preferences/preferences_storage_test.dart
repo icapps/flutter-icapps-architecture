@@ -4,8 +4,8 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'preferences_storage_test.mocks.dart';
 import '../../test_util.dart';
+import 'preferences_storage_test.mocks.dart';
 
 @GenerateMocks([SharedPreferences])
 void main() {
@@ -132,6 +132,12 @@ void main() {
   test('SharedPrefsStorage hasValue', () {
     sut.hasValue(key: 'KEY');
     verify(sharedPreferences.containsKey('KEY')).calledOnce();
+    verifyNoMoreInteractions(sharedPreferences);
+  });
+
+  test('SharedPrefsStorage reload', () {
+    sut.reload();
+    verify(sharedPreferences.reload()).calledOnce();
     verifyNoMoreInteractions(sharedPreferences);
   });
 }
