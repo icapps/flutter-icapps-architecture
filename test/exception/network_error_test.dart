@@ -26,7 +26,7 @@ void main() {
           statusCode: 404,
           statusMessage: "Not found"),
       error: ArgumentError('Test'),
-      type: DioErrorType.other,
+      type: DioErrorType.badResponse,
     );
   });
 
