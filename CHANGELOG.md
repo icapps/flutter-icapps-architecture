@@ -1,4 +1,8 @@
 # Changelog
+## [1.0.1] - 2023-05-05
+### Updated
+- Dependencies
+
 ## [1.0.0] - 2023-03-08
 ### Updated
 - Dependencies

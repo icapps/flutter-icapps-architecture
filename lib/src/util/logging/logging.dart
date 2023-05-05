@@ -141,7 +141,7 @@ class LoggerLogImpl extends Log {
     if (response == null) {
       message
         ..writeln('request | ${request.method} - url: ${request.uri}')
-        ..writeln('message | ${dioError.message}');
+        ..writeln('message | ${dioError.message ?? ''}');
     } else {
       message
         ..writeln('response.data | ${response.data}')
