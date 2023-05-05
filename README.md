@@ -137,6 +137,7 @@ Utility class to facilitate storing shared preferences
 - `double? getDouble(String key)` (Retrieves the stored double value for [key]. Returns null if the value is not found)
 - `Future<void> deleteKey(String key)` (Deletes the value stored for [key])
 - `bool containsKey(String key)` (Returns true if there is a value for [key])
+- `Future<void> reload()` (Fetches the latest values from the host platform. Use this method to observe modifications that were made in native code (without using the plugin) or by another process while the app is running.)
 
 ### Restorable state
 #### Bundle

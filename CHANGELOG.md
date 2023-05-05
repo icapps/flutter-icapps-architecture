@@ -2,6 +2,8 @@
 ## [1.0.1] - 2023-05-05
 ### Updated
 - Dependencies
+- Added reload in shared preferences storage
+- Updated min version to Flutter 3.3.0 since 3.0.0 is no longer compatible with the dependencies
 
 ## [1.0.0] - 2023-03-08
 ### Updated
