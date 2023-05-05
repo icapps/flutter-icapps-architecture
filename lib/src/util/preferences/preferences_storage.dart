@@ -40,6 +40,12 @@ abstract class SharedPreferenceStorage implements SimpleKeyValueStorage {
 
   /// Returns true if there is a value for [key]
   bool containsKey(String key);
+
+  /// Fetches the latest values from the host platform.
+  /// Use this method to observe modifications that were
+  /// made in native code (without using the plugin)
+  /// or by another process while the app is running.
+  Future<void> reload();
 }
 
 class _SharedPreferenceStorage implements SharedPreferenceStorage {
@@ -95,4 +101,7 @@ class _SharedPreferenceStorage implements SharedPreferenceStorage {
   @override
   Future<void> setValue({required String key, required String value}) =>
       saveString(key: key, value: value);
+
+  @override
+  Future<void> reload() => _sharedPreferences.reload();
 }
