@@ -15,7 +15,7 @@ Future<OsConfigInfo> initOsConfig({
   } else if (isIOSOverride ?? Platform.isIOS) {
     final deviceInfo = deviceInfoPluginProvider?.call() ?? DeviceInfoPlugin();
     final iosInfo = await deviceInfo.iosInfo;
-    final iosVersion = iosInfo.systemVersion ?? '';
+    final iosVersion = iosInfo.systemVersion;
     final lastIndexPoint = iosVersion.lastIndexOf('.');
     final versionLength = iosVersion.length;
     final version = lastIndexPoint != -1

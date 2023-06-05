@@ -8,7 +8,7 @@ import 'package:flutter/foundation.dart';
 /// Has helper methods to determine if it has been disposed ([disposed]) and
 /// convenience methods to register listeners that will be cleaned up when the
 /// change notifier is disposed [registerDispose()] and [registerDisposeStream()]
-class ChangeNotifierEx implements ChangeNotifier {
+mixin class ChangeNotifierEx implements ChangeNotifier {
   LinkedList<_ListenerEntry>? _listeners = LinkedList<_ListenerEntry>();
   var _disposed = false;
   final _cleanupList = <DisposeAware>[];
@@ -119,7 +119,7 @@ class ChangeNotifierEx implements ChangeNotifier {
   }
 }
 
-class _ListenerEntry extends LinkedListEntry<_ListenerEntry> {
+base class _ListenerEntry extends LinkedListEntry<_ListenerEntry> {
   _ListenerEntry(this.listener);
 
   final VoidCallback listener;
