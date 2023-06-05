@@ -1,5 +1,5 @@
 # Changelog
-## [3.0.2] - 2023-06-05
+## [2.0.0] - 2023-06-05
 ### Breaking
 - Dart min version 3.0.0
 
