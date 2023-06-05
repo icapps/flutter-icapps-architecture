@@ -28,6 +28,7 @@ class BaseProviderWidget<T extends ChangeNotifier, Theme, Localization>
     this.consumerChild,
     this.childBuilderWithViewModel,
     this.lazy = true,
+    super.key,
   }) : this.value = null;
 
   const BaseProviderWidget.value({
@@ -38,6 +39,7 @@ class BaseProviderWidget<T extends ChangeNotifier, Theme, Localization>
     this.consumerWithThemeAndLocalization,
     this.consumerChild,
     this.childBuilderWithViewModel,
+    super.key,
   })  : this.lazy = false,
         this.create = _notImplemented;
 

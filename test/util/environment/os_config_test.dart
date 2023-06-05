@@ -99,6 +99,13 @@ void main() {
             'localizedModel': 'local hot',
             'identifierForVendor': '4 (chosen by dice roll)',
             'isPhysicalDevice': true,
+            'utsname': {
+              'sysname': 'sysname',
+              'nodename': 'nodename',
+              'release': 'release',
+              'version': 'version',
+              'machine': 'machine',
+            },
           })));
       final info = await io.initOsConfig(
         deviceInfoPluginProvider: () => mock,
