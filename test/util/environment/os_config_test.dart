@@ -1,8 +1,10 @@
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:icapps_architecture/icapps_architecture.dart';
-import 'package:icapps_architecture/src/util/environment/impl/os_info_io.dart' as io;
-import 'package:icapps_architecture/src/util/environment/impl/os_info_stub.dart' as stub;
+import 'package:icapps_architecture/src/util/environment/impl/os_info_io.dart'
+    as io;
+import 'package:icapps_architecture/src/util/environment/impl/os_info_stub.dart'
+    as stub;
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
@@ -40,43 +42,44 @@ void main() {
     });
     test('OS config from io, android', () async {
       final mock = MockDeviceInfoPlugin();
-      when(mock.androidInfo).thenAnswer((_) => Future.value(AndroidDeviceInfo.fromMap({
-            'isPhysicalDevice': true,
-            'board': 'surf',
-            'supportedAbis': ['x256-powermaxx'],
-            'systemFeatures': ['fishingrod'],
-            'display': 'iMAX',
-            'device': 'yes',
-            'model': 'hot',
-            'bootloader': 'not loaded',
-            'hardware': 'soft',
-            'supported64BitAbis': [],
-            'product': 'placement',
-            'supported32BitAbis': [],
-            'tags': 'dog',
-            'brand': 'no',
-            'manufacturer': 'your m*m',
-            'id': '8 (twice the androidId)',
-            'type': 'space station',
-            'host': 'Joan Calamazzo',
-            'fingerprint': '*boop*',
-            'serialNumber': 'serialNumber',
-            'displayMetrics': {
-              'widthPx': 1080.0,
-              'heightPx': 1920.0,
-              'xDpi': 420.0,
-              'yDpi': 420.0,
-            },
-            'version': {
-              'baseOS': 'base',
-              'codename': 'codename',
-              'incremental': 'incremental',
-              'previewSdkInt': 10,
-              'release': 'release',
-              'sdkInt': 10,
-              'securityPatch': 'securityPatch',
-            },
-          })));
+      when(mock.androidInfo)
+          .thenAnswer((_) => Future.value(AndroidDeviceInfo.fromMap({
+                'isPhysicalDevice': true,
+                'board': 'surf',
+                'supportedAbis': ['x256-powermaxx'],
+                'systemFeatures': ['fishingrod'],
+                'display': 'iMAX',
+                'device': 'yes',
+                'model': 'hot',
+                'bootloader': 'not loaded',
+                'hardware': 'soft',
+                'supported64BitAbis': [],
+                'product': 'placement',
+                'supported32BitAbis': [],
+                'tags': 'dog',
+                'brand': 'no',
+                'manufacturer': 'your m*m',
+                'id': '8 (twice the androidId)',
+                'type': 'space station',
+                'host': 'Joan Calamazzo',
+                'fingerprint': '*boop*',
+                'serialNumber': 'serialNumber',
+                'displayMetrics': {
+                  'widthPx': 1080.0,
+                  'heightPx': 1920.0,
+                  'xDpi': 420.0,
+                  'yDpi': 420.0,
+                },
+                'version': {
+                  'baseOS': 'base',
+                  'codename': 'codename',
+                  'incremental': 'incremental',
+                  'previewSdkInt': 10,
+                  'release': 'release',
+                  'sdkInt': 10,
+                  'securityPatch': 'securityPatch',
+                },
+              })));
       final info = await io.initOsConfig(
         deviceInfoPluginProvider: () => mock,
         isAndroidOverride: true,
