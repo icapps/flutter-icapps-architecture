@@ -1,4 +1,8 @@
 # Changelog
+## [3.0.2] - 2023-06-05
+### Breaking
+- Dart min version 3.0.0
+
 ## [1.0.2] - 2023-05-05
 ### Updated
 - Dependencies (dio)
