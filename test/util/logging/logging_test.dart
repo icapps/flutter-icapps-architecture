@@ -11,7 +11,7 @@ import 'package:mockito/mockito.dart';
 import 'logging_test.mocks.dart';
 
 class MockNetworkError extends NetworkError {
-  MockNetworkError(DioError dioError) : super(dioError);
+  MockNetworkError(DioException dioError) : super(dioError);
 
   @override
   String? get getErrorCode => throw UnimplementedError();
@@ -44,7 +44,7 @@ void main() {
       log.logNetworkResponse(
           Response(requestOptions: RequestOptions(path: '/')));
       log.logNetworkError(MockNetworkError(
-          DioError(requestOptions: RequestOptions(path: '/'))));
+          DioException(requestOptions: RequestOptions(path: '/'))));
 
       verify(mock.verbose(argThat(startsWith('[TestPrefix] ')))).called(1);
       verify(mock.debug(argThat(startsWith('[TestPrefix] ')))).called(1);
@@ -139,7 +139,7 @@ void testWithLogger() {
       staticLogger.logNetworkResponse(
           Response(requestOptions: RequestOptions(path: '/')));
       staticLogger.logNetworkError(MockNetworkError(
-          DioError(requestOptions: RequestOptions(path: '/'))));
+          DioException(requestOptions: RequestOptions(path: '/'))));
     });
     test('Test logger methods default pretty', () {
       final buffer = MemoryOutput();
@@ -291,7 +291,7 @@ void testWithLogger() {
       staticLogger.logNetworkResponse(
           Response(requestOptions: RequestOptions(path: '/')));
       staticLogger.logNetworkError(MockNetworkError(
-          DioError(requestOptions: RequestOptions(path: '/'))));
+          DioException(requestOptions: RequestOptions(path: '/'))));
       expect(buffer.buffer.isEmpty, true);
     });
     test('Test logger network enabled', () {
@@ -311,16 +311,16 @@ void testWithLogger() {
           requestOptions:
               RequestOptions(path: '/', baseUrl: 'https://www.example.com'),
           statusCode: 404));
-      staticLogger.logNetworkError(MockNetworkError(DioError(
+      staticLogger.logNetworkError(MockNetworkError(DioException(
           requestOptions:
               RequestOptions(path: '/', baseUrl: 'https://www.example.com'))));
-      staticLogger.logNetworkError(MockNetworkError(DioError(
+      staticLogger.logNetworkError(MockNetworkError(DioException(
           requestOptions:
               RequestOptions(path: '/', baseUrl: 'https://www.example.com'),
           response: Response(
               requestOptions: RequestOptions(
                   path: '/', baseUrl: 'https://www.example.com')))));
-      staticLogger.logNetworkError(MockNetworkError(DioError(
+      staticLogger.logNetworkError(MockNetworkError(DioException(
           requestOptions:
               RequestOptions(path: '/', baseUrl: 'https://www.example.com'),
           response: Response(

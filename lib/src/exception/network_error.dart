@@ -2,15 +2,15 @@ import 'package:dio/dio.dart';
 import 'package:icapps_architecture/src/exception/localized_error.dart';
 
 /// Base class for network errors
-abstract class NetworkError extends DioError with LocalizedError {
+abstract class NetworkError extends DioException with LocalizedError {
   final String? statusCodeValue;
 
-  NetworkError(DioError dioError, {this.statusCodeValue})
+  NetworkError(DioException dioException, {this.statusCodeValue})
       : super(
-          requestOptions: dioError.requestOptions,
-          response: dioError.response,
-          error: dioError.error,
-          type: dioError.type,
+          requestOptions: dioException.requestOptions,
+          response: dioException.response,
+          error: dioException.error,
+          type: dioException.type,
         );
 
   /// Flag indicating if this error should be shown in production

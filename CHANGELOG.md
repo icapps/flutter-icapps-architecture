@@ -1,4 +1,9 @@
 # Changelog
+## [2.1.0] - 2023-07-13
+### Updated
+- TouchFeedBack
+- Depricated DioError to DioException
+
 ## [2.0.0] - 2023-06-05
 ### Breaking
 - Dart min version 3.0.0
