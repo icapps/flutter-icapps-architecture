@@ -1,8 +1,9 @@
 # Changelog
 ## [2.1.0] - 2023-07-13
 ### Updated
+- Dependencies
 - TouchFeedBack
-- Depricated DioError to DioException
+- Deprecated DioError to DioException
 
 ## [2.0.0] - 2023-06-05
 ### Breaking
