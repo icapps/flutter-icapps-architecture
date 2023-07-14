@@ -6,13 +6,13 @@ import 'package:icapps_architecture/src/exception/network_error.dart';
 /// Base class for simple [Dio] interceptors to be used in conjunction with
 /// [CombiningSmartInterceptor].
 ///
-/// Upon returning an instance of [DioError] from [onRequest] or [onResponse],
+/// Upon returning an instance of [DioException] from [onRequest] or [onResponse],
 /// the error interceptors will NOT be called
 abstract class SimpleInterceptor {
   /// Called when the interceptor should process the request ([options])
   ///
   /// Return a future with (modified) [RequestOptions] to continue the chain
-  /// or an instance of [DioError] (or subclasses) to halt processing.
+  /// or an instance of [DioException] (or subclasses) to halt processing.
   ///
   /// Any other values will simply call the next interceptor with [options]
   Future<Object?> onRequest(RequestOptions options) {
@@ -22,7 +22,7 @@ abstract class SimpleInterceptor {
   /// Called when the interceptor should process the request ([options])
   ///
   /// Return a future with (modified) [RequestOptions] to continue the chain
-  /// or an instance of [DioError] (or subclasses) to halt processing.
+  /// or an instance of [DioException] (or subclasses) to halt processing.
   ///
   /// Any other values will simply call the next interceptor with [options]
   Future<Object?> onResponse(Response response) {
@@ -31,13 +31,13 @@ abstract class SimpleInterceptor {
 
   /// Called when the interceptor should process an [error]
   ///
-  /// Return a future with (modified) [DioError] to continue the chain
+  /// Return a future with (modified) [DioException] to continue the chain
   /// or an instance of [Response] (or subclasses) to halt processing and
   /// mark the request as successful. NOTE: When returning [Response], no other
   /// interceptors will be called.
   ///
   /// Any other values will simply call the next interceptor with [error]
-  Future<Object?> onError(DioError error) {
+  Future<Object?> onError(DioException error) {
     return Future.value(error);
   }
 }
@@ -62,12 +62,13 @@ class CombiningSmartInterceptor implements Interceptor {
   }
 
   @override
-  Future<void> onError(DioError err, ErrorInterceptorHandler handler) async {
+  Future<void> onError(
+      DioException err, ErrorInterceptorHandler handler) async {
     NetworkError? finalResult;
     for (final interceptor in _interceptors.reversed) {
       try {
         final dynamic res = await interceptor
-            .onError(finalResult is DioError ? finalResult! : err);
+            .onError(finalResult is DioException ? finalResult! : err);
         if (res is Response) {
           handler.resolve(res);
           return;
@@ -77,11 +78,12 @@ class CombiningSmartInterceptor implements Interceptor {
         }
       } on NetworkError catch (e) {
         finalResult = e;
-      } on DioError catch (e) {
+      } on DioException catch (e) {
         handler.next(e);
         return;
       } catch (e) {
-        handler.next(DioError(requestOptions: err.requestOptions, error: e));
+        handler
+            .next(DioException(requestOptions: err.requestOptions, error: e));
         return;
       }
     }
@@ -98,15 +100,15 @@ class CombiningSmartInterceptor implements Interceptor {
         if (res is RequestOptions) {
           intermediate = res;
           continue;
-        } else if (res is DioError) {
+        } else if (res is DioException) {
           handler.reject(res, false);
           return;
         }
-      } on DioError catch (e) {
+      } on DioException catch (e) {
         handler.reject(e, false);
         return;
       } catch (e) {
-        handler.reject(DioError(requestOptions: options, error: e));
+        handler.reject(DioException(requestOptions: options, error: e));
         return;
       }
     }
@@ -123,16 +125,16 @@ class CombiningSmartInterceptor implements Interceptor {
         if (res is Response) {
           intermediate = res;
           continue;
-        } else if (res is DioError) {
+        } else if (res is DioException) {
           handler.reject(res, false);
           return;
         }
-      } on DioError catch (e) {
+      } on DioException catch (e) {
         handler.reject(e, false);
         return;
       } catch (e) {
         handler.reject(
-            DioError(requestOptions: response.requestOptions, error: e));
+            DioException(requestOptions: response.requestOptions, error: e));
         return;
       }
     }

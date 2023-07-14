@@ -5,57 +5,98 @@ import 'package:icapps_architecture/icapps_architecture.dart';
 ///
 /// On devices running with the android theme, this will create a ripple effect,
 /// on other devices, this will create a scaling touch down effect
-class TouchFeedBack extends StatelessWidget {
+class TouchFeedBack extends StatefulWidget {
   final Widget child;
   final VoidCallback? onClick;
   final String? semanticsLabel;
-  final Color? androidSplashColor;
   final Color color;
   final BorderRadius? borderRadius;
   final double elevation;
   final Color? shadowColor;
   final ShapeBorder? shapeBorder;
+  final Color? androidSplashColor;
 
   const TouchFeedBack({
     required this.child,
     required this.onClick,
     this.semanticsLabel,
-    this.borderRadius,
-    this.androidSplashColor,
     this.color = Colors.transparent,
     this.elevation = 0,
+    this.borderRadius,
     this.shadowColor,
     this.shapeBorder,
-    Key? key,
-  }) : super(key: key);
+    this.androidSplashColor,
+    super.key,
+  });
 
+  @override
+  State<TouchFeedBack> createState() => _TouchFeedBackState();
+}
+
+class _TouchFeedBackState extends State<TouchFeedBack> {
   @override
   Widget build(BuildContext context) {
     if (context.isAndroidTheme) {
-      return _buildAndroid();
+      return TouchFeedBackAndroid(
+        child: widget.child,
+        onClick: widget.onClick,
+        semanticsLabel: widget.semanticsLabel,
+        color: widget.color,
+        elevation: widget.elevation,
+        borderRadius: widget.borderRadius,
+        shadowColor: widget.shadowColor,
+        shapeBorder: widget.shapeBorder,
+        androidSplashColor: widget.androidSplashColor,
+      );
     }
     return TouchFeedBackIOS(
-      child: child,
-      onClick: onClick,
-      semanticsLabel: semanticsLabel,
-      color: color,
-      borderRadius: borderRadius,
-      elevation: elevation,
-      shadowColor: shadowColor,
-      shapeBorder: shapeBorder,
+      child: widget.child,
+      onClick: widget.onClick,
+      semanticsLabel: widget.semanticsLabel,
+      color: widget.color,
+      elevation: widget.elevation,
+      borderRadius: widget.borderRadius,
+      shadowColor: widget.shadowColor,
+      shapeBorder: widget.shapeBorder,
     );
   }
+}
 
-  Widget _buildAndroid() {
+class TouchFeedBackAndroid extends StatelessWidget {
+  final Widget child;
+  final VoidCallback? onClick;
+  final String? semanticsLabel;
+  final Color color;
+  final double elevation;
+  final BorderRadius? borderRadius;
+  final Color? shadowColor;
+  final ShapeBorder? shapeBorder;
+  final Color? androidSplashColor;
+
+  const TouchFeedBackAndroid({
+    required this.child,
+    required this.onClick,
+    this.semanticsLabel,
+    this.color = Colors.transparent,
+    this.elevation = 0,
+    this.borderRadius,
+    this.shadowColor,
+    this.shapeBorder,
+    this.androidSplashColor,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Semantics(
       label: semanticsLabel,
       button: true,
       child: Material(
-        borderRadius: borderRadius,
         color: color,
+        shape: shapeBorder,
         elevation: elevation,
         shadowColor: shadowColor,
-        shape: shapeBorder,
+        borderRadius: borderRadius,
         child: onClick == null
             ? child
             : InkWell(
@@ -75,22 +116,22 @@ class TouchFeedBackIOS extends StatefulWidget {
   final VoidCallback? onClick;
   final String? semanticsLabel;
   final Color color;
-  final BorderRadius? borderRadius;
-  final ShapeBorder? shapeBorder;
   final double elevation;
+  final BorderRadius? borderRadius;
   final Color? shadowColor;
+  final ShapeBorder? shapeBorder;
 
   const TouchFeedBackIOS({
     required this.child,
     required this.onClick,
     this.semanticsLabel,
-    this.borderRadius,
     this.color = Colors.transparent,
-    this.shapeBorder,
-    this.shadowColor,
     this.elevation = 0,
-    Key? key,
-  }) : super(key: key);
+    this.borderRadius,
+    this.shadowColor,
+    this.shapeBorder,
+    super.key,
+  });
 
   @override
   _TouchFeedBackIOSState createState() => _TouchFeedBackIOSState();
@@ -123,14 +164,14 @@ class _TouchFeedBackIOSState extends State<TouchFeedBackIOS> {
         onTapCancel: () => _setTouched(false),
         onTapUp: (details) => _setTouched(false),
         child: Transform.scale(
-          scale: touched ? touchScale : defaultScale,
+          scale: widget.onClick != null && touched ? touchScale : defaultScale,
           child: Material(
-            borderRadius: widget.borderRadius,
             color: widget.color,
-            child: widget.child,
             shape: widget.shapeBorder,
             elevation: widget.elevation,
             shadowColor: widget.shadowColor,
+            borderRadius: widget.borderRadius,
+            child: widget.child,
           ),
         ),
       ),

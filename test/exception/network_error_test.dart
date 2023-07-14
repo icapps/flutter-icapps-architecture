@@ -4,9 +4,9 @@ import 'package:icapps_architecture/src/exception/network_error.dart';
 
 class TestableNetworkError extends NetworkError {
   TestableNetworkError(
-    DioError dioError, {
+    DioException dioException, {
     String? statusCodeValue,
-  }) : super(dioError, statusCodeValue: statusCodeValue);
+  }) : super(dioException, statusCodeValue: statusCodeValue);
 
   @override
   String? get getErrorCode => "Test";
@@ -16,17 +16,17 @@ class TestableNetworkError extends NetworkError {
 }
 
 void main() {
-  late DioError source;
+  late DioException source;
 
   setUp(() {
-    source = DioError(
+    source = DioException(
       requestOptions: RequestOptions(path: '/'),
       response: Response(
           requestOptions: RequestOptions(path: '/'),
           statusCode: 404,
           statusMessage: "Not found"),
       error: ArgumentError('Test'),
-      type: DioErrorType.badResponse,
+      type: DioExceptionType.badResponse,
     );
   });
 
