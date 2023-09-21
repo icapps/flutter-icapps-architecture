@@ -1,8 +1,8 @@
+import 'package:example/screen/counter_screen.dart';
+import 'package:example/screen/stream_test_screen.dart';
 import 'package:example/theme/theme.dart';
 import 'package:example/util/locale/localization.dart';
 import 'package:example/util/locale/localization_delegate.dart';
-import 'package:example/viewmodel/counter_viewmodel.dart';
-import 'package:example/widget/provider/provider_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:icapps_architecture/icapps_architecture.dart';
@@ -31,53 +31,43 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(),
+      routes: {
+        'counter': (context) => CounterScreen(),
+        'stream_test': (context) => StreamTestScreen(),
+      },
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends StatelessWidget {
   MyHomePage({
-    required this.title,
     Key? key,
   }) : super(key: key);
-  final String title;
 
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return ProviderWidget<CounterViewModel>(
-      create: () => CounterViewModel()..init(),
-      childBuilderWithViewModel: (context, viewModel, theme, localization) =>
-          Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'You have pushed the button this many times:',
-              ),
-              Text(
-                '${viewModel.current}',
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineMedium!
-                    .copyWith(color: theme.baseColor),
-              ),
-            ],
-          ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: viewModel.onIncrementTapped,
-          tooltip: 'Increment',
-          child: Icon(Icons.add),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Flutter Demo Home Page'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            MaterialButton(
+              color: Colors.blue,
+              textColor: Colors.white,
+              child: Text('Counter example'),
+              onPressed: () => Navigator.of(context).pushNamed('counter'),
+            ),
+            MaterialButton(
+              color: Colors.blue,
+              textColor: Colors.white,
+              child: Text('Stream with initial value example'),
+              onPressed: () => Navigator.of(context).pushNamed('stream_test'),
+            ),
+          ],
         ),
       ),
     );
