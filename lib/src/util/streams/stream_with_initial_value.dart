@@ -1,15 +1,30 @@
 import 'dart:async';
 
-class StreamWithInitialValue<T> implements StreamController<T> {
+class StreamControllerWithInitialValue<T> implements StreamController<T> {
   late final StreamController<T> _streamController;
+
+  var hasValue = false;
+  
   T? value;
 
-  StreamWithInitialValue({
+  StreamControllerWithInitialValue({
     void Function()? onListen,
     void Function()? onCancel,
     bool sync = false,
   }) {
-    _streamController = StreamController.broadcast(
+    _streamController = StreamController<T>(
+      onListen: onListen,
+      onCancel: onCancel,
+      sync: sync,
+    );
+  }
+
+  StreamControllerWithInitialValue.broadcast({
+    void Function()? onListen,
+    void Function()? onCancel,
+    bool sync = false,
+  }) {
+    _streamController = StreamController<T>.broadcast(
       onListen: onListen,
       onCancel: onCancel,
       sync: sync,
@@ -19,8 +34,8 @@ class StreamWithInitialValue<T> implements StreamController<T> {
   @override
   FutureOr<void> Function()? get onCancel => _streamController.onCancel;
 
-  StreamSubscription<T> onListenValue(
-    void Function(T)? onData, {
+  StreamSubscription<T> listen(
+    void Function(T value) onData, {
     Function? onError,
     void Function()? onDone,
     bool? cancelOnError,
@@ -28,13 +43,14 @@ class StreamWithInitialValue<T> implements StreamController<T> {
     final subscription = _streamController.stream.listen(
       (data) {
         value = data;
-        onData?.call(data);
+        hasValue = true;
+        onData.call(data);
       },
       onError: onError,
       onDone: onDone,
       cancelOnError: cancelOnError,
     );
-    if (value != null) _streamController.add(value!);
+    if (hasValue) onData.call(value!);
     return subscription;
   }
 

@@ -51,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return ProviderWidget<CounterViewModel>(
-      create: () => CounterViewModel(),
+      create: () => CounterViewModel()..init(),
       childBuilderWithViewModel: (context, viewModel, theme, localization) =>
           Scaffold(
         appBar: AppBar(
