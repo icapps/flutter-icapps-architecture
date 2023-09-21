@@ -18,6 +18,9 @@ class LifecycleWidget extends StatefulWidget {
   /// [onInactive] is triggered when the app goes to the [AppLifecycleState.inactive] state.
   final VoidCallback? onInactive;
 
+  /// [onHidden] is triggered when the app goes to the [AppLifecycleState.hidden] state.
+  final VoidCallback? onHidden;
+
   /// Helper widget for reacting to lifecycle events.
   /// This widget listens to changes in the [AppLifecycleState].
   const LifecycleWidget({
@@ -26,14 +29,14 @@ class LifecycleWidget extends StatefulWidget {
     this.onPause,
     this.onDetached,
     this.onInactive,
+    this.onHidden,
   });
 
   @override
   _LifecycleWidgetState createState() => _LifecycleWidgetState();
 }
 
-class _LifecycleWidgetState extends State<LifecycleWidget>
-    with WidgetsBindingObserver {
+class _LifecycleWidgetState extends State<LifecycleWidget> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
@@ -63,6 +66,9 @@ class _LifecycleWidgetState extends State<LifecycleWidget>
         break;
       case AppLifecycleState.inactive:
         widget.onInactive?.call();
+        break;
+      case AppLifecycleState.hidden:
+        widget.onHidden?.call();
         break;
     }
   }
