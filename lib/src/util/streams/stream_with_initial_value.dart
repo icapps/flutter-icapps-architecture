@@ -4,10 +4,11 @@ class StreamControllerWithInitialValue<T> implements StreamController<T> {
   late final StreamController<T> _streamController;
 
   var hasValue = false;
-  
+
   T? value;
 
   StreamControllerWithInitialValue({
+    this.value,
     void Function()? onListen,
     void Function()? onCancel,
     bool sync = false,
@@ -20,6 +21,7 @@ class StreamControllerWithInitialValue<T> implements StreamController<T> {
   }
 
   StreamControllerWithInitialValue.broadcast({
+    this.value,
     void Function()? onListen,
     void Function()? onCancel,
     bool sync = false,
