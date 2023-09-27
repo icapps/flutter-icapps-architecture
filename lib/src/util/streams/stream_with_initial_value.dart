@@ -43,11 +43,7 @@ class StreamControllerWithInitialValue<T> implements StreamController<T> {
     bool? cancelOnError,
   }) {
     final subscription = _streamController.stream.listen(
-      (data) {
-        value = data;
-        hasValue = true;
-        onData.call(data);
-      },
+      onData,
       onError: onError,
       onDone: onDone,
       cancelOnError: cancelOnError,
@@ -86,7 +82,10 @@ class StreamControllerWithInitialValue<T> implements StreamController<T> {
   }
 
   @override
-  void add(T event) => _streamController.add(event);
+  void add(T event) {
+    _setValue(event);
+    _streamController.add(event);
+  }
 
   @override
   void addError(Object error, [StackTrace? stackTrace]) => _streamController.addError(error, stackTrace);
@@ -114,4 +113,9 @@ class StreamControllerWithInitialValue<T> implements StreamController<T> {
 
   @override
   Stream<T> get stream => _streamController.stream;
+
+  void _setValue(T value) {
+    this.value = value;
+    hasValue = true;
+  }
 }

@@ -13,24 +13,24 @@ void main() {
       });
     });
 
-    test('Test stream with multiple values', () {
-      final streamController = StreamControllerWithInitialValue<int>.broadcast();
-      streamController.add(1);
-      var subscription = streamController.listen((value) {
-        expect(value, 1);
-        expect(streamController.value, 1);
+    test('Test stream with multiple value', () async {
+      final streamController = StreamControllerWithInitialValue<int>();
+      var testValue = 1;
+      streamController.add(testValue);
+      streamController.listen((value) {
+        expect(value, testValue);
       });
-      subscription.cancel();
-
-      streamController.add(2);
-      streamController.add(3);
-      streamController.add(4);
-
-      subscription = streamController.listen((value) {
-        expect(value, 4);
-        expect(streamController.value, 4);
-        streamController.close();
-      });
+      // waiting to execute the listen before continuing
+      await Future.value();
+      testValue = 2;
+      streamController.add(testValue);
+      await Future.value();
+      expect(streamController.value, testValue);
+      testValue = 3;
+      streamController.add(testValue);
+      await Future.value();
+      expect(streamController.value, testValue);
+      streamController.close();
     });
 
     test('Test can not listen multiple times to non-broadcast stream', () {
@@ -50,7 +50,7 @@ void main() {
       streamController.close();
     });
 
-    test('Test stream without value in constructor', () {
+    test('Test stream with value in constructor', () {
       final streamController = StreamControllerWithInitialValue<int>(value: 1);
       expect(streamController.value, 1);
       streamController.listen((value) {
