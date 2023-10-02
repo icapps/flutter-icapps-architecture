@@ -1,4 +1,8 @@
 # Changelog
+## [2.1.1] - 2023-10-02
+### Added
+- StreamControllerWithInitialValue
+
 ## [2.1.0] - 2023-07-13
 ### Updated
 - Dependencies
