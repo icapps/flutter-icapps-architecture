@@ -9,7 +9,8 @@ class StreamBuilderTestScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ProviderWidget<StreamTestViewModel>(
       create: () => StreamTestViewModel()..init(),
-      childBuilderWithViewModel: (context, viewModel, theme, localization) => Scaffold(
+      childBuilderWithViewModel: (context, viewModel, theme, localization) =>
+          Scaffold(
         appBar: AppBar(
           title: Text('Counter'),
         ),
@@ -24,7 +25,10 @@ class StreamBuilderTestScreen extends StatelessWidget {
                 stream: viewModel.counterStream,
                 builder: (context, snapshot) => Text(
                   '${snapshot.data}',
-                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: theme.baseColor),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineMedium!
+                      .copyWith(color: theme.baseColor),
                 ),
               ),
               TextButton(

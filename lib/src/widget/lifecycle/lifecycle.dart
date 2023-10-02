@@ -36,7 +36,8 @@ class LifecycleWidget extends StatefulWidget {
   _LifecycleWidgetState createState() => _LifecycleWidgetState();
 }
 
-class _LifecycleWidgetState extends State<LifecycleWidget> with WidgetsBindingObserver {
+class _LifecycleWidgetState extends State<LifecycleWidget>
+    with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();

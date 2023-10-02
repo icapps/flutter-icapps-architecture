@@ -9,7 +9,8 @@ class CounterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ProviderWidget<CounterViewModel>(
       create: () => CounterViewModel(),
-      childBuilderWithViewModel: (context, viewModel, theme, localization) => Scaffold(
+      childBuilderWithViewModel: (context, viewModel, theme, localization) =>
+          Scaffold(
         appBar: AppBar(
           title: Text('Counter'),
         ),
@@ -22,7 +23,10 @@ class CounterScreen extends StatelessWidget {
               ),
               Text(
                 '${viewModel.current}',
-                style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: theme.baseColor),
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineMedium!
+                    .copyWith(color: theme.baseColor),
               ),
             ],
           ),

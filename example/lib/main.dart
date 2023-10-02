@@ -73,7 +73,8 @@ class MyHomePage extends StatelessWidget {
               color: Colors.blue,
               textColor: Colors.white,
               child: Text('Stream builder with initial value example'),
-              onPressed: () => Navigator.of(context).pushNamed('stream_builder_test'),
+              onPressed: () =>
+                  Navigator.of(context).pushNamed('stream_builder_test'),
             ),
           ],
         ),

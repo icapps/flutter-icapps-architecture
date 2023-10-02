@@ -72,10 +72,12 @@ class StreamControllerWithInitialValue<T> implements StreamController<T> {
   }
 
   @override
-  void addError(Object error, [StackTrace? stackTrace]) => _streamController.addError(error, stackTrace);
+  void addError(Object error, [StackTrace? stackTrace]) =>
+      _streamController.addError(error, stackTrace);
 
   @override
-  Future addStream(Stream<T> source, {bool? cancelOnError}) => _streamController.addStream(source, cancelOnError: cancelOnError);
+  Future addStream(Stream<T> source, {bool? cancelOnError}) =>
+      _streamController.addStream(source, cancelOnError: cancelOnError);
 
   @override
   Future close() => _streamController.close();

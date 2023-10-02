@@ -33,7 +33,8 @@ void main() {
       streamController.close();
     });
 
-    test('Test can not listen multiple times to non-broadcast stream', () async {
+    test('Test can not listen multiple times to non-broadcast stream',
+        () async {
       final streamController = StreamControllerWithInitialValue<int>();
       dynamic error;
       try {
@@ -50,7 +51,8 @@ void main() {
       expect(error, isNotNull);
       expect(error, isA<StateError>());
       if (error is Exception) {
-        expect(error.toString(), 'StateError:<Bad state: Stream has already been listened to.');
+        expect(error.toString(),
+            'StateError:<Bad state: Stream has already been listened to.');
       }
       streamController.close();
     });
