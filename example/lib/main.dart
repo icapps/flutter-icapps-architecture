@@ -1,4 +1,5 @@
 import 'package:example/screen/counter_screen.dart';
+import 'package:example/screen/stream_builder_test_screen.dart';
 import 'package:example/screen/stream_test_screen.dart';
 import 'package:example/theme/theme.dart';
 import 'package:example/util/locale/localization.dart';
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
       routes: {
         'counter': (context) => CounterScreen(),
         'stream_test': (context) => StreamTestScreen(),
+        'stream_builder_test': (context) => StreamBuilderTestScreen(),
       },
     );
   }
@@ -66,6 +68,12 @@ class MyHomePage extends StatelessWidget {
               textColor: Colors.white,
               child: Text('Stream with initial value example'),
               onPressed: () => Navigator.of(context).pushNamed('stream_test'),
+            ),
+            MaterialButton(
+              color: Colors.blue,
+              textColor: Colors.white,
+              child: Text('Stream builder with initial value example'),
+              onPressed: () => Navigator.of(context).pushNamed('stream_builder_test'),
             ),
           ],
         ),

@@ -6,7 +6,7 @@ void main() {
     test('Test stream with initial value', () {
       final streamController = StreamControllerWithInitialValue<int>();
       streamController.add(1);
-      streamController.listen((value) {
+      streamController.stream.listen((value) {
         expect(value, 1);
         expect(streamController.value, 1);
         streamController.close();
@@ -17,28 +17,33 @@ void main() {
       final streamController = StreamControllerWithInitialValue<int>();
       var testValue = 1;
       streamController.add(testValue);
-      streamController.listen((value) {
+      streamController.stream.listen((value) {
         expect(value, testValue);
       });
       // waiting to execute the listen before continuing
-      await Future.value();
+      await Future.delayed(Duration(milliseconds: 10));
       testValue = 2;
       streamController.add(testValue);
-      await Future.value();
+      await Future.delayed(Duration(milliseconds: 10));
       expect(streamController.value, testValue);
       testValue = 3;
       streamController.add(testValue);
-      await Future.value();
+      await Future.delayed(Duration(milliseconds: 10));
       expect(streamController.value, testValue);
       streamController.close();
     });
 
-    test('Test can not listen multiple times to non-broadcast stream', () {
+    test('Test can not listen multiple times to non-broadcast stream', () async {
       final streamController = StreamControllerWithInitialValue<int>();
       dynamic error;
       try {
-        streamController.listen((value) {});
-        streamController.listen((value) {});
+        var hasFirstValue = false;
+        streamController.stream.listen((value) {});
+        await for (final _ in streamController.stream) {
+          if (hasFirstValue) break;
+          hasFirstValue = true;
+          streamController.add(1);
+        }
       } catch (e) {
         error = e;
       }
@@ -53,7 +58,7 @@ void main() {
     test('Test stream with value in constructor', () {
       final streamController = StreamControllerWithInitialValue<int>(value: 1);
       expect(streamController.value, 1);
-      streamController.listen((value) {
+      streamController.stream.listen((value) {
         expect(value, 1);
         streamController.close();
       });

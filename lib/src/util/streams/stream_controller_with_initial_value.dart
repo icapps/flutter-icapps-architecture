@@ -36,22 +36,6 @@ class StreamControllerWithInitialValue<T> implements StreamController<T> {
   @override
   FutureOr<void> Function()? get onCancel => _streamController.onCancel;
 
-  StreamSubscription<T> listen(
-    void Function(T value) onData, {
-    Function? onError,
-    void Function()? onDone,
-    bool? cancelOnError,
-  }) {
-    final subscription = _streamController.stream.listen(
-      onData,
-      onError: onError,
-      onDone: onDone,
-      cancelOnError: cancelOnError,
-    );
-    if (hasValue) onData.call(value!);
-    return subscription;
-  }
-
   @override
   set onCancel(FutureOr<void> Function()? onCancelHandler) {
     _streamController.onCancel = onCancelHandler;
@@ -111,8 +95,12 @@ class StreamControllerWithInitialValue<T> implements StreamController<T> {
   @override
   StreamSink<T> get sink => _streamController.sink;
 
-  @override
-  Stream<T> get stream => _streamController.stream;
+  Stream<T> get stream async* {
+    if (value is T) yield value as T;
+    await for (final value in _streamController.stream) {
+      yield value;
+    }
+  }
 
   void _setValue(T value) {
     this.value = value;

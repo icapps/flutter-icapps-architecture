@@ -23,7 +23,7 @@ export 'src/util/preferences/preferences_storage.dart';
 export 'src/util/restorable/bundle.dart';
 export 'src/util/restorable/restorable.dart';
 export 'src/util/storage/simple_key_value_storage.dart';
-export 'src/util/streams/stream_with_initial_value.dart';
+export 'src/util/streams/stream_controller_with_initial_value.dart';
 export 'src/viewmodel/restorable.dart';
 export 'src/widget/lifecycle/lifecycle.dart';
 export 'src/widget/mixin/after_layout.dart';

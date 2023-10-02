@@ -1,10 +1,12 @@
 import 'package:icapps_architecture/icapps_architecture.dart';
 
 class StreamTestViewModel with ChangeNotifierEx {
-  final _counterStream = StreamControllerWithInitialValue<int>.broadcast();
+  final _counterStream = StreamControllerWithInitialValue<int>.broadcast(value: 0);
   var _current = 0;
 
   int get current => _current;
+
+  Stream get counterStream => _counterStream.stream;
 
   void init() {
     addStream();
@@ -18,7 +20,7 @@ class StreamTestViewModel with ChangeNotifierEx {
 
   void onIncrementTapped() => _counterStream.add(_current + 1);
 
-  void addStream() => registerDisposeStream(_counterStream.listen(_onCounterUpdated));
+  void addStream() => registerDisposeStream(_counterStream.stream.listen(_onCounterUpdated));
 
   @override
   void dispose() {
