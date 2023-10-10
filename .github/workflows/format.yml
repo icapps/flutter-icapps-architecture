@@ -1,4 +1,4 @@
-name: Analyzer
+name: Format
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  analyzer:
+  format:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v3
@@ -15,4 +15,4 @@ jobs:
       with:
         channel: 'stable'
     - run: flutter packages get
-    - run: flutter analyze
+    - run: dart format . --set-exit-if-changed
