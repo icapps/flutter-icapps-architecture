@@ -25,7 +25,7 @@ void main(List<String> args) {
   } else if (codeCoveragePercentage >= minRequiredCoverage) {
     printMessage('COVERAGE IS ${codeCoveragePercentage.toStringAsFixed(2)}%\n');
     printMessage(
-        'TIS IS ABOVE THE MIN REQUIRED TARGET of $minRequiredCoverage%\n');
+        'THIS IS ABOVE THE MIN REQUIRED TARGET of $minRequiredCoverage%\n');
   } else {
     printMessage('\nCODE COVERAGE IS TO LOW!!\n');
     printMessage('COVERAGE IS ${codeCoveragePercentage.toStringAsFixed(2)}%\n');
