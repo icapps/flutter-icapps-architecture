@@ -5,6 +5,20 @@ import 'package:logger/logger.dart';
 
 import 'impl/LoggerPrinter.dart';
 
+class LoggingConfiguration {
+  final bool shouldLogNetworkInfo;
+  final bool isEnabled;
+  final Level loggingLevel;
+  final ValueChanged<String> onLog;
+
+  LoggingConfiguration({
+    required this.shouldLogNetworkInfo,
+    required this.onLog,
+    this.isEnabled = true,
+    this.loggingLevel = Level.verbose,
+  });
+}
+
 abstract class Log {
   void verbose(String message, {dynamic error, StackTrace? trace});
 
@@ -51,14 +65,20 @@ class LoggingFactory {
   static Log? _instance;
 
   static Log provide() {
-    return _instance ?? reset();
+    return _instance ??
+        configure(
+          LoggingConfiguration(
+            shouldLogNetworkInfo: false,
+            onLog: (_) {},
+          ),
+        );
   }
 
-  static Log reset({bool enabled = isInDebug, bool logNetworkInfo = false}) {
-    return resetWithLogger(enabled
+  static Log configure(LoggingConfiguration configuration) {
+    return resetWithLogger(configuration.isEnabled
         ? LoggerLogImpl(
-            _makeLogger(),
-            logNetworkInfo: logNetworkInfo,
+            _makeLogger(configuration),
+            logNetworkInfo: configuration.shouldLogNetworkInfo,
           )
         : VoidLogger());
   }
@@ -67,10 +87,14 @@ class LoggingFactory {
     return _instance = logger;
   }
 
-  static Logger _makeLogger() {
+  static Logger _makeLogger(LoggingConfiguration configuration) {
     return Logger(
       printer: _makeLogPrinter(),
-      output: WrappingOutput(print),
+      output: WrappingOutput((line) {
+        if (isInDebug) print(line);
+        configuration.onLog(line);
+      }),
+      level: configuration.loggingLevel,
     );
   }
 

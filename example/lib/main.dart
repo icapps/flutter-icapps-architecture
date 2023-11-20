@@ -1,4 +1,5 @@
 import 'package:example/screen/counter_screen.dart';
+import 'package:example/screen/logger_screen.dart';
 import 'package:example/screen/stream_builder_test_screen.dart';
 import 'package:example/screen/stream_test_screen.dart';
 import 'package:example/theme/theme.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
         'counter': (context) => CounterScreen(),
         'stream_test': (context) => StreamTestScreen(),
         'stream_builder_test': (context) => StreamBuilderTestScreen(),
+        'logger': (context) => LoggerScreen(),
       },
     );
   }
@@ -62,6 +64,12 @@ class MyHomePage extends StatelessWidget {
               textColor: Colors.white,
               child: Text('Counter example'),
               onPressed: () => Navigator.of(context).pushNamed('counter'),
+            ),
+            MaterialButton(
+              color: Colors.blue,
+              textColor: Colors.white,
+              child: Text('Logger example'),
+              onPressed: () => Navigator.of(context).pushNamed('logger'),
             ),
             MaterialButton(
               color: Colors.blue,
