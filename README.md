@@ -119,6 +119,7 @@ Waits for n futures and returns a future containing a [TupleN] with the results 
 
 ### Logger
 Send logs, via the `staticLogger` or `logger`
+Extra configuration can be added using `LoggingFactory.configure`
 You can specific when you you want to actually print something using the `Level`
 - `void debug(String message, {dynamic error, StackTrace? trace})`
 - `void info(String message, {dynamic error, StackTrace? trace})`

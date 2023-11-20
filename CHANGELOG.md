@@ -1,4 +1,8 @@
 # Changelog
+## [2.1.2] - 2023-11-20
+### Added
+- Added extra configuration options to the logger, including ability to add a callback.
+
 ## [2.1.1] - 2023-10-02
 ### Added
 - StreamControllerWithInitialValue

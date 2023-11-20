@@ -5,6 +5,22 @@ import 'package:logger/logger.dart';
 
 import 'impl/LoggerPrinter.dart';
 
+class LoggingConfiguration {
+  final bool shouldLogNetworkInfo;
+  final bool isEnabled;
+  final bool printTime;
+  final Level loggingLevel;
+  final ValueChanged<String>? onLog;
+
+  LoggingConfiguration({
+    this.shouldLogNetworkInfo = false,
+    this.printTime = true,
+    this.onLog,
+    this.isEnabled = true,
+    this.loggingLevel = Level.verbose,
+  });
+}
+
 abstract class Log {
   void verbose(String message, {dynamic error, StackTrace? trace});
 
@@ -51,14 +67,14 @@ class LoggingFactory {
   static Log? _instance;
 
   static Log provide() {
-    return _instance ?? reset();
+    return _instance ?? configure(LoggingConfiguration());
   }
 
-  static Log reset({bool enabled = isInDebug, bool logNetworkInfo = false}) {
-    return resetWithLogger(enabled
+  static Log configure(LoggingConfiguration configuration) {
+    return resetWithLogger(configuration.isEnabled
         ? LoggerLogImpl(
-            _makeLogger(),
-            logNetworkInfo: logNetworkInfo,
+            _makeLogger(configuration),
+            logNetworkInfo: configuration.shouldLogNetworkInfo,
           )
         : VoidLogger());
   }
@@ -67,21 +83,25 @@ class LoggingFactory {
     return _instance = logger;
   }
 
-  static Logger _makeLogger() {
+  static Logger _makeLogger(LoggingConfiguration configuration) {
     return Logger(
-      printer: _makeLogPrinter(),
-      output: WrappingOutput(print),
+      printer: _makeLogPrinter(configuration),
+      output: WrappingOutput((line) {
+        if (isInDebug) print(line);
+        configuration.onLog?.call(line);
+      }),
+      level: configuration.loggingLevel,
     );
   }
 
-  static LogPrinter _makeLogPrinter() {
+  static LogPrinter _makeLogPrinter(LoggingConfiguration configuration) {
     return OurPrettyPrinter(
       methodCount: 0,
       errorMethodCount: 5,
       lineLength: 50,
       colors: isDeviceAndroid,
       printEmojis: true,
-      printTime: true,
+      printTime: configuration.printTime,
     );
   }
 }
