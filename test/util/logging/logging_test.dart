@@ -87,6 +87,14 @@ void main() {
 }
 
 void testWithLogger() {
+  void _logAllLevels() {
+    staticLogger.v('Verbose message');
+    staticLogger.d('Debug message');
+    staticLogger.i('Info message');
+    staticLogger.w('Warning message');
+    staticLogger.e('Error message');
+  }
+
   group('Logging tests', () {
     test('Test get logger, unset', () {
       expect(staticLogger, isInstanceOf<LoggerLogImpl>());
@@ -95,34 +103,103 @@ void testWithLogger() {
       LoggingFactory.resetWithLogger(VoidLogger());
       expect(staticLogger, isInstanceOf<VoidLogger>());
     });
-    test('Test get logger, reset disable', () {
-      LoggingFactory.reset(enabled: false);
+    test('Test get logger, configure disable', () {
+      LoggingFactory.configure(LoggingConfiguration(isEnabled: false));
       expect(staticLogger, isInstanceOf<VoidLogger>());
     });
-    test('Test get logger, reset enable', () {
-      LoggingFactory.reset(enabled: true);
+    test('Test get logger, configure enable', () {
+      LoggingFactory.configure(LoggingConfiguration(isEnabled: true));
       expect(staticLogger, isInstanceOf<LoggerLogImpl>());
     });
     test('Test logger methods default', () {
-      final buffer = MemoryOutput();
-      LoggingFactory.resetWithLogger(LoggerLogImpl(
-          Logger(
-            printer: SimplePrinter(printTime: false, colors: false),
-            output: buffer,
-          ),
-          logNetworkInfo: false));
-      staticLogger.v('Verbose message');
-      staticLogger.d('Debug message');
-      staticLogger.i('Info message');
-      staticLogger.w('Warning message');
-      staticLogger.e('Error message');
-      final messages = buffer.buffer.toList(growable: false);
-      expect(messages[0].lines[0], '[V]  Verbose message');
-      expect(messages[1].lines[0], '[D]  Debug message');
-      expect(messages[2].lines[0], '[I]  Info message');
-      expect(messages[3].lines[0], '[W]  Warning message');
-      expect(messages[4].lines[0], '[E]  Error message');
+      final buffer = <String>[];
+      LoggingFactory.configure(LoggingConfiguration(
+        printTime: false,
+        shouldLogNetworkInfo: false,
+        onLog: (logLine) => buffer.add(logLine),
+      ));
+      _logAllLevels();
+      expect(buffer[0], ' Verbose message');
+      expect(buffer[1], ' 🐛 Debug message');
+      expect(buffer[2], ' 💡 Info message');
+      expect(buffer[3], ' ⚠️ Warning message');
+      expect(buffer[4], ' ⛔ Error message');
     });
+
+    void _testLogLevel({
+      required Level logLevel,
+      required Function(List<String> messages) expectLogs,
+    }) {
+      final buffer = <String>[];
+      LoggingFactory.configure(LoggingConfiguration(
+        printTime: false,
+        shouldLogNetworkInfo: false,
+        loggingLevel: logLevel,
+        onLog: (logLine) => buffer.add(logLine),
+      ));
+      _logAllLevels();
+      expectLogs(buffer);
+    }
+
+    test(
+      'Test logger level verbose',
+      () => _testLogLevel(
+        logLevel: Level.verbose,
+        expectLogs: (messages) {
+          expect(messages[0], ' Verbose message');
+          expect(messages[1], ' 🐛 Debug message');
+          expect(messages[2], ' 💡 Info message');
+          expect(messages[3], ' ⚠️ Warning message');
+          expect(messages[4], ' ⛔ Error message');
+        },
+      ),
+    );
+
+    test(
+      'Test logger level debug',
+      () => _testLogLevel(
+        logLevel: Level.debug,
+        expectLogs: (messages) {
+          expect(messages[0], ' 🐛 Debug message');
+          expect(messages[1], ' 💡 Info message');
+          expect(messages[2], ' ⚠️ Warning message');
+          expect(messages[3], ' ⛔ Error message');
+        },
+      ),
+    );
+    test(
+      'Test logger level info',
+      () => _testLogLevel(
+        logLevel: Level.info,
+        expectLogs: (messages) {
+          expect(messages[0], ' 💡 Info message');
+          expect(messages[1], ' ⚠️ Warning message');
+          expect(messages[2], ' ⛔ Error message');
+        },
+      ),
+    );
+
+    test(
+      'Test logger level warning',
+      () => _testLogLevel(
+        logLevel: Level.warning,
+        expectLogs: (messages) {
+          expect(messages[0], ' ⚠️ Warning message');
+          expect(messages[1], ' ⛔ Error message');
+        },
+      ),
+    );
+
+    test(
+      'Test logger level error',
+      () => _testLogLevel(
+        logLevel: Level.error,
+        expectLogs: (messages) {
+          expect(messages[0], ' ⛔ Error message');
+        },
+      ),
+    );
+
     test('Test logger methods void', () {
       LoggingFactory.resetWithLogger(VoidLogger());
       staticLogger.v('Verbose message');
@@ -280,28 +357,25 @@ void testWithLogger() {
   });
   group('Test network logging', () {
     test('Test logger network disabled', () {
-      final buffer = MemoryOutput();
-      LoggingFactory.resetWithLogger(LoggerLogImpl(
-          Logger(
-            printer: SimplePrinter(printTime: false, colors: false),
-            output: buffer,
-          ),
-          logNetworkInfo: false));
+      final buffer = <String>[];
+      LoggingFactory.configure(LoggingConfiguration(
+        shouldLogNetworkInfo: false,
+        onLog: (logLine) => buffer.add(logLine),
+      ));
       staticLogger.logNetworkRequest(RequestOptions(path: '/'));
       staticLogger.logNetworkResponse(
           Response(requestOptions: RequestOptions(path: '/')));
       staticLogger.logNetworkError(MockNetworkError(
           DioException(requestOptions: RequestOptions(path: '/'))));
-      expect(buffer.buffer.isEmpty, true);
+      expect(buffer.isEmpty, true);
     });
     test('Test logger network enabled', () {
-      final buffer = MemoryOutput();
-      LoggingFactory.resetWithLogger(LoggerLogImpl(
-          Logger(
-            printer: SimplePrinter(printTime: false, colors: false),
-            output: buffer,
-          ),
-          logNetworkInfo: true));
+      final buffer = <String>[];
+      LoggingFactory.configure(LoggingConfiguration(
+        shouldLogNetworkInfo: true,
+        printTime: false,
+        onLog: (logLine) => buffer.add(logLine),
+      ));
       staticLogger.logNetworkRequest(
           RequestOptions(path: '/', baseUrl: 'https://www.example.com'));
       staticLogger.logNetworkResponse(Response(
@@ -328,19 +402,26 @@ void testWithLogger() {
                   RequestOptions(path: '/', baseUrl: 'https://www.example.com'),
               statusCode: 404))));
 
-      final messages = buffer.buffer.toList(growable: false);
-      expect(messages[0].lines[0],
-          '[D]  ---------------> GET - url: https://www.example.com/');
-      expect(messages[1].lines[0],
-          '[D]  <--------------- GET - url: https://www.example.com/ - status code: N/A');
-      expect(messages[2].lines[0],
-          '[D]  <--------------- GET - url: https://www.example.com/ - status code: 404');
-      expect(messages[3].lines[0],
-          '[E]  request | GET - url: https://www.example.com/\nmessage | \n<--------------- GET - url: https://www.example.com/ - status code: N/A\n');
-      expect(messages[4].lines[0],
-          '[E]  response.data | null\nresponse.headers | \n<--------------- GET - url: https://www.example.com/ - status code: N/A\n');
-      expect(messages[5].lines[0],
-          '[E]  response.data | null\nresponse.headers | \n<--------------- GET - url: https://www.example.com/ - status code: 404\n');
+      expect(buffer[0],
+          ' 🐛 ---------------> GET - url: https://www.example.com/');
+      expect(buffer[1],
+          ' 🐛 <--------------- GET - url: https://www.example.com/ - status code: N/A');
+      expect(buffer[2],
+          ' 🐛 <--------------- GET - url: https://www.example.com/ - status code: 404');
+      expect(buffer[3], ' ⛔ request | GET - url: https://www.example.com/');
+      expect(buffer[4], ' ⛔ message | ');
+      expect(buffer[5],
+          ' ⛔ <--------------- GET - url: https://www.example.com/ - status code: N/A');
+      expect(buffer[6], ' ⛔ ');
+      expect(buffer[7], ' ⛔ response.data | null');
+      expect(buffer[8], ' ⛔ response.headers | ');
+      expect(buffer[9],
+          ' ⛔ <--------------- GET - url: https://www.example.com/ - status code: N/A');
+      expect(buffer[10], ' ⛔ ');
+      expect(buffer[11], ' ⛔ response.data | null');
+      expect(buffer[12], ' ⛔ response.headers | ');
+      expect(buffer[13],
+          ' ⛔ <--------------- GET - url: https://www.example.com/ - status code: 404');
     });
   });
 }
