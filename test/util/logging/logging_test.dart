@@ -251,6 +251,8 @@ void testWithLogger() {
           matches(' \\d+:\\d+:\\d+\\.\\d+\\s+💡 Info message'));
       expect(messages[3].lines.join(" "),
           matches(' \\d+:\\d+:\\d+\\.\\d+\\s+⚠️ Warning message'));
+      expect(messages[4].lines[0],
+          matches(' \\d+:\\d+:\\d+\\.\\d+\\s+⛔ Error message'));
       expect(messages[4].lines[1],
           matches('\\d+:\\d+:\\d+\\.\\d+\\s+Invalid argument\\(s\\)'));
       expect(
@@ -262,11 +264,9 @@ void testWithLogger() {
       expect(
           messages[4].lines[4],
           matches(
-              '\\d+:\\d+:\\d+\\.\\d+\\s+#2   StackZoneSpecification._registerUnaryCallback.<anonymous closure> \\(package:stack_trace/src/stack_zone_specification.dart:\\d+:\\d+\\)'));
+              '\\d+:\\d+:\\d+\\.\\d+\\s+#2   Declarer.test.<anonymous closure> \\(package:test_api/src/backend/declarer.dart:\\d+:\\d+\\)'));
       expect(messages[4].lines[5],
           matches('\\d+:\\d+:\\d+\\.\\d+\\s+#3   <asynchronous suspension>'));
-      expect(messages[4].lines[0],
-          matches(' \\d+:\\d+:\\d+\\.\\d+\\s+⛔ Error message'));
     });
     test('Test logger methods default pretty include method', () {
       final buffer = MemoryOutput();
