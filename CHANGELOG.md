@@ -1,4 +1,8 @@
 # Changelog
+## [2.1.3] - 2024-01-31
+### Added
+- Updated TouchFeedBack android implementation
+
 ## [2.1.2] - 2023-11-20
 ### Added
 - Added extra configuration options to the logger, including ability to add a callback.
