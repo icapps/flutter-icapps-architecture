@@ -37,20 +37,20 @@ class _TouchFeedBackState extends State<TouchFeedBack> {
   @override
   Widget build(BuildContext context) {
     if (context.isAndroidTheme) {
-      return ClipRRect(
-        borderRadius: widget.borderRadius ?? BorderRadius.zero,
-        child: Stack(
-          alignment: AlignmentDirectional.center,
-          children: [
-            Material(
-              color: widget.color,
-              borderRadius: widget.borderRadius,
-              shadowColor: widget.shadowColor,
-              elevation: widget.elevation,
-              shape: widget.shapeBorder,
-              child: widget.child,
-            ),
-            Positioned.fill(
+      return Stack(
+        alignment: AlignmentDirectional.center,
+        children: [
+          Material(
+            color: widget.color,
+            borderRadius: widget.borderRadius,
+            shadowColor: widget.shadowColor,
+            elevation: widget.elevation,
+            shape: widget.shapeBorder,
+            child: widget.child,
+          ),
+          Positioned.fill(
+            child: ClipRRect(
+              borderRadius: widget.borderRadius ?? BorderRadius.zero,
               child: TouchFeedBackAndroid(
                 child: Container(color: Colors.transparent),
                 onClick: widget.onClick,
@@ -60,8 +60,8 @@ class _TouchFeedBackState extends State<TouchFeedBack> {
                 androidSplashColor: widget.androidSplashColor,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       );
     }
     return TouchFeedBackIOS(
