@@ -2,6 +2,7 @@ import 'package:example/screen/counter_screen.dart';
 import 'package:example/screen/logger_screen.dart';
 import 'package:example/screen/stream_builder_test_screen.dart';
 import 'package:example/screen/stream_test_screen.dart';
+import 'package:example/screen/touch_screen.dart';
 import 'package:example/theme/theme.dart';
 import 'package:example/util/locale/localization.dart';
 import 'package:example/util/locale/localization_delegate.dart';
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
       ),
       home: MyHomePage(),
       routes: {
+        'touch': (context) => TouchScreen(),
         'counter': (context) => CounterScreen(),
         'stream_test': (context) => StreamTestScreen(),
         'stream_builder_test': (context) => StreamBuilderTestScreen(),
@@ -62,6 +64,12 @@ class MyHomePage extends StatelessWidget {
             MaterialButton(
               color: Colors.blue,
               textColor: Colors.white,
+              child: Text('Touch example'),
+              onPressed: () => Navigator.of(context).pushNamed('touch'),
+            ),
+            MaterialButton(
+              color: Colors.blue,
+              textColor: Colors.white,
               child: Text('Counter example'),
               onPressed: () => Navigator.of(context).pushNamed('counter'),
             ),
@@ -81,8 +89,7 @@ class MyHomePage extends StatelessWidget {
               color: Colors.blue,
               textColor: Colors.white,
               child: Text('Stream builder with initial value example'),
-              onPressed: () =>
-                  Navigator.of(context).pushNamed('stream_builder_test'),
+              onPressed: () => Navigator.of(context).pushNamed('stream_builder_test'),
             ),
           ],
         ),

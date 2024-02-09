@@ -15,6 +15,8 @@ class TouchFeedBack extends StatefulWidget {
   final Color? shadowColor;
   final ShapeBorder? shapeBorder;
   final Color? androidSplashColor;
+  final bool forceAndroid;
+  final bool forceIOS;
 
   const TouchFeedBack({
     required this.child,
@@ -26,6 +28,8 @@ class TouchFeedBack extends StatefulWidget {
     this.shadowColor,
     this.shapeBorder,
     this.androidSplashColor,
+    this.forceAndroid = false,
+    this.forceIOS = false,
     super.key,
   });
 
@@ -36,32 +40,17 @@ class TouchFeedBack extends StatefulWidget {
 class _TouchFeedBackState extends State<TouchFeedBack> {
   @override
   Widget build(BuildContext context) {
-    if (context.isAndroidTheme) {
-      return Stack(
-        alignment: AlignmentDirectional.center,
-        children: [
-          Material(
-            color: widget.color,
-            borderRadius: widget.borderRadius,
-            shadowColor: widget.shadowColor,
-            elevation: widget.elevation,
-            shape: widget.shapeBorder,
-            child: widget.child,
-          ),
-          Positioned.fill(
-            child: ClipRRect(
-              borderRadius: widget.borderRadius ?? BorderRadius.zero,
-              child: TouchFeedBackAndroid(
-                child: Container(color: Colors.transparent),
-                onClick: widget.onClick,
-                semanticsLabel: widget.semanticsLabel,
-                borderRadius: widget.borderRadius,
-                shapeBorder: widget.shapeBorder,
-                androidSplashColor: widget.androidSplashColor,
-              ),
-            ),
-          ),
-        ],
+    if ((!widget.forceIOS && context.isAndroidTheme) || widget.forceAndroid) {
+      return ClipRRect(
+        borderRadius: widget.borderRadius ?? BorderRadius.zero,
+        child: TouchFeedBackAndroid(
+          onClick: widget.onClick,
+          semanticsLabel: widget.semanticsLabel,
+          borderRadius: widget.borderRadius,
+          shapeBorder: widget.shapeBorder,
+          androidSplashColor: widget.androidSplashColor,
+          child: widget.child,
+        ),
       );
     }
     return TouchFeedBackIOS(
@@ -112,15 +101,10 @@ class TouchFeedBackAndroid extends StatelessWidget {
         elevation: elevation,
         shadowColor: shadowColor,
         borderRadius: borderRadius,
-        child: onClick == null
-            ? child
-            : InkWell(
-                customBorder: shapeBorder,
-                borderRadius: borderRadius,
-                splashColor: androidSplashColor,
-                onTap: onClick,
-                child: child,
-              ),
+        child: BetterInkwell(
+          onTap: onClick,
+          child: child,
+        ),
       ),
     );
   }
