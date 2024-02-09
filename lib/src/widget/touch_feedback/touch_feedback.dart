@@ -100,6 +100,7 @@ class TouchFeedBackAndroid extends StatelessWidget {
         shadowColor: shadowColor,
         borderRadius: borderRadius,
         child: BetterInkwell(
+          borderRadius: borderRadius,
           onTap: onClick,
           child: child,
         ),
