@@ -41,16 +41,14 @@ class _TouchFeedBackState extends State<TouchFeedBack> {
   @override
   Widget build(BuildContext context) {
     if ((!widget.forceIOS && context.isAndroidTheme) || widget.forceAndroid) {
-      return ClipRRect(
-        borderRadius: widget.borderRadius ?? BorderRadius.zero,
-        child: TouchFeedBackAndroid(
-          onClick: widget.onClick,
-          semanticsLabel: widget.semanticsLabel,
-          borderRadius: widget.borderRadius,
-          shapeBorder: widget.shapeBorder,
-          androidSplashColor: widget.androidSplashColor,
-          child: widget.child,
-        ),
+      return TouchFeedBackAndroid(
+        onClick: widget.onClick,
+        semanticsLabel: widget.semanticsLabel,
+        borderRadius: widget.borderRadius,
+        elevation: widget.elevation,
+        shapeBorder: widget.shapeBorder,
+        androidSplashColor: widget.androidSplashColor,
+        child: widget.child,
       );
     }
     return TouchFeedBackIOS(
