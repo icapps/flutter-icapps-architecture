@@ -24,7 +24,8 @@ class BetterInkwell extends StatefulWidget {
   State<BetterInkwell> createState() => _BetterInkwellState();
 }
 
-class _BetterInkwellState extends State<BetterInkwell> with SingleTickerProviderStateMixin {
+class _BetterInkwellState extends State<BetterInkwell>
+    with SingleTickerProviderStateMixin {
   var _isTouched = false;
   var _touchPosition = Offset.zero;
   static const durationSeconds = 10;
@@ -68,7 +69,8 @@ class _BetterInkwellState extends State<BetterInkwell> with SingleTickerProvider
     do {
       ancestor?.ignoreTouch = true;
       if (!mounted) return;
-      ancestor = ancestor?.context.findAncestorStateOfType<_BetterInkwellState>();
+      ancestor =
+          ancestor?.context.findAncestorStateOfType<_BetterInkwellState>();
     } while (ancestor != null);
   }
 
@@ -161,5 +163,8 @@ class _RipplePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => oldDelegate is! _RipplePainter || oldDelegate.center != center || oldDelegate.radius != radius;
+  bool shouldRepaint(covariant CustomPainter oldDelegate) =>
+      oldDelegate is! _RipplePainter ||
+      oldDelegate.center != center ||
+      oldDelegate.radius != radius;
 }
