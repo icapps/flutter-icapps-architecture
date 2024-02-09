@@ -1,7 +1,8 @@
 # Changelog
+## [2.1.4+2] - 2024-02-09
 ## [2.1.4+1] - 2024-02-09
-### Fixed
-- Issue where android clips outside of the TouchFeedback widget (breaking shadows etc)
+### Changed
+-  Issue where android clips outside of the TouchFeedback widget (breaking shadows etc)
 
 ## [2.1.4] - 2024-02-09
 ### Added
