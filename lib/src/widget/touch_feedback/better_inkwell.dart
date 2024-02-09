@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class BetterInkwell extends StatefulWidget {
+  final Color color;
   final Color colorHover;
   final Color colorPress;
   final Widget child;
@@ -15,6 +16,7 @@ class BetterInkwell extends StatefulWidget {
     this.borderRadius,
     this.colorHover = const Color(0x0A000000),
     this.colorPress = const Color(0x1E000000),
+    this.color = Colors.transparent,
     super.key,
   });
 
@@ -131,7 +133,7 @@ class _BetterInkwellState extends State<BetterInkwell> with SingleTickerProvider
           ],
         ),
         child: Container(
-          color: Colors.transparent,
+          color: widget.color,
           child: widget.child,
         ),
       ),

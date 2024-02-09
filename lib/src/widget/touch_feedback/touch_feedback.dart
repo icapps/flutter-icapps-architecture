@@ -45,9 +45,6 @@ class _TouchFeedBackState extends State<TouchFeedBack> {
         onClick: widget.onClick,
         semanticsLabel: widget.semanticsLabel,
         borderRadius: widget.borderRadius,
-        elevation: widget.elevation,
-        shapeBorder: widget.shapeBorder,
-        androidSplashColor: widget.androidSplashColor,
         child: widget.child,
       );
     }
@@ -69,22 +66,14 @@ class TouchFeedBackAndroid extends StatelessWidget {
   final VoidCallback? onClick;
   final String? semanticsLabel;
   final Color color;
-  final double elevation;
   final BorderRadius? borderRadius;
-  final Color? shadowColor;
-  final ShapeBorder? shapeBorder;
-  final Color? androidSplashColor;
 
   const TouchFeedBackAndroid({
     required this.child,
     required this.onClick,
     this.semanticsLabel,
     this.color = Colors.transparent,
-    this.elevation = 0,
     this.borderRadius,
-    this.shadowColor,
-    this.shapeBorder,
-    this.androidSplashColor,
     super.key,
   });
 
@@ -93,17 +82,11 @@ class TouchFeedBackAndroid extends StatelessWidget {
     return Semantics(
       label: semanticsLabel,
       button: true,
-      child: Material(
-        color: color,
-        shape: shapeBorder,
-        elevation: elevation,
-        shadowColor: shadowColor,
+      child: BetterInkwell(
         borderRadius: borderRadius,
-        child: BetterInkwell(
-          borderRadius: borderRadius,
-          onTap: onClick,
-          child: child,
-        ),
+        onTap: onClick,
+        color: color,
+        child: child,
       ),
     );
   }
