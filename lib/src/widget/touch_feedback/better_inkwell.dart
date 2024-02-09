@@ -31,14 +31,21 @@ class _BetterInkwellState extends State<BetterInkwell>
   /// handles the touch event itself
   var ignoreTouch = false;
 
-  late final _animationController = AnimationController(
-    vsync: this,
-    duration: const Duration(seconds: durationSeconds),
-  );
+  AnimationController? _animationController;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: durationSeconds),
+    );
+  }
 
   @override
   void dispose() {
-    _animationController.dispose();
+    _animationController?.dispose();
+    _animationController = null;
     super.dispose();
   }
 
@@ -49,7 +56,7 @@ class _BetterInkwellState extends State<BetterInkwell>
     }
     _touchPosition = details.localPosition;
     _isTouched = true;
-    _animationController
+    _animationController!
       ..reset()
       ..forward();
     setState(() {});
@@ -57,18 +64,21 @@ class _BetterInkwellState extends State<BetterInkwell>
     var ancestor = context.findAncestorStateOfType<_BetterInkwellState>();
     do {
       ancestor?.ignoreTouch = true;
+      if (!mounted) return;
       ancestor =
           ancestor?.context.findAncestorStateOfType<_BetterInkwellState>();
     } while (ancestor != null);
   }
 
   void _onTapUp(TapUpDetails details) {
+    if (!mounted) return;
     if (_isTouched) widget.onTap?.call();
     _isTouched = false;
     setState(() {});
   }
 
   void _onTapCancel() {
+    if (!mounted) return;
     _isTouched = false;
     setState(() {});
   }
@@ -82,13 +92,10 @@ class _BetterInkwellState extends State<BetterInkwell>
       onTapUp: _onTapUp,
       onTapCancel: _onTapCancel,
       child: AnimatedBuilder(
-        animation: _animationController,
+        animation: _animationController!,
         builder: (context, child) => Stack(
           children: [
-            Container(
-              color: Colors.transparent,
-              child: child!,
-            ),
+            child!,
             Positioned.fill(
               child: IgnorePointer(
                 child: AnimatedOpacity(
@@ -97,7 +104,7 @@ class _BetterInkwellState extends State<BetterInkwell>
                   child: CustomPaint(
                     painter: _RipplePainter(
                       center: _touchPosition,
-                      radius: _animationController.value * speed,
+                      radius: _animationController!.value * speed,
                       color: widget.colorPress,
                     ),
                   ),
@@ -117,7 +124,10 @@ class _BetterInkwellState extends State<BetterInkwell>
             ),
           ],
         ),
-        child: widget.child,
+        child: Container(
+          color: Colors.transparent,
+          child: widget.child,
+        ),
       ),
     );
   }
