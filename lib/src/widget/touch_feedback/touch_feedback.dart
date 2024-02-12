@@ -45,6 +45,10 @@ class _TouchFeedBackState extends State<TouchFeedBack> {
         onClick: widget.onClick,
         semanticsLabel: widget.semanticsLabel,
         borderRadius: widget.borderRadius,
+        color: widget.color,
+        elevation: widget.elevation,
+        shadowColor: widget.shadowColor,
+        shapeBorder: widget.shapeBorder,
         child: widget.child,
       );
     }
@@ -67,6 +71,9 @@ class TouchFeedBackAndroid extends StatelessWidget {
   final String? semanticsLabel;
   final Color color;
   final BorderRadius? borderRadius;
+  final double elevation;
+  final Color? shadowColor;
+  final ShapeBorder? shapeBorder;
 
   const TouchFeedBackAndroid({
     required this.child,
@@ -74,6 +81,9 @@ class TouchFeedBackAndroid extends StatelessWidget {
     this.semanticsLabel,
     this.color = Colors.transparent,
     this.borderRadius,
+    this.elevation = 0,
+    this.shadowColor,
+    this.shapeBorder,
     super.key,
   });
 
@@ -85,8 +95,14 @@ class TouchFeedBackAndroid extends StatelessWidget {
       child: BetterInkwell(
         borderRadius: borderRadius,
         onTap: onClick,
-        color: color,
-        child: child,
+        child: Material(
+          color: color,
+          shape: shapeBorder,
+          elevation: elevation,
+          shadowColor: shadowColor,
+          borderRadius: borderRadius,
+          child: child,
+        ),
       ),
     );
   }

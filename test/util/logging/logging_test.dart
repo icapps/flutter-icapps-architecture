@@ -144,9 +144,9 @@ void testWithLogger() {
     test(
       'Test logger level verbose',
       () => _testLogLevel(
-        logLevel: Level.verbose,
+        logLevel: Level.trace,
         expectLogs: (messages) {
-          expect(messages[0], ' Verbose message');
+          expect(messages[0], ' Trace message');
           expect(messages[1], ' 🐛 Debug message');
           expect(messages[2], ' 💡 Info message');
           expect(messages[3], ' ⚠️ Warning message');
@@ -300,7 +300,7 @@ void testWithLogger() {
               colors: true,
               printEmojis: true,
               printTime: false)
-          .log(LogEvent(Level.wtf, ['Some', 'body'], null, null));
+          .log(LogEvent(Level.fatal, ['Some', 'body']));
 
       expect(lines[0], '\x1B[38;5;199m 👾 [\x1B[0m');
       expect(lines[1], '\x1B[38;5;199m 👾   "Some",\x1B[0m');
@@ -316,13 +316,13 @@ void testWithLogger() {
               colors: true,
               printEmojis: true,
               printTime: false)
-          .log(LogEvent(Level.error, 'Error', ArgumentError(), null));
+          .log(LogEvent(Level.error, 'Error', error: ArgumentError()));
 
       expect(
           lines[1], '\x1B[39m\x1B[48;5;196mInvalid argument(s)\x1B[0m\x1B[49m');
       expect(lines[0], '\x1B[38;5;196m ⛔ Error\x1B[0m');
     });
-    test('Test logger methods default error color wtf', () {
+    test('Test logger methods default error color fatal', () {
       final lines = OurPrettyPrinter(
               methodCount: 0,
               errorMethodCount: 1,
@@ -331,7 +331,7 @@ void testWithLogger() {
               colors: true,
               printEmojis: true,
               printTime: false)
-          .log(LogEvent(Level.wtf, 'WTF', ArgumentError(), null));
+          .log(LogEvent(Level.fatal, 'Fatal', error: ArgumentError()));
 
       expect(
           lines[1], '\x1B[39m\x1B[48;5;199mInvalid argument(s)\x1B[0m\x1B[49m');

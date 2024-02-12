@@ -17,7 +17,7 @@ class LoggingConfiguration {
     this.printTime = true,
     this.onLog,
     this.isEnabled = true,
-    this.loggingLevel = Level.verbose,
+    this.loggingLevel = Level.trace,
   });
 }
 
@@ -132,23 +132,23 @@ class LoggerLogImpl extends Log {
 
   @override
   void debug(String message, {dynamic error, StackTrace? trace}) =>
-      logger.d(message, error, trace);
+      logger.d(message, error: error, stackTrace: trace);
 
   @override
   void error(String message, {error, StackTrace? trace}) =>
-      logger.e(message, error, trace);
+      logger.e(message, error: error, stackTrace: trace);
 
   @override
   void info(String message, {dynamic error, StackTrace? trace}) =>
-      logger.i(message, error, trace);
+      logger.i(message, error: error, stackTrace: trace);
 
   @override
   void verbose(String message, {dynamic error, StackTrace? trace}) =>
-      logger.v(message, error, trace);
+      logger.t(message, error: error, stackTrace: trace);
 
   @override
   void warning(String message, {dynamic error, StackTrace? trace}) =>
-      logger.w(message, error, trace);
+      logger.w(message, error: error, stackTrace: trace);
 
   @override
   void logNetworkError(NetworkError error) {
