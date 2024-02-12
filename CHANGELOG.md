@@ -2,7 +2,7 @@
 ## [2.1.5] - 2024-02-12
 ### Changed
 -  Fixed missing material in the TouchFeedback widget
--  Updated logger to v2.0.0
+-  Updated dependencies (logger to v2, connectivity_plus to v5)
 
 ## [2.1.4+2] - 2024-02-09
 ## [2.1.4+1] - 2024-02-09

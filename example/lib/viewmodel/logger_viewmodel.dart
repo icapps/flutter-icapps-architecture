@@ -14,7 +14,7 @@ class LoggerViewModel with ChangeNotifierEx {
       LoggingConfiguration(
         isEnabled: true,
         shouldLogNetworkInfo: true,
-        loggingLevel: Level.verbose,
+        loggingLevel: Level.trace,
         onLog: _onLog,
       ),
     );
