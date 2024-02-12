@@ -41,14 +41,18 @@ void main() {
       log.i('Test');
       log.e('Test');
       log.logNetworkRequest(RequestOptions(path: '/'));
-      log.logNetworkResponse(Response(requestOptions: RequestOptions(path: '/')));
-      log.logNetworkError(MockNetworkError(DioException(requestOptions: RequestOptions(path: '/'))));
+      log.logNetworkResponse(
+          Response(requestOptions: RequestOptions(path: '/')));
+      log.logNetworkError(MockNetworkError(
+          DioException(requestOptions: RequestOptions(path: '/'))));
 
       verify(mock.trace(argThat(startsWith('[TestPrefix] ')))).called(1);
       verify(mock.debug(argThat(startsWith('[TestPrefix] ')))).called(1);
       verify(mock.info(argThat(startsWith('[TestPrefix] ')))).called(1);
       verify(mock.warning(argThat(startsWith('[TestPrefix] ')))).called(1);
-      verify(mock.error(argThat(startsWith('[TestPrefix] ')), stackTrace: anyNamed('stackTrace'), error: anyNamed('error'))).called(1);
+      verify(mock.error(argThat(startsWith('[TestPrefix] ')),
+              stackTrace: anyNamed('stackTrace'), error: anyNamed('error')))
+          .called(1);
       verify(mock.logNetworkResponse(any)).called(1);
       verify(mock.logNetworkRequest(any)).called(1);
       verify(mock.logNetworkError(any)).called(1);
@@ -61,14 +65,18 @@ void main() {
     test('Output logger does not split short items', () {
       final lines = <String>[];
       final output = WrappingOutput((str) => lines.add(str));
-      output.output(OutputEvent(LogEvent(Level.info, 'Short string'), ['Short string', 'Longer string that does not need to be split']));
-      expect(lines, ['Short string', 'Longer string that does not need to be split']);
+      output.output(OutputEvent(LogEvent(Level.info, 'Short string'),
+          ['Short string', 'Longer string that does not need to be split']));
+      expect(lines,
+          ['Short string', 'Longer string that does not need to be split']);
     });
     test('Output logger does splits long items', () {
-      final inputString = base64Encode(List<int>.generate(1000, (i) => i % 255));
+      final inputString =
+          base64Encode(List<int>.generate(1000, (i) => i % 255));
       final lines = <String>[];
       final output = WrappingOutput((str) => lines.add(str));
-      output.output(OutputEvent(LogEvent(Level.info, 'Short string'), ['Short string', inputString]));
+      output.output(OutputEvent(
+          LogEvent(Level.info, 'Short string'), ['Short string', inputString]));
       expect(lines, [
         'Short string',
         'AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0+P0BBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWltcXV5fYGFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6e3x9fn+AgYKDhIWGh4iJiouMjY6PkJGSk5SVlpeYmZqbnJ2en6ChoqOkpaanqKmqq6ytrq+wsbKztLW2t7i5uru8vb6/wMHCw8TFxsfIycrLzM3Oz9DR0tPU1dbX2Nna29zd3t/g4eLj5OXm5+jp6uvs7e7v8PHy8/T19vf4+fr7/P3+AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0+P0BBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWltcXV5fYGFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6e3x9fn+AgYKDhIWGh4iJiouMjY6PkJGSk5SVlpeYmZqbnJ2en6ChoqOkpaanqKmqq6ytrq+wsbKztLW2t7i5uru8vb6/wMHCw8TFxsfIycrLzM3Oz9DR0tPU1dbX2Nna29zd3t/g4eLj5OXm5+jp6uvs7e7v8PHy8/T19vf4+fr7/P3+AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0+P0BBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZ',
@@ -205,8 +213,10 @@ void testWithLogger() {
       staticLogger.warning('Warning message');
       staticLogger.error('Error message');
       staticLogger.logNetworkRequest(RequestOptions(path: '/'));
-      staticLogger.logNetworkResponse(Response(requestOptions: RequestOptions(path: '/')));
-      staticLogger.logNetworkError(MockNetworkError(DioException(requestOptions: RequestOptions(path: '/'))));
+      staticLogger.logNetworkResponse(
+          Response(requestOptions: RequestOptions(path: '/')));
+      staticLogger.logNetworkError(MockNetworkError(
+          DioException(requestOptions: RequestOptions(path: '/'))));
     });
     test('Test logger methods default pretty', () {
       final buffer = MemoryOutput();
@@ -230,38 +240,66 @@ void testWithLogger() {
       staticLogger.d('Debug message');
       staticLogger.i('Info message');
       staticLogger.w('Warning message');
-      staticLogger.e('Error message', error: ArgumentError(), stackTrace: StackTrace.current);
+      staticLogger.e('Error message',
+          error: ArgumentError(), stackTrace: StackTrace.current);
       final messages = buffer.buffer.toList(growable: false);
-      expect(messages[0].lines.join(" "), matches(' \\d+:\\d+:\\d+\\.\\d+\\s+Trace message'));
-      expect(messages[1].lines.join(" "), matches(' \\d+:\\d+:\\d+\\.\\d+\\s+🐛 Debug message'));
-      expect(messages[2].lines.join(" "), matches(' \\d+:\\d+:\\d+\\.\\d+\\s+💡 Info message'));
-      expect(messages[3].lines.join(" "), matches(' \\d+:\\d+:\\d+\\.\\d+\\s+⚠️ Warning message'));
-      expect(messages[4].lines[0], matches(' \\d+:\\d+:\\d+\\.\\d+\\s+⛔ Error message'));
-      expect(messages[4].lines[1], matches('\\d+:\\d+:\\d+\\.\\d+\\s+Invalid argument\\(s\\)'));
-      expect(messages[4].lines[2],
-          matches('\\d+:\\d+:\\d+\\.\\d+\\s+#0   Declarer.test.<anonymous closure>.<anonymous closure> \\(package:test_api/src/backend/declarer.dart:\\d+:\\d+\\)'));
-      expect(messages[4].lines[3], matches('\\d+:\\d+:\\d+\\.\\d+\\s+#1   <asynchronous suspension>'));
+      expect(messages[0].lines.join(" "),
+          matches(' \\d+:\\d+:\\d+\\.\\d+\\s+Trace message'));
+      expect(messages[1].lines.join(" "),
+          matches(' \\d+:\\d+:\\d+\\.\\d+\\s+🐛 Debug message'));
+      expect(messages[2].lines.join(" "),
+          matches(' \\d+:\\d+:\\d+\\.\\d+\\s+💡 Info message'));
+      expect(messages[3].lines.join(" "),
+          matches(' \\d+:\\d+:\\d+\\.\\d+\\s+⚠️ Warning message'));
+      expect(messages[4].lines[0],
+          matches(' \\d+:\\d+:\\d+\\.\\d+\\s+⛔ Error message'));
+      expect(messages[4].lines[1],
+          matches('\\d+:\\d+:\\d+\\.\\d+\\s+Invalid argument\\(s\\)'));
+      expect(
+          messages[4].lines[2],
+          matches(
+              '\\d+:\\d+:\\d+\\.\\d+\\s+#0   Declarer.test.<anonymous closure>.<anonymous closure> \\(package:test_api/src/backend/declarer.dart:\\d+:\\d+\\)'));
+      expect(messages[4].lines[3],
+          matches('\\d+:\\d+:\\d+\\.\\d+\\s+#1   <asynchronous suspension>'));
       expect(
           messages[4].lines[4],
           matches(
               '\\d+:\\d+:\\d+\\.\\d+\\s+#2   StackZoneSpecification._registerUnaryCallback.<anonymous closure> \\(package:stack_trace/src/stack_zone_specification.dart:\\d+:\\d+\\)'));
-      expect(messages[4].lines[5], matches('\\d+:\\d+:\\d+\\.\\d+\\s+#3   <asynchronous suspension>'));
+      expect(messages[4].lines[5],
+          matches('\\d+:\\d+:\\d+\\.\\d+\\s+#3   <asynchronous suspension>'));
     });
     test('Test logger methods default pretty include method', () {
       final buffer = MemoryOutput();
       LoggingFactory.resetWithLogger(LoggerLogImpl(
           Logger(
-            printer: OurPrettyPrinter(methodCount: 1, errorMethodCount: 5, stackTraceBeginIndex: 0, lineLength: 50, colors: false, printEmojis: true, printTime: false),
+            printer: OurPrettyPrinter(
+                methodCount: 1,
+                errorMethodCount: 5,
+                stackTraceBeginIndex: 0,
+                lineLength: 50,
+                colors: false,
+                printEmojis: true,
+                printTime: false),
             output: buffer,
           ),
           logNetworkInfo: false));
       staticLogger.d('Debug message');
       final messages = buffer.buffer.toList(growable: false);
-      expect(messages[0].lines[1], matches('#0   OurPrettyPrinter.log \\(package:icapps_architecture/src/util/logging/impl/LoggerPrinter.dart:\\d+:\\d+\\)'));
+      expect(
+          messages[0].lines[1],
+          matches(
+              '#0   OurPrettyPrinter.log \\(package:icapps_architecture/src/util/logging/impl/LoggerPrinter.dart:\\d+:\\d+\\)'));
       expect(messages[0].lines[0], ' 🐛 Debug message');
     });
     test('Test logger methods default json', () {
-      final lines = OurPrettyPrinter(methodCount: 0, errorMethodCount: 5, stackTraceBeginIndex: 1, lineLength: 50, colors: true, printEmojis: true, printTime: false)
+      final lines = OurPrettyPrinter(
+              methodCount: 0,
+              errorMethodCount: 5,
+              stackTraceBeginIndex: 1,
+              lineLength: 50,
+              colors: true,
+              printEmojis: true,
+              printTime: false)
           .log(LogEvent(Level.fatal, ['Some', 'body']));
 
       expect(lines[0], '\x1B[38;5;199m 👾 [\x1B[0m');
@@ -270,25 +308,51 @@ void testWithLogger() {
       expect(lines[3], '\x1B[38;5;199m 👾 ]\x1B[0m');
     });
     test('Test logger methods default error color', () {
-      final lines = OurPrettyPrinter(methodCount: 0, errorMethodCount: 1, stackTraceBeginIndex: 0, lineLength: 50, colors: true, printEmojis: true, printTime: false)
+      final lines = OurPrettyPrinter(
+              methodCount: 0,
+              errorMethodCount: 1,
+              stackTraceBeginIndex: 0,
+              lineLength: 50,
+              colors: true,
+              printEmojis: true,
+              printTime: false)
           .log(LogEvent(Level.error, 'Error', error: ArgumentError()));
 
-      expect(lines[1], '\x1B[39m\x1B[48;5;196mInvalid argument(s)\x1B[0m\x1B[49m');
+      expect(
+          lines[1], '\x1B[39m\x1B[48;5;196mInvalid argument(s)\x1B[0m\x1B[49m');
       expect(lines[0], '\x1B[38;5;196m ⛔ Error\x1B[0m');
     });
     test('Test logger methods default error color fatal', () {
-      final lines = OurPrettyPrinter(methodCount: 0, errorMethodCount: 1, stackTraceBeginIndex: 0, lineLength: 50, colors: true, printEmojis: true, printTime: false)
+      final lines = OurPrettyPrinter(
+              methodCount: 0,
+              errorMethodCount: 1,
+              stackTraceBeginIndex: 0,
+              lineLength: 50,
+              colors: true,
+              printEmojis: true,
+              printTime: false)
           .log(LogEvent(Level.fatal, 'Fatal', error: ArgumentError()));
 
-      expect(lines[1], '\x1B[39m\x1B[48;5;199mInvalid argument(s)\x1B[0m\x1B[49m');
+      expect(
+          lines[1], '\x1B[39m\x1B[48;5;199mInvalid argument(s)\x1B[0m\x1B[49m');
       expect(lines[0], '\x1B[38;5;199m 👾 Fatal\x1B[0m');
     });
     test('Test logger methods default build stack trace', () {
-      final formatted = OurPrettyPrinter(methodCount: 0, errorMethodCount: 1, stackTraceBeginIndex: 0, lineLength: 50, colors: true, printEmojis: true, printTime: true)
+      final formatted = OurPrettyPrinter(
+              methodCount: 0,
+              errorMethodCount: 1,
+              stackTraceBeginIndex: 0,
+              lineLength: 50,
+              colors: true,
+              printEmojis: true,
+              printTime: true)
           .formatStackTrace(
-              StackTrace.fromString('#1      Logger.log (package:logger/src/logger.dart:115:29)\npackages/logger/src/printers/pretty_printer.dart 91:37\npackage:logger/lib'), 3);
+              StackTrace.fromString(
+                  '#1      Logger.log (package:logger/src/logger.dart:115:29)\npackages/logger/src/printers/pretty_printer.dart 91:37\npackage:logger/lib'),
+              3);
 
-      expect(formatted, '#0   packages/logger/src/printers/pretty_printer.dart 91:37\n#1   package:logger/lib');
+      expect(formatted,
+          '#0   packages/logger/src/printers/pretty_printer.dart 91:37\n#1   package:logger/lib');
     });
   });
   group('Test network logging', () {
@@ -299,8 +363,10 @@ void testWithLogger() {
         onLog: (logLine) => buffer.add(logLine),
       ));
       staticLogger.logNetworkRequest(RequestOptions(path: '/'));
-      staticLogger.logNetworkResponse(Response(requestOptions: RequestOptions(path: '/')));
-      staticLogger.logNetworkError(MockNetworkError(DioException(requestOptions: RequestOptions(path: '/'))));
+      staticLogger.logNetworkResponse(
+          Response(requestOptions: RequestOptions(path: '/')));
+      staticLogger.logNetworkError(MockNetworkError(
+          DioException(requestOptions: RequestOptions(path: '/'))));
       expect(buffer.isEmpty, true);
     });
     test('Test logger network enabled', () {
@@ -310,31 +376,52 @@ void testWithLogger() {
         printTime: false,
         onLog: (logLine) => buffer.add(logLine),
       ));
-      staticLogger.logNetworkRequest(RequestOptions(path: '/', baseUrl: 'https://www.example.com'));
-      staticLogger.logNetworkResponse(Response(requestOptions: RequestOptions(path: '/', baseUrl: 'https://www.example.com')));
-      staticLogger.logNetworkResponse(Response(requestOptions: RequestOptions(path: '/', baseUrl: 'https://www.example.com'), statusCode: 404));
-      staticLogger.logNetworkError(MockNetworkError(DioException(requestOptions: RequestOptions(path: '/', baseUrl: 'https://www.example.com'))));
+      staticLogger.logNetworkRequest(
+          RequestOptions(path: '/', baseUrl: 'https://www.example.com'));
+      staticLogger.logNetworkResponse(Response(
+          requestOptions:
+              RequestOptions(path: '/', baseUrl: 'https://www.example.com')));
+      staticLogger.logNetworkResponse(Response(
+          requestOptions:
+              RequestOptions(path: '/', baseUrl: 'https://www.example.com'),
+          statusCode: 404));
       staticLogger.logNetworkError(MockNetworkError(DioException(
-          requestOptions: RequestOptions(path: '/', baseUrl: 'https://www.example.com'),
-          response: Response(requestOptions: RequestOptions(path: '/', baseUrl: 'https://www.example.com')))));
+          requestOptions:
+              RequestOptions(path: '/', baseUrl: 'https://www.example.com'))));
       staticLogger.logNetworkError(MockNetworkError(DioException(
-          requestOptions: RequestOptions(path: '/', baseUrl: 'https://www.example.com'),
-          response: Response(requestOptions: RequestOptions(path: '/', baseUrl: 'https://www.example.com'), statusCode: 404))));
+          requestOptions:
+              RequestOptions(path: '/', baseUrl: 'https://www.example.com'),
+          response: Response(
+              requestOptions: RequestOptions(
+                  path: '/', baseUrl: 'https://www.example.com')))));
+      staticLogger.logNetworkError(MockNetworkError(DioException(
+          requestOptions:
+              RequestOptions(path: '/', baseUrl: 'https://www.example.com'),
+          response: Response(
+              requestOptions:
+                  RequestOptions(path: '/', baseUrl: 'https://www.example.com'),
+              statusCode: 404))));
 
-      expect(buffer[0], ' 🐛 ---------------> GET - url: https://www.example.com/');
-      expect(buffer[1], ' 🐛 <--------------- GET - url: https://www.example.com/ - status code: N/A');
-      expect(buffer[2], ' 🐛 <--------------- GET - url: https://www.example.com/ - status code: 404');
+      expect(buffer[0],
+          ' 🐛 ---------------> GET - url: https://www.example.com/');
+      expect(buffer[1],
+          ' 🐛 <--------------- GET - url: https://www.example.com/ - status code: N/A');
+      expect(buffer[2],
+          ' 🐛 <--------------- GET - url: https://www.example.com/ - status code: 404');
       expect(buffer[3], ' ⛔ request | GET - url: https://www.example.com/');
       expect(buffer[4], ' ⛔ message | ');
-      expect(buffer[5], ' ⛔ <--------------- GET - url: https://www.example.com/ - status code: N/A');
+      expect(buffer[5],
+          ' ⛔ <--------------- GET - url: https://www.example.com/ - status code: N/A');
       expect(buffer[6], ' ⛔ ');
       expect(buffer[7], ' ⛔ response.data | null');
       expect(buffer[8], ' ⛔ response.headers | ');
-      expect(buffer[9], ' ⛔ <--------------- GET - url: https://www.example.com/ - status code: N/A');
+      expect(buffer[9],
+          ' ⛔ <--------------- GET - url: https://www.example.com/ - status code: N/A');
       expect(buffer[10], ' ⛔ ');
       expect(buffer[11], ' ⛔ response.data | null');
       expect(buffer[12], ' ⛔ response.headers | ');
-      expect(buffer[13], ' ⛔ <--------------- GET - url: https://www.example.com/ - status code: 404');
+      expect(buffer[13],
+          ' ⛔ <--------------- GET - url: https://www.example.com/ - status code: 404');
     });
   });
 }

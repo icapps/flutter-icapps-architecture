@@ -32,15 +32,20 @@ abstract class Log {
 
   void error(String message, {dynamic error, StackTrace? stackTrace});
 
-  void t(String message, {dynamic error, StackTrace? stackTrace}) => trace(message, error: error, stackTrace: stackTrace);
+  void t(String message, {dynamic error, StackTrace? stackTrace}) =>
+      trace(message, error: error, stackTrace: stackTrace);
 
-  void d(String message, {dynamic error, StackTrace? stackTrace}) => debug(message, error: error, stackTrace: stackTrace);
+  void d(String message, {dynamic error, StackTrace? stackTrace}) =>
+      debug(message, error: error, stackTrace: stackTrace);
 
-  void i(String message, {dynamic error, StackTrace? stackTrace}) => info(message, error: error, stackTrace: stackTrace);
+  void i(String message, {dynamic error, StackTrace? stackTrace}) =>
+      info(message, error: error, stackTrace: stackTrace);
 
-  void w(String message, {dynamic error, StackTrace? stackTrace}) => warning(message, error: error, stackTrace: stackTrace);
+  void w(String message, {dynamic error, StackTrace? stackTrace}) =>
+      warning(message, error: error, stackTrace: stackTrace);
 
-  void e(String message, {dynamic error, StackTrace? stackTrace}) => this.error(message, error: error, stackTrace: stackTrace);
+  void e(String message, {dynamic error, StackTrace? stackTrace}) =>
+      this.error(message, error: error, stackTrace: stackTrace);
 
   void logNetworkError(NetworkError error);
 
@@ -126,19 +131,24 @@ class LoggerLogImpl extends Log {
   LoggerLogImpl(this.logger, {required this.logNetworkInfo});
 
   @override
-  void debug(String message, {dynamic error, StackTrace? stackTrace}) => logger.d(message, error: error, stackTrace: stackTrace);
+  void debug(String message, {dynamic error, StackTrace? stackTrace}) =>
+      logger.d(message, error: error, stackTrace: stackTrace);
 
   @override
-  void error(String message, {error, StackTrace? stackTrace}) => logger.e(message, error: error, stackTrace: stackTrace);
+  void error(String message, {error, StackTrace? stackTrace}) =>
+      logger.e(message, error: error, stackTrace: stackTrace);
 
   @override
-  void info(String message, {dynamic error, StackTrace? stackTrace}) => logger.i(message, error: error, stackTrace: stackTrace);
+  void info(String message, {dynamic error, StackTrace? stackTrace}) =>
+      logger.i(message, error: error, stackTrace: stackTrace);
 
   @override
-  void trace(String message, {dynamic error, StackTrace? stackTrace}) => logger.t(message, error: error, stackTrace: stackTrace);
+  void trace(String message, {dynamic error, StackTrace? stackTrace}) =>
+      logger.t(message, error: error, stackTrace: stackTrace);
 
   @override
-  void warning(String message, {dynamic error, StackTrace? stackTrace}) => logger.w(message, error: error, stackTrace: stackTrace);
+  void warning(String message, {dynamic error, StackTrace? stackTrace}) =>
+      logger.w(message, error: error, stackTrace: stackTrace);
 
   @override
   void logNetworkError(NetworkError error) {
@@ -157,7 +167,8 @@ class LoggerLogImpl extends Log {
         ..writeln('response.data | ${response.data}')
         ..writeln('response.headers | ${response.headers}');
     }
-    message.writeln('<--------------- ${request.method} - url: ${request.uri} - status code: ${response?.statusCode ?? 'N/A'}');
+    message.writeln(
+        '<--------------- ${request.method} - url: ${request.uri} - status code: ${response?.statusCode ?? 'N/A'}');
     this.error(message.toString());
   }
 
@@ -170,7 +181,8 @@ class LoggerLogImpl extends Log {
   @override
   void logNetworkResponse(Response response) {
     if (!logNetworkInfo) return;
-    debug('<--------------- ${response.requestOptions.method} - url: ${response.requestOptions.uri} - status code: ${response.statusCode ?? 'N/A'}');
+    debug(
+        '<--------------- ${response.requestOptions.method} - url: ${response.requestOptions.uri} - status code: ${response.statusCode ?? 'N/A'}');
   }
 }
 
@@ -225,26 +237,34 @@ class PrefixLogger extends Log {
   PrefixLogger(this._name, this._delegate);
 
   @override
-  void debug(String message, {error, StackTrace? stackTrace}) => _delegate.debug('[$_name] $message', error: error, stackTrace: stackTrace);
+  void debug(String message, {error, StackTrace? stackTrace}) => _delegate
+      .debug('[$_name] $message', error: error, stackTrace: stackTrace);
 
   @override
-  void error(String message, {Object? error, StackTrace? stackTrace}) => _delegate.error('[$_name] $message', error: error, stackTrace: stackTrace);
+  void error(String message, {Object? error, StackTrace? stackTrace}) =>
+      _delegate.error('[$_name] $message',
+          error: error, stackTrace: stackTrace);
 
   @override
-  void info(String message, {error, StackTrace? stackTrace}) => _delegate.info('[$_name] $message', error: error, stackTrace: stackTrace);
+  void info(String message, {error, StackTrace? stackTrace}) =>
+      _delegate.info('[$_name] $message', error: error, stackTrace: stackTrace);
 
   @override
   void logNetworkError(NetworkError error) => _delegate.logNetworkError(error);
 
   @override
-  void logNetworkRequest(RequestOptions request) => _delegate.logNetworkRequest(request);
+  void logNetworkRequest(RequestOptions request) =>
+      _delegate.logNetworkRequest(request);
 
   @override
-  void logNetworkResponse(Response<dynamic> response) => _delegate.logNetworkResponse(response);
+  void logNetworkResponse(Response<dynamic> response) =>
+      _delegate.logNetworkResponse(response);
 
   @override
-  void trace(String message, {error, StackTrace? stackTrace}) => _delegate.trace('[$_name] $message', error: error, stackTrace: stackTrace);
+  void trace(String message, {error, StackTrace? stackTrace}) => _delegate
+      .trace('[$_name] $message', error: error, stackTrace: stackTrace);
 
   @override
-  void warning(String message, {error, StackTrace? stackTrace}) => _delegate.warning('[$_name] $message', error: error, stackTrace: stackTrace);
+  void warning(String message, {error, StackTrace? stackTrace}) => _delegate
+      .warning('[$_name] $message', error: error, stackTrace: stackTrace);
 }
