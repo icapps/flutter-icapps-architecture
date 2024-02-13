@@ -35,7 +35,7 @@ void main() {
     test('Test logs with prefix', () {
       final mock = MockLog();
       final log = PrefixLogger('TestPrefix', mock);
-      log.v('Test');
+      log.t('Test');
       log.d('Test');
       log.w('Test');
       log.i('Test');
@@ -46,12 +46,12 @@ void main() {
       log.logNetworkError(MockNetworkError(
           DioException(requestOptions: RequestOptions(path: '/'))));
 
-      verify(mock.verbose(argThat(startsWith('[TestPrefix] ')))).called(1);
+      verify(mock.trace(argThat(startsWith('[TestPrefix] ')))).called(1);
       verify(mock.debug(argThat(startsWith('[TestPrefix] ')))).called(1);
       verify(mock.info(argThat(startsWith('[TestPrefix] ')))).called(1);
       verify(mock.warning(argThat(startsWith('[TestPrefix] ')))).called(1);
       verify(mock.error(argThat(startsWith('[TestPrefix] ')),
-              trace: anyNamed('trace'), error: anyNamed('error')))
+              stackTrace: anyNamed('stackTrace'), error: anyNamed('error')))
           .called(1);
       verify(mock.logNetworkResponse(any)).called(1);
       verify(mock.logNetworkRequest(any)).called(1);
@@ -88,7 +88,7 @@ void main() {
 
 void testWithLogger() {
   void _logAllLevels() {
-    staticLogger.v('Verbose message');
+    staticLogger.t('Trace message');
     staticLogger.d('Debug message');
     staticLogger.i('Info message');
     staticLogger.w('Warning message');
@@ -119,7 +119,7 @@ void testWithLogger() {
         onLog: (logLine) => buffer.add(logLine),
       ));
       _logAllLevels();
-      expect(buffer[0], ' Verbose message');
+      expect(buffer[0], ' Trace message');
       expect(buffer[1], ' 🐛 Debug message');
       expect(buffer[2], ' 💡 Info message');
       expect(buffer[3], ' ⚠️ Warning message');
@@ -142,11 +142,11 @@ void testWithLogger() {
     }
 
     test(
-      'Test logger level verbose',
+      'Test logger level trace',
       () => _testLogLevel(
-        logLevel: Level.verbose,
+        logLevel: Level.trace,
         expectLogs: (messages) {
-          expect(messages[0], ' Verbose message');
+          expect(messages[0], ' Trace message');
           expect(messages[1], ' 🐛 Debug message');
           expect(messages[2], ' 💡 Info message');
           expect(messages[3], ' ⚠️ Warning message');
@@ -202,12 +202,12 @@ void testWithLogger() {
 
     test('Test logger methods void', () {
       LoggingFactory.resetWithLogger(VoidLogger());
-      staticLogger.v('Verbose message');
+      staticLogger.t('Trace message');
       staticLogger.d('Debug message');
       staticLogger.i('Info message');
       staticLogger.w('Warning message');
       staticLogger.e('Error message');
-      staticLogger.verbose('Verbose message');
+      staticLogger.trace('Trace message');
       staticLogger.debug('Debug message');
       staticLogger.info('Info message');
       staticLogger.warning('Warning message');
@@ -236,15 +236,15 @@ void testWithLogger() {
             ),
             logNetworkInfo: false),
       );
-      staticLogger.v('Verbose message');
+      staticLogger.t('Trace message');
       staticLogger.d('Debug message');
       staticLogger.i('Info message');
       staticLogger.w('Warning message');
       staticLogger.e('Error message',
-          error: ArgumentError(), trace: StackTrace.current);
+          error: ArgumentError(), stackTrace: StackTrace.current);
       final messages = buffer.buffer.toList(growable: false);
       expect(messages[0].lines.join(" "),
-          matches(' \\d+:\\d+:\\d+\\.\\d+\\s+Verbose message'));
+          matches(' \\d+:\\d+:\\d+\\.\\d+\\s+Trace message'));
       expect(messages[1].lines.join(" "),
           matches(' \\d+:\\d+:\\d+\\.\\d+\\s+🐛 Debug message'));
       expect(messages[2].lines.join(" "),
@@ -300,7 +300,7 @@ void testWithLogger() {
               colors: true,
               printEmojis: true,
               printTime: false)
-          .log(LogEvent(Level.wtf, ['Some', 'body'], null, null));
+          .log(LogEvent(Level.fatal, ['Some', 'body']));
 
       expect(lines[0], '\x1B[38;5;199m 👾 [\x1B[0m');
       expect(lines[1], '\x1B[38;5;199m 👾   "Some",\x1B[0m');
@@ -316,13 +316,13 @@ void testWithLogger() {
               colors: true,
               printEmojis: true,
               printTime: false)
-          .log(LogEvent(Level.error, 'Error', ArgumentError(), null));
+          .log(LogEvent(Level.error, 'Error', error: ArgumentError()));
 
       expect(
           lines[1], '\x1B[39m\x1B[48;5;196mInvalid argument(s)\x1B[0m\x1B[49m');
       expect(lines[0], '\x1B[38;5;196m ⛔ Error\x1B[0m');
     });
-    test('Test logger methods default error color wtf', () {
+    test('Test logger methods default error color fatal', () {
       final lines = OurPrettyPrinter(
               methodCount: 0,
               errorMethodCount: 1,
@@ -331,11 +331,11 @@ void testWithLogger() {
               colors: true,
               printEmojis: true,
               printTime: false)
-          .log(LogEvent(Level.wtf, 'WTF', ArgumentError(), null));
+          .log(LogEvent(Level.fatal, 'Fatal', error: ArgumentError()));
 
       expect(
           lines[1], '\x1B[39m\x1B[48;5;199mInvalid argument(s)\x1B[0m\x1B[49m');
-      expect(lines[0], '\x1B[38;5;199m 👾 WTF\x1B[0m');
+      expect(lines[0], '\x1B[38;5;199m 👾 Fatal\x1B[0m');
     });
     test('Test logger methods default build stack trace', () {
       final formatted = OurPrettyPrinter(

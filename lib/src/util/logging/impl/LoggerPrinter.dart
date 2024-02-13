@@ -8,21 +8,21 @@ import 'package:logger/logger.dart';
 @immutable
 class OurPrettyPrinter extends LogPrinter {
   static final levelColors = {
-    Level.verbose: AnsiColor.fg(AnsiColor.grey(0.5)),
+    Level.trace: AnsiColor.fg(AnsiColor.grey(0.5)),
     Level.debug: AnsiColor.none(),
     Level.info: AnsiColor.fg(12),
     Level.warning: AnsiColor.fg(208),
     Level.error: AnsiColor.fg(196),
-    Level.wtf: AnsiColor.fg(199),
+    Level.fatal: AnsiColor.fg(199),
   };
 
   static final levelEmojis = {
-    Level.verbose: '',
+    Level.trace: '',
     Level.debug: '🐛 ',
     Level.info: '💡 ',
     Level.warning: '⚠️ ',
     Level.error: '⛔ ',
-    Level.wtf: '👾 ',
+    Level.fatal: '👾 ',
   };
 
   /// Matches a stacktrace line as generated on Android/iOS devices.
@@ -145,8 +145,8 @@ class OurPrettyPrinter extends LogPrinter {
 
   AnsiColor _getErrorColor(Level level) {
     if (colors) {
-      if (level == Level.wtf) {
-        return levelColors[Level.wtf]!.toBg();
+      if (level == Level.fatal) {
+        return levelColors[Level.fatal]!.toBg();
       } else {
         return levelColors[Level.error]!.toBg();
       }

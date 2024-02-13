@@ -41,16 +41,15 @@ class _TouchFeedBackState extends State<TouchFeedBack> {
   @override
   Widget build(BuildContext context) {
     if ((!widget.forceIOS && context.isAndroidTheme) || widget.forceAndroid) {
-      return ClipRRect(
-        borderRadius: widget.borderRadius ?? BorderRadius.zero,
-        child: TouchFeedBackAndroid(
-          onClick: widget.onClick,
-          semanticsLabel: widget.semanticsLabel,
-          borderRadius: widget.borderRadius,
-          shapeBorder: widget.shapeBorder,
-          androidSplashColor: widget.androidSplashColor,
-          child: widget.child,
-        ),
+      return TouchFeedBackAndroid(
+        onClick: widget.onClick,
+        semanticsLabel: widget.semanticsLabel,
+        borderRadius: widget.borderRadius,
+        color: widget.color,
+        elevation: widget.elevation,
+        shadowColor: widget.shadowColor,
+        shapeBorder: widget.shapeBorder,
+        child: widget.child,
       );
     }
     return TouchFeedBackIOS(
@@ -71,22 +70,20 @@ class TouchFeedBackAndroid extends StatelessWidget {
   final VoidCallback? onClick;
   final String? semanticsLabel;
   final Color color;
-  final double elevation;
   final BorderRadius? borderRadius;
+  final double elevation;
   final Color? shadowColor;
   final ShapeBorder? shapeBorder;
-  final Color? androidSplashColor;
 
   const TouchFeedBackAndroid({
     required this.child,
     required this.onClick,
     this.semanticsLabel,
     this.color = Colors.transparent,
-    this.elevation = 0,
     this.borderRadius,
+    this.elevation = 0,
     this.shadowColor,
     this.shapeBorder,
-    this.androidSplashColor,
     super.key,
   });
 
@@ -95,14 +92,15 @@ class TouchFeedBackAndroid extends StatelessWidget {
     return Semantics(
       label: semanticsLabel,
       button: true,
-      child: Material(
-        color: color,
-        shape: shapeBorder,
-        elevation: elevation,
-        shadowColor: shadowColor,
+      child: BetterInkwell(
         borderRadius: borderRadius,
-        child: BetterInkwell(
-          onTap: onClick,
+        onTap: onClick,
+        child: Material(
+          color: color,
+          shape: shapeBorder,
+          elevation: elevation,
+          shadowColor: shadowColor,
+          borderRadius: borderRadius,
           child: child,
         ),
       ),

@@ -1,4 +1,14 @@
 # Changelog
+## [2.1.5] - 2024-02-12
+### Changed
+-  Fixed missing material in the TouchFeedback widget
+-  Updated dependencies (logger to v2, connectivity_plus to v5)
+
+## [2.1.4+2] - 2024-02-09
+## [2.1.4+1] - 2024-02-09
+### Changed
+-  Issue where android clips outside of the TouchFeedback widget (breaking shadows etc)
+
 ## [2.1.4] - 2024-02-09
 ### Added
 - Improved TouchFeedBack android implementation by using a custom inkwell that draws on top of its child and can be nested. See the example for more information.

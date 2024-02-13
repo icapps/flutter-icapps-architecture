@@ -17,35 +17,35 @@ class LoggingConfiguration {
     this.printTime = true,
     this.onLog,
     this.isEnabled = true,
-    this.loggingLevel = Level.verbose,
+    this.loggingLevel = Level.trace,
   });
 }
 
 abstract class Log {
-  void verbose(String message, {dynamic error, StackTrace? trace});
+  void trace(String message, {dynamic error, StackTrace? stackTrace});
 
-  void debug(String message, {dynamic error, StackTrace? trace});
+  void debug(String message, {dynamic error, StackTrace? stackTrace});
 
-  void info(String message, {dynamic error, StackTrace? trace});
+  void info(String message, {dynamic error, StackTrace? stackTrace});
 
-  void warning(String message, {dynamic error, StackTrace? trace});
+  void warning(String message, {dynamic error, StackTrace? stackTrace});
 
-  void error(String message, {dynamic error, StackTrace? trace});
+  void error(String message, {dynamic error, StackTrace? stackTrace});
 
-  void v(String message, {dynamic error, StackTrace? trace}) =>
-      verbose(message, error: error, trace: trace);
+  void t(String message, {dynamic error, StackTrace? stackTrace}) =>
+      trace(message, error: error, stackTrace: stackTrace);
 
-  void d(String message, {dynamic error, StackTrace? trace}) =>
-      debug(message, error: error, trace: trace);
+  void d(String message, {dynamic error, StackTrace? stackTrace}) =>
+      debug(message, error: error, stackTrace: stackTrace);
 
-  void i(String message, {dynamic error, StackTrace? trace}) =>
-      info(message, error: error, trace: trace);
+  void i(String message, {dynamic error, StackTrace? stackTrace}) =>
+      info(message, error: error, stackTrace: stackTrace);
 
-  void w(String message, {dynamic error, StackTrace? trace}) =>
-      warning(message, error: error, trace: trace);
+  void w(String message, {dynamic error, StackTrace? stackTrace}) =>
+      warning(message, error: error, stackTrace: stackTrace);
 
-  void e(String message, {dynamic error, StackTrace? trace}) =>
-      this.error(message, error: error, trace: trace);
+  void e(String message, {dynamic error, StackTrace? stackTrace}) =>
+      this.error(message, error: error, stackTrace: stackTrace);
 
   void logNetworkError(NetworkError error);
 
@@ -131,24 +131,24 @@ class LoggerLogImpl extends Log {
   LoggerLogImpl(this.logger, {required this.logNetworkInfo});
 
   @override
-  void debug(String message, {dynamic error, StackTrace? trace}) =>
-      logger.d(message, error, trace);
+  void debug(String message, {dynamic error, StackTrace? stackTrace}) =>
+      logger.d(message, error: error, stackTrace: stackTrace);
 
   @override
-  void error(String message, {error, StackTrace? trace}) =>
-      logger.e(message, error, trace);
+  void error(String message, {error, StackTrace? stackTrace}) =>
+      logger.e(message, error: error, stackTrace: stackTrace);
 
   @override
-  void info(String message, {dynamic error, StackTrace? trace}) =>
-      logger.i(message, error, trace);
+  void info(String message, {dynamic error, StackTrace? stackTrace}) =>
+      logger.i(message, error: error, stackTrace: stackTrace);
 
   @override
-  void verbose(String message, {dynamic error, StackTrace? trace}) =>
-      logger.v(message, error, trace);
+  void trace(String message, {dynamic error, StackTrace? stackTrace}) =>
+      logger.t(message, error: error, stackTrace: stackTrace);
 
   @override
-  void warning(String message, {dynamic error, StackTrace? trace}) =>
-      logger.w(message, error, trace);
+  void warning(String message, {dynamic error, StackTrace? stackTrace}) =>
+      logger.w(message, error: error, stackTrace: stackTrace);
 
   @override
   void logNetworkError(NetworkError error) {
@@ -189,34 +189,34 @@ class LoggerLogImpl extends Log {
 @visibleForTesting
 class VoidLogger implements Log {
   @override
-  void d(String message, {error, StackTrace? trace}) {}
+  void d(String message, {error, StackTrace? stackTrace}) {}
 
   @override
-  void debug(String message, {error, StackTrace? trace}) {}
+  void debug(String message, {error, StackTrace? stackTrace}) {}
 
   @override
-  void e(String message, {error, StackTrace? trace}) {}
+  void e(String message, {error, StackTrace? stackTrace}) {}
 
   @override
-  void error(String message, {error, StackTrace? trace}) {}
+  void error(String message, {error, StackTrace? stackTrace}) {}
 
   @override
-  void i(String message, {error, StackTrace? trace}) {}
+  void i(String message, {error, StackTrace? stackTrace}) {}
 
   @override
-  void info(String message, {error, StackTrace? trace}) {}
+  void info(String message, {error, StackTrace? stackTrace}) {}
 
   @override
-  void v(String message, {error, StackTrace? trace}) {}
+  void t(String message, {error, StackTrace? stackTrace}) {}
 
   @override
-  void verbose(String message, {error, StackTrace? trace}) {}
+  void trace(String message, {error, StackTrace? stackTrace}) {}
 
   @override
-  void w(String message, {error, StackTrace? trace}) {}
+  void w(String message, {error, StackTrace? stackTrace}) {}
 
   @override
-  void warning(String message, {error, StackTrace? trace}) {}
+  void warning(String message, {error, StackTrace? stackTrace}) {}
 
   @override
   void logNetworkError(NetworkError error) {}
@@ -237,16 +237,17 @@ class PrefixLogger extends Log {
   PrefixLogger(this._name, this._delegate);
 
   @override
-  void debug(String message, {error, StackTrace? trace}) =>
-      _delegate.debug('[$_name] $message', error: error, trace: trace);
+  void debug(String message, {error, StackTrace? stackTrace}) => _delegate
+      .debug('[$_name] $message', error: error, stackTrace: stackTrace);
 
   @override
-  void error(String message, {Object? error, StackTrace? trace}) =>
-      _delegate.error('[$_name] $message', error: error, trace: trace);
+  void error(String message, {Object? error, StackTrace? stackTrace}) =>
+      _delegate.error('[$_name] $message',
+          error: error, stackTrace: stackTrace);
 
   @override
-  void info(String message, {error, StackTrace? trace}) =>
-      _delegate.info('[$_name] $message', error: error, trace: trace);
+  void info(String message, {error, StackTrace? stackTrace}) =>
+      _delegate.info('[$_name] $message', error: error, stackTrace: stackTrace);
 
   @override
   void logNetworkError(NetworkError error) => _delegate.logNetworkError(error);
@@ -260,10 +261,10 @@ class PrefixLogger extends Log {
       _delegate.logNetworkResponse(response);
 
   @override
-  void verbose(String message, {error, StackTrace? trace}) =>
-      _delegate.verbose('[$_name] $message', error: error, trace: trace);
+  void trace(String message, {error, StackTrace? stackTrace}) => _delegate
+      .trace('[$_name] $message', error: error, stackTrace: stackTrace);
 
   @override
-  void warning(String message, {error, StackTrace? trace}) =>
-      _delegate.warning('[$_name] $message', error: error, trace: trace);
+  void warning(String message, {error, StackTrace? stackTrace}) => _delegate
+      .warning('[$_name] $message', error: error, stackTrace: stackTrace);
 }

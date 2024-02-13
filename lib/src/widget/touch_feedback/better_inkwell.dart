@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 
 class BetterInkwell extends StatefulWidget {
+  final Color color;
   final Color colorHover;
   final Color colorPress;
   final Widget child;
   final VoidCallback? onTap;
+  final BorderRadius? borderRadius;
   final HitTestBehavior? behavior;
 
   const BetterInkwell({
     required this.child,
     this.onTap,
     this.behavior,
+    this.borderRadius,
     this.colorHover = const Color(0x0A000000),
     this.colorPress = const Color(0x1E000000),
+    this.color = Colors.transparent,
     super.key,
   });
 
@@ -98,14 +102,17 @@ class _BetterInkwellState extends State<BetterInkwell>
             child!,
             Positioned.fill(
               child: IgnorePointer(
-                child: AnimatedOpacity(
-                  duration: const Duration(milliseconds: 200),
-                  opacity: _isTouched ? 1 : 0,
-                  child: CustomPaint(
-                    painter: _RipplePainter(
-                      center: _touchPosition,
-                      radius: _animationController!.value * speed,
-                      color: widget.colorPress,
+                child: ClipRRect(
+                  borderRadius: widget.borderRadius ?? BorderRadius.zero,
+                  child: AnimatedOpacity(
+                    duration: const Duration(milliseconds: 200),
+                    opacity: _isTouched ? 1 : 0,
+                    child: CustomPaint(
+                      painter: _RipplePainter(
+                        center: _touchPosition,
+                        radius: _animationController!.value * speed,
+                        color: widget.colorPress,
+                      ),
                     ),
                   ),
                 ),
@@ -117,7 +124,10 @@ class _BetterInkwellState extends State<BetterInkwell>
                   duration: const Duration(milliseconds: 200),
                   opacity: _isTouched ? 1 : 0,
                   child: Container(
-                    color: widget.colorHover,
+                    decoration: BoxDecoration(
+                      borderRadius: widget.borderRadius,
+                      color: widget.colorHover,
+                    ),
                   ),
                 ),
               ),
@@ -125,7 +135,7 @@ class _BetterInkwellState extends State<BetterInkwell>
           ],
         ),
         child: Container(
-          color: Colors.transparent,
+          color: widget.color,
           child: widget.child,
         ),
       ),
