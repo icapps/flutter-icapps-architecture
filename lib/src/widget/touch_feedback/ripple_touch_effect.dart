@@ -60,5 +60,8 @@ class _RipplePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => oldDelegate is! _RipplePainter || oldDelegate.center != center || oldDelegate.radius != radius;
+  bool shouldRepaint(covariant CustomPainter oldDelegate) =>
+      oldDelegate is! _RipplePainter ||
+      oldDelegate.center != center ||
+      oldDelegate.radius != radius;
 }
