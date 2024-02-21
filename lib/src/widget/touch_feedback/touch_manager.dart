@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:icapps_architecture/icapps_architecture.dart';
 
-class BetterInkwell extends StatefulWidget {
+typedef TouchEffectBuilder = Widget Function(BuildContext context, TouchEffectInfo touchInfo);
+
+class TouchManager extends StatefulWidget {
   final Color color;
   final Color colorHover;
   final Color colorPress;
@@ -8,9 +11,11 @@ class BetterInkwell extends StatefulWidget {
   final VoidCallback? onTap;
   final BorderRadius? borderRadius;
   final HitTestBehavior? behavior;
+  final List<TouchEffectBuilder> touchEffectBuilders;
 
-  const BetterInkwell({
+  const TouchManager({
     required this.child,
+    required this.touchEffectBuilders,
     this.onTap,
     this.behavior,
     this.borderRadius,
@@ -21,15 +26,13 @@ class BetterInkwell extends StatefulWidget {
   });
 
   @override
-  State<BetterInkwell> createState() => _BetterInkwellState();
+  State<TouchManager> createState() => _TouchManagerState();
 }
 
-class _BetterInkwellState extends State<BetterInkwell>
-    with SingleTickerProviderStateMixin {
+class _TouchManagerState extends State<TouchManager> with SingleTickerProviderStateMixin {
   var _isTouched = false;
   var _touchPosition = Offset.zero;
   static const durationSeconds = 10;
-  static const speed = 1000 * durationSeconds;
 
   /// Set by a child to ignore touch events when the child
   /// handles the touch event itself
@@ -65,12 +68,11 @@ class _BetterInkwellState extends State<BetterInkwell>
       ..forward();
     setState(() {});
 
-    var ancestor = context.findAncestorStateOfType<_BetterInkwellState>();
+    var ancestor = context.findAncestorStateOfType<_TouchManagerState>();
     do {
       ancestor?.ignoreTouch = true;
       if (!mounted) return;
-      ancestor =
-          ancestor?.context.findAncestorStateOfType<_BetterInkwellState>();
+      ancestor = ancestor?.context.findAncestorStateOfType<_TouchManagerState>();
     } while (ancestor != null);
   }
 
@@ -100,33 +102,17 @@ class _BetterInkwellState extends State<BetterInkwell>
         builder: (context, child) => Stack(
           children: [
             child!,
-            Positioned.fill(
-              child: IgnorePointer(
-                child: ClipRRect(
-                  borderRadius: widget.borderRadius ?? BorderRadius.zero,
-                  child: AnimatedOpacity(
-                    duration: const Duration(milliseconds: 200),
-                    opacity: _isTouched ? 1 : 0,
-                    child: CustomPaint(
-                      painter: _RipplePainter(
-                        center: _touchPosition,
-                        radius: _animationController!.value * speed,
-                        color: widget.colorPress,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Positioned.fill(
-              child: IgnorePointer(
-                child: AnimatedOpacity(
-                  duration: const Duration(milliseconds: 200),
-                  opacity: _isTouched ? 1 : 0,
-                  child: Container(
-                    decoration: BoxDecoration(
+            ...widget.touchEffectBuilders.map(
+              (builder) => Positioned.fill(
+                child: IgnorePointer(
+                  child: builder(
+                    context,
+                    TouchEffectInfo(
+                      touchPosition: _touchPosition,
+                      isTouched: _isTouched,
+                      animationController: _animationController,
+                      durationInSeconds: durationSeconds,
                       borderRadius: widget.borderRadius,
-                      color: widget.colorHover,
                     ),
                   ),
                 ),
@@ -141,30 +127,4 @@ class _BetterInkwellState extends State<BetterInkwell>
       ),
     );
   }
-}
-
-class _RipplePainter extends CustomPainter {
-  final Offset center;
-  final double radius;
-  final Color color;
-
-  _RipplePainter({
-    required this.center,
-    required this.radius,
-    required this.color,
-  });
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = color
-      ..style = PaintingStyle.fill;
-    canvas.drawCircle(center, radius, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) =>
-      oldDelegate is! _RipplePainter ||
-      oldDelegate.center != center ||
-      oldDelegate.radius != radius;
 }

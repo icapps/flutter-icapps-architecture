@@ -30,5 +30,5 @@ export 'src/widget/mixin/after_layout.dart';
 export 'src/widget/provider/provider_widget.dart';
 export 'src/widget/provider/theme_provider_widget.dart';
 export 'src/widget/responsive/responsive_widget.dart';
-export 'src/widget/touch_feedback/better_inkwell.dart';
+export 'src/widget/touch_feedback/ripple_touch_effect.dart';
 export 'src/widget/touch_feedback/touch_feedback.dart';
