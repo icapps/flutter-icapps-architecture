@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:icapps_architecture/icapps_architecture.dart';
-import 'package:icapps_architecture/src/widget/touch_feedback/color_touch_effect.dart';
 import 'package:icapps_architecture/src/widget/touch_feedback/touch_manager.dart';
 
 const androidTapColor = Color(0x0A000000);
@@ -46,8 +45,8 @@ class TouchFeedBack extends StatelessWidget {
 
   const TouchFeedBack({
     required this.child,
-    required this.onClick,
     required this.isDark,
+    this.onClick,
     this.tapColor,
     this.semanticsLabel,
     this.color = Colors.transparent,
@@ -77,7 +76,7 @@ class TouchFeedBack extends StatelessWidget {
     super.key,
   }) : isDark = true;
 
-  const TouchFeedBack.ligh({
+  const TouchFeedBack.light({
     required this.child,
     required this.onClick,
     this.tapColor,
@@ -102,6 +101,12 @@ class TouchFeedBack extends StatelessWidget {
       child: TouchManager(
         borderRadius: borderRadius,
         onTap: onClick,
+        tapColor: tapColor ??
+            (isAndroid
+                ? androidTapColor
+                : isDark
+                    ? iosDarkPressColor
+                    : iosLightPressColor),
         touchEffectBuilders: [
           if (isAndroid) ...[
             (context, info) => RippleTouchEffect(
@@ -112,16 +117,6 @@ class TouchFeedBack extends StatelessWidget {
                   borderRadius: info.borderRadius,
                 ),
           ],
-          (context, info) => ColorTouchEffect(
-                isTouched: info.isTouched,
-                borderRadius: info.borderRadius,
-                color: tapColor ??
-                    (isAndroid
-                        ? androidTapColor
-                        : isDark
-                            ? iosDarkPressColor
-                            : iosLightPressColor),
-              ),
         ],
         child: Material(
           color: color,

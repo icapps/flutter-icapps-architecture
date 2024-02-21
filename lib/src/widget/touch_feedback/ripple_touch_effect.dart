@@ -4,8 +4,7 @@ import 'package:icapps_architecture/icapps_architecture.dart';
 class RippleTouchEffect extends StatelessWidget {
   final int durationSeconds;
   final bool isTouched;
-  final Color colorHover;
-  final Color colorPress;
+  final Color rippleColor;
   final Offset touchPosition;
   final BorderRadius? borderRadius;
   final AnimationController? animationController;
@@ -16,8 +15,7 @@ class RippleTouchEffect extends StatelessWidget {
     required this.animationController,
     required this.durationSeconds,
     this.borderRadius,
-    this.colorHover = androidTapColor,
-    this.colorPress = androidRippleColor,
+    this.rippleColor = androidRippleColor,
     super.key,
   });
 
@@ -34,7 +32,7 @@ class RippleTouchEffect extends StatelessWidget {
           painter: _RipplePainter(
             center: touchPosition,
             radius: animationController!.value * speed,
-            color: colorPress,
+            color: rippleColor,
           ),
         ),
       ),

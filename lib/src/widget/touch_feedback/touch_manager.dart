@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:icapps_architecture/icapps_architecture.dart';
+import 'package:icapps_architecture/src/widget/touch_feedback/color_touch_effect.dart';
 
 typedef TouchEffectBuilder = Widget Function(BuildContext context, TouchEffectInfo touchInfo);
 
 class TouchManager extends StatefulWidget {
   final Color color;
-  final Color colorHover;
-  final Color colorPress;
+  final Color tapColor;
   final Widget child;
   final VoidCallback? onTap;
   final BorderRadius? borderRadius;
@@ -16,11 +16,10 @@ class TouchManager extends StatefulWidget {
   const TouchManager({
     required this.child,
     required this.touchEffectBuilders,
+    required this.tapColor,
     this.onTap,
     this.behavior,
     this.borderRadius,
-    this.colorHover = const Color(0x0A000000),
-    this.colorPress = const Color(0x1E000000),
     this.color = Colors.transparent,
     super.key,
   });
@@ -120,9 +119,13 @@ class _TouchManagerState extends State<TouchManager> with SingleTickerProviderSt
             ),
           ],
         ),
-        child: Container(
-          color: widget.color,
-          child: widget.child,
+        child: ColorTouchEffect(
+          isTouched: _isTouched,
+          color: widget.tapColor,
+          child: Container(
+            color: widget.color,
+            child: widget.child,
+          ),
         ),
       ),
     );

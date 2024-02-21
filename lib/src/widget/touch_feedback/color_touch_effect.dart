@@ -3,25 +3,29 @@ import 'package:flutter/material.dart';
 class ColorTouchEffect extends StatelessWidget {
   final bool isTouched;
   final Color color;
-  final BorderRadius? borderRadius;
+  final Widget child;
 
   const ColorTouchEffect({
     required this.isTouched,
-    required this.borderRadius,
+    required this.child,
     this.color = const Color(0x0A000000),
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedOpacity(
+    return TweenAnimationBuilder(
       duration: const Duration(milliseconds: 200),
-      opacity: isTouched ? 1 : 0,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: borderRadius,
-          color: color,
+      tween: ColorTween(
+        begin: Colors.transparent,
+        end: isTouched ? color : Colors.transparent,
+      ),
+      builder: (context, color, widget) => ColorFiltered(
+        colorFilter: ColorFilter.mode(
+          color ?? Colors.transparent,
+          BlendMode.srcATop,
         ),
+        child: child,
       ),
     );
   }
