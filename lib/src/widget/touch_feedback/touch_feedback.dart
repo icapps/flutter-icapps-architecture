@@ -30,7 +30,7 @@ class TouchEffectInfo {
 /// on other devices, this will create a scaling touch down effect
 class TouchFeedBack extends StatelessWidget {
   final Widget child;
-  final VoidCallback? onClick;
+  final VoidCallback? onTapped;
   final String? semanticsLabel;
   final Color color;
   final Color? tapColor;
@@ -46,7 +46,7 @@ class TouchFeedBack extends StatelessWidget {
   const TouchFeedBack({
     required this.child,
     required this.isDark,
-    required this.onClick,
+    required this.onTapped,
     this.tapColor,
     this.semanticsLabel,
     this.color = Colors.transparent,
@@ -62,7 +62,7 @@ class TouchFeedBack extends StatelessWidget {
 
   const TouchFeedBack.dark({
     required this.child,
-    required this.onClick,
+    required this.onTapped,
     this.tapColor,
     this.semanticsLabel,
     this.color = Colors.transparent,
@@ -78,7 +78,7 @@ class TouchFeedBack extends StatelessWidget {
 
   const TouchFeedBack.light({
     required this.child,
-    required this.onClick,
+    required this.onTapped,
     this.tapColor,
     this.semanticsLabel,
     this.color = Colors.transparent,
@@ -100,7 +100,7 @@ class TouchFeedBack extends StatelessWidget {
       button: true,
       child: TouchManager(
         borderRadius: borderRadius,
-        onTap: onClick,
+        onTap: onTapped,
         tapColor: tapColor ??
             (isAndroid
                 ? androidTapColor

@@ -71,7 +71,7 @@ class _TouchScreenState extends State<TouchScreen> {
                 return Center(
                   child: TouchFeedBack(
                     isDark: isDark,
-                    onClick: () {},
+                    onTapped: () {},
                     child: Text(
                       '0x${color.value.toRadixString(16).padLeft(8, '0')}: $count',
                       style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: color),
@@ -92,7 +92,7 @@ class _TouchScreenState extends State<TouchScreen> {
                 children: [
                   TouchFeedBack(
                     isDark: isDark,
-                    onClick: () {},
+                    onTapped: () {},
                     child: Icon(
                       Icons.plus_one,
                       size: 32,
@@ -101,7 +101,7 @@ class _TouchScreenState extends State<TouchScreen> {
                   const SizedBox(width: 8),
                   TouchFeedBack(
                     isDark: isDark,
-                    onClick: () {},
+                    onTapped: () {},
                     child: Text(
                       'Tap me',
                       style: TextStyle(fontSize: 20),
@@ -114,7 +114,7 @@ class _TouchScreenState extends State<TouchScreen> {
             const SizedBox(height: 16),
             Center(
               child: TouchFeedBack(
-                onClick: () {},
+                onTapped: () {},
                 isDark: isDark,
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
@@ -142,7 +142,7 @@ class _TouchScreenState extends State<TouchScreen> {
       forceAndroid: forceAndroid,
       forceIOS: forceIOS,
       isDark: isDark,
-      onClick: () {
+      onTapped: () {
         setState(() {
           _counters.update(counters.keys.first, (value) => value + 1);
         });

@@ -12,7 +12,7 @@ void main() {
         child: Container(
           color: Colors.amber.withOpacity(0.5),
         ),
-        onClick: () {},
+        onTapped: () {},
       ),
     );
     await TestUtil.loadWidgetWithText(tester, sut);
@@ -26,7 +26,7 @@ void main() {
         child: Container(
           color: Colors.amber.withOpacity(0.5),
         ),
-        onClick: null,
+        onTapped: null,
       ),
     );
     await TestUtil.loadWidgetWithText(tester, sut);
@@ -40,7 +40,7 @@ void main() {
         child: Container(
           color: Colors.amber.withOpacity(0.5),
         ),
-        onClick: () {},
+        onTapped: () {},
       ),
     );
     await TestUtil.loadWidgetWithText(tester, sut);
@@ -56,7 +56,7 @@ void main() {
           child: Container(
             color: Colors.amber.withOpacity(0.5),
           ),
-          onClick: () {
+          onTapped: () {
             onClickCalled = true;
           },
         ),
@@ -77,7 +77,7 @@ void main() {
           child: Container(
             color: Colors.amber.withOpacity(0.5),
           ),
-          onClick: () {
+          onTapped: () {
             onClickCalled = true;
           },
         ),
@@ -97,7 +97,7 @@ void main() {
           child: Container(
             color: Colors.amber.withOpacity(0.5),
           ),
-          onClick: () {
+          onTapped: () {
             onClickCalled = true;
           },
         ),
@@ -117,7 +117,7 @@ void main() {
           child: Container(
             color: Colors.amber.withOpacity(0.5),
           ),
-          onClick: () {
+          onTapped: () {
             onClickCalled = true;
           },
         ),
