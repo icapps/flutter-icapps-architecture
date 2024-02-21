@@ -3,6 +3,12 @@ import 'package:icapps_architecture/icapps_architecture.dart';
 import 'package:icapps_architecture/src/widget/touch_feedback/color_touch_effect.dart';
 import 'package:icapps_architecture/src/widget/touch_feedback/touch_manager.dart';
 
+const androidTapColor = Color(0x0A000000);
+const androidRippleColor = Color(0x1E000000);
+
+const iosDarkPressColor = Color(0x4B3A3A3C);
+const iosLightPressColor = Color(0x4BF2F2F7);
+
 class TouchEffectInfo {
   final int durationInSeconds;
   final bool isTouched;
@@ -28,6 +34,7 @@ class TouchFeedBack extends StatelessWidget {
   final VoidCallback? onClick;
   final String? semanticsLabel;
   final Color color;
+  final Color? tapColor;
   final BorderRadius? borderRadius;
   final double elevation;
   final Color? shadowColor;
@@ -35,10 +42,13 @@ class TouchFeedBack extends StatelessWidget {
   final Color? androidSplashColor;
   final bool forceAndroid;
   final bool forceIOS;
+  final bool isDark;
 
   const TouchFeedBack({
     required this.child,
     required this.onClick,
+    required this.isDark,
+    this.tapColor,
     this.semanticsLabel,
     this.color = Colors.transparent,
     this.elevation = 0,
@@ -50,6 +60,38 @@ class TouchFeedBack extends StatelessWidget {
     this.forceIOS = false,
     super.key,
   });
+
+  const TouchFeedBack.dark({
+    required this.child,
+    required this.onClick,
+    this.tapColor,
+    this.semanticsLabel,
+    this.color = Colors.transparent,
+    this.elevation = 0,
+    this.borderRadius,
+    this.shadowColor,
+    this.shapeBorder,
+    this.androidSplashColor,
+    this.forceAndroid = false,
+    this.forceIOS = false,
+    super.key,
+  }) : isDark = true;
+
+  const TouchFeedBack.ligh({
+    required this.child,
+    required this.onClick,
+    this.tapColor,
+    this.semanticsLabel,
+    this.color = Colors.transparent,
+    this.elevation = 0,
+    this.borderRadius,
+    this.shadowColor,
+    this.shapeBorder,
+    this.androidSplashColor,
+    this.forceAndroid = false,
+    this.forceIOS = false,
+    super.key,
+  }) : isDark = false;
 
   @override
   Widget build(BuildContext context) {
@@ -73,8 +115,13 @@ class TouchFeedBack extends StatelessWidget {
           (context, info) => ColorTouchEffect(
                 isTouched: info.isTouched,
                 borderRadius: info.borderRadius,
-                color: color,
-              )
+                color: tapColor ??
+                    (isAndroid
+                        ? androidTapColor
+                        : isDark
+                            ? iosDarkPressColor
+                            : iosLightPressColor),
+              ),
         ],
         child: Material(
           color: color,

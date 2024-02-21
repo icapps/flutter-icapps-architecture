@@ -8,7 +8,7 @@ void main() {
   testWidgets('TouchFeedBack on Android', (tester) async {
     final sut = Theme(
       data: ThemeData(platform: TargetPlatform.android),
-      child: TouchFeedBack(
+      child: TouchFeedBack.dark(
         child: Container(
           color: Colors.amber.withOpacity(0.5),
         ),
@@ -22,7 +22,7 @@ void main() {
   testWidgets('TouchFeedBack on Android empty', (tester) async {
     final sut = Theme(
       data: ThemeData(platform: TargetPlatform.android),
-      child: TouchFeedBack(
+      child: TouchFeedBack.dark(
         child: Container(
           color: Colors.amber.withOpacity(0.5),
         ),
@@ -36,7 +36,7 @@ void main() {
   testWidgets('TouchFeedBack on iOS', (tester) async {
     final sut = Theme(
       data: ThemeData(platform: TargetPlatform.iOS),
-      child: TouchFeedBack(
+      child: TouchFeedBack.dark(
         child: Container(
           color: Colors.amber.withOpacity(0.5),
         ),
@@ -52,7 +52,7 @@ void main() {
       var onClickCalled = false;
       final sut = Theme(
         data: ThemeData(platform: TargetPlatform.android),
-        child: TouchFeedBack(
+        child: TouchFeedBack.dark(
           child: Container(
             color: Colors.amber.withOpacity(0.5),
           ),
@@ -73,7 +73,7 @@ void main() {
       var onClickCalled = false;
       final sut = Theme(
         data: ThemeData(platform: TargetPlatform.iOS),
-        child: TouchFeedBack(
+        child: TouchFeedBack.dark(
           child: Container(
             color: Colors.amber.withOpacity(0.5),
           ),
@@ -93,7 +93,7 @@ void main() {
       var onClickCalled = false;
       final sut = Theme(
         data: ThemeData(platform: TargetPlatform.iOS),
-        child: TouchFeedBack(
+        child: TouchFeedBack.dark(
           child: Container(
             color: Colors.amber.withOpacity(0.5),
           ),
@@ -113,7 +113,7 @@ void main() {
       var onClickCalled = false;
       final sut = Theme(
         data: ThemeData(platform: TargetPlatform.iOS),
-        child: TouchFeedBack(
+        child: TouchFeedBack.dark(
           child: Container(
             color: Colors.amber.withOpacity(0.5),
           ),

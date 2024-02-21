@@ -82,7 +82,7 @@ class _TouchScreenState extends State<TouchScreen> {
 
   Widget _createButtons(Map<Color, int> counters) {
     if (counters.isEmpty) return const SizedBox();
-    return TouchFeedBack(
+    return TouchFeedBack.dark(
       forceAndroid: forceAndroid,
       forceIOS: forceIOS,
       onClick: () {

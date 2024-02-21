@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:icapps_architecture/icapps_architecture.dart';
 
 class RippleTouchEffect extends StatelessWidget {
   final int durationSeconds;
@@ -15,8 +16,8 @@ class RippleTouchEffect extends StatelessWidget {
     required this.animationController,
     required this.durationSeconds,
     this.borderRadius,
-    this.colorHover = const Color(0x0A000000),
-    this.colorPress = const Color(0x1E000000),
+    this.colorHover = androidTapColor,
+    this.colorPress = androidRippleColor,
     super.key,
   });
 
