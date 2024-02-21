@@ -46,7 +46,7 @@ class TouchFeedBack extends StatelessWidget {
   const TouchFeedBack({
     required this.child,
     required this.isDark,
-    this.onClick,
+    required this.onClick,
     this.tapColor,
     this.semanticsLabel,
     this.color = Colors.transparent,

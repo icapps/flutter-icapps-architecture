@@ -14,19 +14,12 @@ class ColorTouchEffect extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TweenAnimationBuilder(
-      duration: const Duration(milliseconds: 200),
-      tween: ColorTween(
-        begin: Colors.transparent,
-        end: isTouched ? color : Colors.transparent,
+    return ColorFiltered(
+      colorFilter: ColorFilter.mode(
+        isTouched ? color : Colors.transparent,
+        BlendMode.srcATop,
       ),
-      builder: (context, color, widget) => ColorFiltered(
-        colorFilter: ColorFilter.mode(
-          color ?? Colors.transparent,
-          BlendMode.srcATop,
-        ),
-        child: child,
-      ),
+      child: child,
     );
   }
 }

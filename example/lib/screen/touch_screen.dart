@@ -69,9 +69,13 @@ class _TouchScreenState extends State<TouchScreen> {
                 final color = entry.key;
                 final count = entry.value;
                 return Center(
-                  child: Text(
-                    '0x${color.value.toRadixString(16).padLeft(8, '0')}: $count',
-                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: color),
+                  child: TouchFeedBack(
+                    isDark: isDark,
+                    onClick: () {},
+                    child: Text(
+                      '0x${color.value.toRadixString(16).padLeft(8, '0')}: $count',
+                      style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: color),
+                    ),
                   ),
                 );
               },
@@ -105,6 +109,24 @@ class _TouchScreenState extends State<TouchScreen> {
                   ),
                   const SizedBox(width: 8),
                 ],
+              ),
+            ),
+            const SizedBox(height: 16),
+            Center(
+              child: TouchFeedBack(
+                onClick: () {},
+                isDark: isDark,
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                  child: Text(
+                    'hello',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: Colors.blue,
+                  ),
+                ),
               ),
             ),
             const SizedBox(height: 16),
