@@ -3,7 +3,7 @@ description: icapps architecture components for flutter projects. Contains commo
 homepage: https://github.com/icapps/flutter-icapps-architecture
 repository: https://github.com/icapps/flutter-icapps-architecture
 issue_tracker: https://github.com/icapps/flutter-icapps-architecture/issues
-version: 2.1.5
+version: 2.1.6
 
 environment:
   sdk: '>=3.0.0 <4.0.0'

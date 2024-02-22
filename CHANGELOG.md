@@ -1,4 +1,9 @@
 # Changelog
+## [2.1.6] - 2024-02-22
+### Changed
+-  Updated touchfeedback for ios to be more inline with the specs.
+
+# Changelog
 ## [2.1.5] - 2024-02-12
 ### Changed
 -  Fixed missing material in the TouchFeedback widget
