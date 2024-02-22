@@ -15,7 +15,7 @@ class RippleTouchEffect extends StatelessWidget {
     required this.animationController,
     required this.durationSeconds,
     this.borderRadius,
-    this.rippleColor = androidRippleColor,
+    this.rippleColor = androidDarkRippleColor,
     super.key,
   });
 

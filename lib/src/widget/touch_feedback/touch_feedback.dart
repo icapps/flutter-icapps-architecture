@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:icapps_architecture/icapps_architecture.dart';
 import 'package:icapps_architecture/src/widget/touch_feedback/touch_manager.dart';
 
-const androidTapColor = Color(0x0A000000);
-const androidRippleColor = Color(0x1E000000);
+const androidDarkTapColor = Color(0x0A000000);
+const androidDarkRippleColor = Color(0x1E000000);
 
-const iosDarkPressColor = Color(0x4B3A3A3C);
-const iosLightPressColor = Color(0x4BF2F2F7);
+const androidLightTapColor = Color(0x0AFFFFFF);
+const androidLightRippleColor = Color(0x1EFFFFFF);
+
+const iosDarkTapColor = Color(0x4B3A3A3C);
+const iosLightTapColor = Color(0x4BF2F2F7);
 
 class TouchEffectInfo {
   final int durationInSeconds;
@@ -44,12 +47,14 @@ class TouchFeedBack extends StatelessWidget {
   final Color? androidSplashColor;
   final bool forceAndroid;
   final bool forceIOS;
-  final bool isDark;
+  final bool isAndroidDark;
+  final bool isIosDark;
 
   const TouchFeedBack({
     required this.child,
-    required this.isDark,
     required this.onTapped,
+    this.isAndroidDark = true,
+    this.isIosDark = true,
     this.tapColor,
     this.semanticsLabel,
     this.color = Colors.transparent,
@@ -64,40 +69,6 @@ class TouchFeedBack extends StatelessWidget {
     super.key,
   });
 
-  const TouchFeedBack.dark({
-    required this.child,
-    required this.onTapped,
-    this.tapColor,
-    this.semanticsLabel,
-    this.color = Colors.transparent,
-    this.elevation = 0,
-    this.borderRadius,
-    this.shadowColor,
-    this.shapeBorder,
-    this.androidSplashColor,
-    this.forceAndroid = false,
-    this.forceIOS = false,
-    this.waitUntilOnTappedFinishesIOS = true,
-    super.key,
-  }) : isDark = true;
-
-  const TouchFeedBack.light({
-    required this.child,
-    required this.onTapped,
-    this.tapColor,
-    this.semanticsLabel,
-    this.color = Colors.transparent,
-    this.elevation = 0,
-    this.borderRadius,
-    this.shadowColor,
-    this.shapeBorder,
-    this.androidSplashColor,
-    this.forceAndroid = false,
-    this.forceIOS = false,
-    this.waitUntilOnTappedFinishesIOS = true,
-    super.key,
-  }) : isDark = false;
-
   @override
   Widget build(BuildContext context) {
     final isAndroid = (!forceIOS && context.isAndroidTheme) || forceAndroid;
@@ -107,12 +78,7 @@ class TouchFeedBack extends StatelessWidget {
       child: TouchManager(
         borderRadius: borderRadius,
         onTap: onTapped,
-        tapColor: tapColor ??
-            (isAndroid
-                ? androidTapColor
-                : isDark
-                    ? iosDarkPressColor
-                    : iosLightPressColor),
+        tapColor: tapColor ?? _getTapColor(isAndroid),
         touchEffectBuilders: [
           if (isAndroid) ...[
             (context, info) => RippleTouchEffect(
@@ -121,6 +87,9 @@ class TouchFeedBack extends StatelessWidget {
                   animationController: info.animationController,
                   durationSeconds: info.durationInSeconds,
                   borderRadius: info.borderRadius,
+                  rippleColor: isAndroidDark
+                      ? androidDarkRippleColor
+                      : androidLightRippleColor,
                 ),
           ],
         ],
@@ -134,5 +103,13 @@ class TouchFeedBack extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Color _getTapColor(bool isAndroid) {
+    if (isAndroid) {
+      return isAndroidDark ? androidDarkTapColor : androidLightTapColor;
+    } else {
+      return isIosDark ? iosDarkTapColor : iosLightTapColor;
+    }
   }
 }

@@ -72,7 +72,6 @@ class _TouchScreenState extends State<TouchScreen> {
                 final count = entry.value;
                 return Center(
                   child: TouchFeedBack(
-                    isDark: isDark,
                     onTapped: () {},
                     child: Text(
                       '0x${color.value.toRadixString(16).padLeft(8, '0')}: $count',
@@ -96,7 +95,8 @@ class _TouchScreenState extends State<TouchScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TouchFeedBack(
-                    isDark: isDark,
+                    forceAndroid: forceAndroid,
+                    forceIOS: forceIOS,
                     onTapped: () {},
                     child: Icon(
                       Icons.plus_one,
@@ -105,7 +105,8 @@ class _TouchScreenState extends State<TouchScreen> {
                   ),
                   const SizedBox(width: 8),
                   TouchFeedBack(
-                    isDark: isDark,
+                    forceAndroid: forceAndroid,
+                    forceIOS: forceIOS,
                     onTapped: () {},
                     child: Text(
                       'Tap me',
@@ -120,7 +121,8 @@ class _TouchScreenState extends State<TouchScreen> {
             Center(
               child: TouchFeedBack(
                 onTapped: () async => Future.delayed(Duration(seconds: 1)),
-                isDark: isDark,
+                forceAndroid: forceAndroid,
+                forceIOS: forceIOS,
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                   child: Text(
@@ -146,7 +148,6 @@ class _TouchScreenState extends State<TouchScreen> {
     return TouchFeedBack(
       forceAndroid: forceAndroid,
       forceIOS: forceIOS,
-      isDark: isDark,
       onTapped: () {
         setState(() {
           _counters.update(counters.keys.first, (value) => value + 1);
