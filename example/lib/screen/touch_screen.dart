@@ -119,12 +119,12 @@ class _TouchScreenState extends State<TouchScreen> {
             const SizedBox(height: 16),
             Center(
               child: TouchFeedBack(
-                onTapped: () {},
+                onTapped: () async => Future.delayed(Duration(seconds: 1)),
                 isDark: isDark,
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                   child: Text(
-                    'hello',
+                    'Delayed button',
                     style: TextStyle(color: Colors.white),
                   ),
                   decoration: BoxDecoration(

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:icapps_architecture/icapps_architecture.dart';
 import 'package:icapps_architecture/src/widget/touch_feedback/touch_manager.dart';
@@ -30,7 +32,8 @@ class TouchEffectInfo {
 /// on other devices, this will create a scaling touch down effect
 class TouchFeedBack extends StatelessWidget {
   final Widget child;
-  final VoidCallback? onTapped;
+  final bool waitUntilOnTappedFinishesIOS;
+  final FutureOr<void> Function()? onTapped;
   final String? semanticsLabel;
   final Color color;
   final Color? tapColor;
@@ -57,6 +60,7 @@ class TouchFeedBack extends StatelessWidget {
     this.androidSplashColor,
     this.forceAndroid = false,
     this.forceIOS = false,
+    this.waitUntilOnTappedFinishesIOS = true,
     super.key,
   });
 
@@ -73,6 +77,7 @@ class TouchFeedBack extends StatelessWidget {
     this.androidSplashColor,
     this.forceAndroid = false,
     this.forceIOS = false,
+    this.waitUntilOnTappedFinishesIOS = true,
     super.key,
   }) : isDark = true;
 
@@ -89,6 +94,7 @@ class TouchFeedBack extends StatelessWidget {
     this.androidSplashColor,
     this.forceAndroid = false,
     this.forceIOS = false,
+    this.waitUntilOnTappedFinishesIOS = true,
     super.key,
   }) : isDark = false;
 

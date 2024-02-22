@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:icapps_architecture/icapps_architecture.dart';
 import 'package:icapps_architecture/src/widget/touch_feedback/color_touch_effect.dart';
@@ -9,7 +11,7 @@ class TouchManager extends StatefulWidget {
   final Color color;
   final Color tapColor;
   final Widget child;
-  final VoidCallback? onTap;
+  final FutureOr<void> Function()? onTap;
   final BorderRadius? borderRadius;
   final HitTestBehavior? behavior;
   final List<TouchEffectBuilder> touchEffectBuilders;
@@ -78,9 +80,9 @@ class _TouchManagerState extends State<TouchManager>
     } while (ancestor != null);
   }
 
-  void _onTapUp(TapUpDetails details) {
+  Future<void> _onTapUp(TapUpDetails details) async {
     if (!mounted) return;
-    if (_isTouched) widget.onTap?.call();
+    if (_isTouched) await widget.onTap?.call();
     _isTouched = false;
     setState(() {});
   }
