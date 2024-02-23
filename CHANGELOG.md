@@ -1,7 +1,10 @@
 # Changelog
-## [2.1.6] - 2024-02-22
-### Changed
--  Updated touchfeedback for ios to be more inline with the specs.
+## [2.2.0] - 2024-02-22
+### Breaking
+- onClick now becomes onTapped
+- TouchFeedBack on IOS now more inline with the native look and feel
+- Added posiblity to add custom effects
+- Removed BetterInkwell widget
 
 # Changelog
 ## [2.1.5] - 2024-02-12
