@@ -18,6 +18,7 @@ class _TouchScreenState extends State<TouchScreen> {
 
   bool forceAndroid = false;
   bool forceIOS = false;
+  bool isDark = true;
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +51,16 @@ class _TouchScreenState extends State<TouchScreen> {
                 Text('Force iOS'),
               ],
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Checkbox(
+                  value: isDark,
+                  onChanged: (value) => setState(() => isDark = value ?? false),
+                ),
+                Text('Is Dark'),
+              ],
+            ),
             Center(
               child: Text(
                 'You have pushed the buttons this many times:',
@@ -60,12 +71,15 @@ class _TouchScreenState extends State<TouchScreen> {
                 final color = entry.key;
                 final count = entry.value;
                 return Center(
-                  child: Text(
-                    '0x${color.value.toRadixString(16).padLeft(8, '0')}: $count',
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineMedium!
-                        .copyWith(color: color),
+                  child: TouchFeedBack(
+                    onTapped: () {},
+                    child: Text(
+                      '0x${color.value.toRadixString(16).padLeft(8, '0')}: $count',
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineMedium!
+                          .copyWith(color: color),
+                    ),
                   ),
                 );
               },
@@ -74,6 +88,55 @@ class _TouchScreenState extends State<TouchScreen> {
             Center(
               child: _createButtons(_counters),
             ),
+            const SizedBox(height: 16),
+            Padding(
+              padding: EdgeInsets.all(16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TouchFeedBack(
+                    forceAndroid: forceAndroid,
+                    forceIOS: forceIOS,
+                    onTapped: () {},
+                    child: Icon(
+                      Icons.plus_one,
+                      size: 32,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  TouchFeedBack(
+                    forceAndroid: forceAndroid,
+                    forceIOS: forceIOS,
+                    onTapped: () {},
+                    child: Text(
+                      'Tap me',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+            Center(
+              child: TouchFeedBack(
+                onTapped: () async => Future.delayed(Duration(seconds: 1)),
+                forceAndroid: forceAndroid,
+                forceIOS: forceIOS,
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                  child: Text(
+                    'Delayed button',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: Colors.blue,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
           ],
         ),
       ),
@@ -85,7 +148,7 @@ class _TouchScreenState extends State<TouchScreen> {
     return TouchFeedBack(
       forceAndroid: forceAndroid,
       forceIOS: forceIOS,
-      onClick: () {
+      onTapped: () {
         setState(() {
           _counters.update(counters.keys.first, (value) => value + 1);
         });

@@ -1,15 +1,47 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:icapps_architecture/icapps_architecture.dart';
+import 'package:icapps_architecture/src/widget/touch_feedback/touch_manager.dart';
+
+const androidDarkTapColor = Color(0x0A000000);
+const androidDarkRippleColor = Color(0x1E000000);
+
+const androidLightTapColor = Color(0x0AFFFFFF);
+const androidLightRippleColor = Color(0x1EFFFFFF);
+
+const iosDarkTapColor = Color(0x4B3A3A3C);
+const iosLightTapColor = Color(0x4BF2F2F7);
+
+class TouchEffectInfo {
+  final int durationInSeconds;
+  final bool isTouched;
+  final Offset touchPosition;
+  final BorderRadius? borderRadius;
+  final AnimationController? animationController;
+  final Color? tapColor;
+
+  TouchEffectInfo({
+    required this.touchPosition,
+    required this.isTouched,
+    required this.animationController,
+    required this.durationInSeconds,
+    required this.borderRadius,
+    required this.tapColor,
+  });
+}
 
 /// Helper class for platform-specific touch feedback
 ///
 /// On devices running with the android theme, this will create a ripple effect,
 /// on other devices, this will create a scaling touch down effect
-class TouchFeedBack extends StatefulWidget {
+class TouchFeedBack extends StatelessWidget {
   final Widget child;
-  final VoidCallback? onClick;
+  final bool waitUntilOnTappedFinishesIOS;
+  final FutureOr<void> Function()? onTapped;
   final String? semanticsLabel;
   final Color color;
+  final Color? tapColor;
   final BorderRadius? borderRadius;
   final double elevation;
   final Color? shadowColor;
@@ -17,10 +49,19 @@ class TouchFeedBack extends StatefulWidget {
   final Color? androidSplashColor;
   final bool forceAndroid;
   final bool forceIOS;
+  final bool isAndroidDark;
+  final bool isIosDark;
+
+  /// Custom touch effect builders will be show on top of the child in a stack
+  final List<TouchEffectBuilder> touchEffectBuilders;
 
   const TouchFeedBack({
     required this.child,
-    required this.onClick,
+    required this.onTapped,
+    this.touchEffectBuilders = const <TouchEffectBuilder>[],
+    this.isAndroidDark = true,
+    this.isIosDark = true,
+    this.tapColor,
     this.semanticsLabel,
     this.color = Colors.transparent,
     this.elevation = 0,
@@ -30,71 +71,35 @@ class TouchFeedBack extends StatefulWidget {
     this.androidSplashColor,
     this.forceAndroid = false,
     this.forceIOS = false,
-    super.key,
-  });
-
-  @override
-  State<TouchFeedBack> createState() => _TouchFeedBackState();
-}
-
-class _TouchFeedBackState extends State<TouchFeedBack> {
-  @override
-  Widget build(BuildContext context) {
-    if ((!widget.forceIOS && context.isAndroidTheme) || widget.forceAndroid) {
-      return TouchFeedBackAndroid(
-        onClick: widget.onClick,
-        semanticsLabel: widget.semanticsLabel,
-        borderRadius: widget.borderRadius,
-        color: widget.color,
-        elevation: widget.elevation,
-        shadowColor: widget.shadowColor,
-        shapeBorder: widget.shapeBorder,
-        child: widget.child,
-      );
-    }
-    return TouchFeedBackIOS(
-      child: widget.child,
-      onClick: widget.onClick,
-      semanticsLabel: widget.semanticsLabel,
-      color: widget.color,
-      elevation: widget.elevation,
-      borderRadius: widget.borderRadius,
-      shadowColor: widget.shadowColor,
-      shapeBorder: widget.shapeBorder,
-    );
-  }
-}
-
-class TouchFeedBackAndroid extends StatelessWidget {
-  final Widget child;
-  final VoidCallback? onClick;
-  final String? semanticsLabel;
-  final Color color;
-  final BorderRadius? borderRadius;
-  final double elevation;
-  final Color? shadowColor;
-  final ShapeBorder? shapeBorder;
-
-  const TouchFeedBackAndroid({
-    required this.child,
-    required this.onClick,
-    this.semanticsLabel,
-    this.color = Colors.transparent,
-    this.borderRadius,
-    this.elevation = 0,
-    this.shadowColor,
-    this.shapeBorder,
+    this.waitUntilOnTappedFinishesIOS = true,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
+    final isAndroid = (!forceIOS && context.isAndroidTheme) || forceAndroid;
     return Semantics(
       label: semanticsLabel,
       button: true,
-      child: BetterInkwell(
+      child: TouchManager(
         borderRadius: borderRadius,
-        onTap: onClick,
+        onTap: onTapped,
+        tapColor: tapColor ?? _getTapColor(isAndroid),
+        touchEffectBuilders: [
+          if (isAndroid) ...[
+            (context, info) => RippleTouchEffect(
+                  isTouched: info.isTouched,
+                  touchPosition: info.touchPosition,
+                  animationController: info.animationController,
+                  durationSeconds: info.durationInSeconds,
+                  borderRadius: info.borderRadius,
+                  rippleColor: isAndroidDark
+                      ? androidDarkRippleColor
+                      : androidLightRippleColor,
+                ),
+          ],
+          ...touchEffectBuilders,
+        ],
         child: Material(
           color: color,
           shape: shapeBorder,
@@ -106,85 +111,12 @@ class TouchFeedBackAndroid extends StatelessWidget {
       ),
     );
   }
-}
 
-class TouchFeedBackIOS extends StatefulWidget {
-  final Widget child;
-  final VoidCallback? onClick;
-  final String? semanticsLabel;
-  final Color color;
-  final double elevation;
-  final BorderRadius? borderRadius;
-  final Color? shadowColor;
-  final ShapeBorder? shapeBorder;
-
-  const TouchFeedBackIOS({
-    required this.child,
-    required this.onClick,
-    this.semanticsLabel,
-    this.color = Colors.transparent,
-    this.elevation = 0,
-    this.borderRadius,
-    this.shadowColor,
-    this.shapeBorder,
-    super.key,
-  });
-
-  @override
-  _TouchFeedBackIOSState createState() => _TouchFeedBackIOSState();
-}
-
-class _TouchFeedBackIOSState extends State<TouchFeedBackIOS> {
-  static const touchScale = 0.98;
-  static const defaultScale = 1.0;
-
-  static final _touchPoints = <UniqueKey, Offset>{};
-  final _key = UniqueKey();
-
-  var touched = false;
-
-  @override
-  void dispose() {
-    _touchPoints.remove(_key);
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      label: widget.semanticsLabel,
-      button: true,
-      child: GestureDetector(
-        excludeFromSemantics: widget.onClick == null,
-        onTapDown: _onTapDown,
-        onTap: widget.onClick,
-        onTapCancel: () => _setTouched(false),
-        onTapUp: (details) => _setTouched(false),
-        child: Transform.scale(
-          scale: widget.onClick != null && touched ? touchScale : defaultScale,
-          child: Material(
-            color: widget.color,
-            shape: widget.shapeBorder,
-            elevation: widget.elevation,
-            shadowColor: widget.shadowColor,
-            borderRadius: widget.borderRadius,
-            child: widget.child,
-          ),
-        ),
-      ),
-    );
-  }
-
-  void _setTouched(bool touched) {
-    if (!touched) _touchPoints.remove(_key);
-    if (widget.onClick == null || this.touched == touched) return;
-    setState(() => this.touched = touched);
-  }
-
-  void _onTapDown(TapDownDetails details) {
-    final touchPosition = details.globalPosition;
-    if (_touchPoints.containsValue(touchPosition)) return;
-    _touchPoints[_key] = touchPosition;
-    _setTouched(true);
+  Color _getTapColor(bool isAndroid) {
+    if (isAndroid) {
+      return isAndroidDark ? androidDarkTapColor : androidLightTapColor;
+    } else {
+      return isIosDark ? iosDarkTapColor : iosLightTapColor;
+    }
   }
 }
