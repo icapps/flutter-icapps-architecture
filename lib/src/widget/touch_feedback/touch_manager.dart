@@ -117,6 +117,7 @@ class _TouchManagerState extends State<TouchManager>
                       animationController: _animationController,
                       durationInSeconds: durationSeconds,
                       borderRadius: widget.borderRadius,
+                      tapColor: widget.tapColor,
                     ),
                   ),
                 ),

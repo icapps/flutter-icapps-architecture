@@ -19,6 +19,7 @@ class TouchEffectInfo {
   final Offset touchPosition;
   final BorderRadius? borderRadius;
   final AnimationController? animationController;
+  final Color? tapColor;
 
   TouchEffectInfo({
     required this.touchPosition,
@@ -26,6 +27,7 @@ class TouchEffectInfo {
     required this.animationController,
     required this.durationInSeconds,
     required this.borderRadius,
+    required this.tapColor,
   });
 }
 
@@ -50,9 +52,13 @@ class TouchFeedBack extends StatelessWidget {
   final bool isAndroidDark;
   final bool isIosDark;
 
+  /// Custom touch effect builders will be show on top of the child in a stack
+  final List<TouchEffectBuilder> touchEffectBuilders;
+
   const TouchFeedBack({
     required this.child,
     required this.onTapped,
+    this.touchEffectBuilders = const <TouchEffectBuilder>[],
     this.isAndroidDark = true,
     this.isIosDark = true,
     this.tapColor,
@@ -92,6 +98,7 @@ class TouchFeedBack extends StatelessWidget {
                       : androidLightRippleColor,
                 ),
           ],
+          ...touchEffectBuilders,
         ],
         child: Material(
           color: color,
