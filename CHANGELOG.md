@@ -6,7 +6,6 @@
 - Added posiblity to add custom effects
 - Removed BetterInkwell widget
 
-# Changelog
 ## [2.1.5] - 2024-02-12
 ### Changed
 -  Fixed missing material in the TouchFeedback widget
