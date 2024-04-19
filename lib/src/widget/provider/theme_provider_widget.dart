@@ -16,6 +16,7 @@ class BaseThemeProviderWidget<Theme, Localization> extends StatelessWidget {
     this.childBuilderTheme,
     this.childBuilderLocalization,
     this.childBuilder,
+    super.key,
   });
 
   @override
