@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:icapps_architecture/icapps_architecture.dart';
 import 'package:icapps_architecture/src/widget/touch_feedback/color_touch_effect.dart';
 
-typedef TouchEffectBuilder = Widget Function(BuildContext context, TouchEffectInfo touchInfo);
+typedef TouchEffectBuilder = Widget Function(
+    BuildContext context, TouchEffectInfo touchInfo);
 
 class TouchManager extends StatefulWidget {
   final Color color;
@@ -32,7 +33,8 @@ class TouchManager extends StatefulWidget {
   State<TouchManager> createState() => _TouchManagerState();
 }
 
-class _TouchManagerState extends State<TouchManager> with SingleTickerProviderStateMixin {
+class _TouchManagerState extends State<TouchManager>
+    with SingleTickerProviderStateMixin {
   var _isTouched = false;
   var _touchPosition = Offset.zero;
   static const durationSeconds = 10;
@@ -75,12 +77,14 @@ class _TouchManagerState extends State<TouchManager> with SingleTickerProviderSt
     do {
       ancestor?.ignoreTouch = true;
       if (!mounted) return;
-      ancestor = ancestor?.context.findAncestorStateOfType<_TouchManagerState>();
+      ancestor =
+          ancestor?.context.findAncestorStateOfType<_TouchManagerState>();
     } while (ancestor != null);
   }
 
   FutureOr<void> _onTapUp(TapUpDetails details) async {
-    if (_isTouched) widget.isAndroid ? widget.onTap?.call() : await widget.onTap?.call();
+    if (_isTouched)
+      widget.isAndroid ? widget.onTap?.call() : await widget.onTap?.call();
     if (!mounted) return;
     _isTouched = false;
     setState(() {});
