@@ -10,6 +10,7 @@ class TouchManager extends StatefulWidget {
   final Color color;
   final Color tapColor;
   final Widget child;
+  final bool isAndroid;
   final FutureOr<void> Function()? onTap;
   final BorderRadius? borderRadius;
   final HitTestBehavior? behavior;
@@ -19,6 +20,7 @@ class TouchManager extends StatefulWidget {
     required this.child,
     required this.touchEffectBuilders,
     required this.tapColor,
+    required this.isAndroid,
     this.onTap,
     this.behavior,
     this.borderRadius,
@@ -77,8 +79,8 @@ class _TouchManagerState extends State<TouchManager> with SingleTickerProviderSt
     } while (ancestor != null);
   }
 
-  Future<void> _onTapUp(TapUpDetails details) async {
-    if (_isTouched) await widget.onTap?.call();
+  FutureOr<void> _onTapUp(TapUpDetails details) async {
+    if (_isTouched) widget.isAndroid ? widget.onTap?.call() : await widget.onTap?.call();
     if (!mounted) return;
     _isTouched = false;
     setState(() {});

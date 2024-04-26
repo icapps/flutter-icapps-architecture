@@ -82,6 +82,7 @@ class TouchFeedBack extends StatelessWidget {
       label: semanticsLabel,
       button: true,
       child: TouchManager(
+        isAndroid: isAndroid,
         borderRadius: borderRadius,
         onTap: onTapped,
         tapColor: tapColor ?? _getTapColor(isAndroid),
