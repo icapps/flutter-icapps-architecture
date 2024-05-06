@@ -11,6 +11,7 @@ class TouchManager extends StatefulWidget {
   final Color color;
   final Color tapColor;
   final Widget child;
+  final bool animateAwait;
   final FutureOr<void> Function()? onTap;
   final BorderRadius? borderRadius;
   final HitTestBehavior? behavior;
@@ -20,6 +21,7 @@ class TouchManager extends StatefulWidget {
     required this.child,
     required this.touchEffectBuilders,
     required this.tapColor,
+    required this.animateAwait,
     this.onTap,
     this.behavior,
     this.borderRadius,
@@ -80,9 +82,10 @@ class _TouchManagerState extends State<TouchManager>
     } while (ancestor != null);
   }
 
-  Future<void> _onTapUp(TapUpDetails details) async {
+  FutureOr<void> _onTapUp(TapUpDetails details) async {
+    if (_isTouched)
+      widget.animateAwait ? await widget.onTap?.call() : widget.onTap?.call();
     if (!mounted) return;
-    if (_isTouched) await widget.onTap?.call();
     _isTouched = false;
     setState(() {});
   }
