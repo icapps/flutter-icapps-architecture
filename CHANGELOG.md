@@ -1,4 +1,9 @@
 # Changelog
+## [2.2.1] - 2024-05-06
+### Updated
+- Fixed TouchFeedBack setState error
+- TouchFeedBack on Android doesn't pause anymore
+
 ## [2.2.0] - 2024-02-22
 ### Breaking
 - onClick now becomes onTapped
@@ -6,7 +11,6 @@
 - Added posiblity to add custom effects
 - Removed BetterInkwell widget
 
-# Changelog
 ## [2.1.5] - 2024-02-12
 ### Changed
 -  Fixed missing material in the TouchFeedback widget
