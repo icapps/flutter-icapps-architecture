@@ -10,16 +10,11 @@ class Locale {}
 
 class ThemeProviderWidget extends BaseThemeProviderWidget<Theme, Locale> {
   const ThemeProviderWidget({
-    Widget Function(BuildContext context, Theme theme)? childBuilderTheme,
-    Widget Function(BuildContext context, Locale localization)?
-        childBuilderLocalization,
-    Widget Function(BuildContext context, Theme theme, Locale localization)?
-        childBuilder,
-  }) : super(
-          childBuilderTheme: childBuilderTheme,
-          childBuilder: childBuilder,
-          childBuilderLocalization: childBuilderLocalization,
-        );
+    super.childBuilderTheme,
+    super.childBuilderLocalization,
+    super.childBuilder,
+    super.key,
+  });
 }
 
 LocaleT getLocale<LocaleT>(BuildContext _) => Locale() as LocaleT;
