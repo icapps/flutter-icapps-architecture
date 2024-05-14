@@ -51,6 +51,7 @@ class TouchFeedBack extends StatelessWidget {
   final bool forceIOS;
   final bool isAndroidDark;
   final bool isIosDark;
+  final bool animateAwait;
 
   /// Custom touch effect builders will be show on top of the child in a stack
   final List<TouchEffectBuilder> touchEffectBuilders;
@@ -72,6 +73,7 @@ class TouchFeedBack extends StatelessWidget {
     this.forceAndroid = false,
     this.forceIOS = false,
     this.waitUntilOnTappedFinishesIOS = true,
+    this.animateAwait = true,
     super.key,
   });
 
@@ -82,6 +84,7 @@ class TouchFeedBack extends StatelessWidget {
       label: semanticsLabel,
       button: true,
       child: TouchManager(
+        animateAwait: animateAwait,
         borderRadius: borderRadius,
         onTap: onTapped,
         tapColor: tapColor ?? _getTapColor(isAndroid),
