@@ -1,4 +1,8 @@
 # Changelog
+## [2.2.2] - 2024-05-17
+### Updated
+- Pass named super.key parameter in BaseThemeProviderWidget constructor
+
 ## [2.2.1] - 2024-05-06
 ### Updated
 - Fixed TouchFeedBack setState error
