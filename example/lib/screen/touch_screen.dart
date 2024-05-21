@@ -34,8 +34,7 @@ class _TouchScreenState extends State<TouchScreen> {
               children: [
                 Checkbox(
                   value: forceAndroid,
-                  onChanged: (value) =>
-                      setState(() => forceAndroid = value ?? false),
+                  onChanged: (value) => setState(() => forceAndroid = value ?? false),
                 ),
                 Text('Force Android'),
               ],
@@ -45,8 +44,7 @@ class _TouchScreenState extends State<TouchScreen> {
               children: [
                 Checkbox(
                   value: forceIOS,
-                  onChanged: (value) =>
-                      setState(() => forceIOS = value ?? false),
+                  onChanged: (value) => setState(() => forceIOS = value ?? false),
                 ),
                 Text('Force iOS'),
               ],
@@ -75,10 +73,7 @@ class _TouchScreenState extends State<TouchScreen> {
                     onTapped: () {},
                     child: Text(
                       '0x${color.value.toRadixString(16).padLeft(8, '0')}: $count',
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineMedium!
-                          .copyWith(color: color),
+                      style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: color),
                     ),
                   ),
                 );
