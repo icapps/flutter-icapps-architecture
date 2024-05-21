@@ -79,7 +79,7 @@ class TouchFeedBack extends StatelessWidget {
     this.forceIOS = false,
     this.waitUntilOnTappedFinishesIOS = true,
     this.animateAwait = true,
-    this.cursor = SystemMouseCursors.click,
+    this.cursor = MouseCursor.defer,
     this.onEnter,
     this.onExit,
     this.onHover,
