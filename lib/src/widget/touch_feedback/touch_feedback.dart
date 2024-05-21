@@ -104,7 +104,9 @@ class TouchFeedBack extends StatelessWidget {
                 animationController: info.animationController,
                 durationSeconds: info.durationInSeconds,
                 borderRadius: info.borderRadius,
-                rippleColor: isAndroidDark ? androidDarkRippleColor : androidLightRippleColor,
+                rippleColor: isAndroidDark
+                    ? androidDarkRippleColor
+                    : androidLightRippleColor,
               ),
         ],
         ...touchEffectBuilders,
