@@ -92,9 +92,12 @@ class TouchFeedBack extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isAndroid = (forcePlatform != PlatformOverwrite.iOS && context.isAndroidTheme) ||
-        forcePlatform == PlatformOverwrite.android;
-    final isMobile = isAndroid || context.isIOSTheme || forcePlatform == PlatformOverwrite.iOS;
+    final isAndroid =
+        (forcePlatform != PlatformOverwrite.iOS && context.isAndroidTheme) ||
+            forcePlatform == PlatformOverwrite.android;
+    final isMobile = isAndroid ||
+        context.isIOSTheme ||
+        forcePlatform == PlatformOverwrite.iOS;
 
     Widget touchManager = TouchManager(
       animateAwait: animateAwait,
@@ -109,7 +112,9 @@ class TouchFeedBack extends StatelessWidget {
                 animationController: info.animationController,
                 durationSeconds: info.durationInSeconds,
                 borderRadius: info.borderRadius,
-                rippleColor: isAndroidDark ? androidDarkRippleColor : androidLightRippleColor,
+                rippleColor: isAndroidDark
+                    ? androidDarkRippleColor
+                    : androidLightRippleColor,
               ),
         ],
         ...touchEffectBuilders,
