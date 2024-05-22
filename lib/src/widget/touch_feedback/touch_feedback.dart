@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:icapps_architecture/icapps_architecture.dart';
-import 'package:icapps_architecture/src/model/platform/platform_overwrite_enum.dart';
 import 'package:icapps_architecture/src/widget/touch_feedback/touch_manager.dart';
 
 const androidDarkTapColor = Color(0x0A000000);
@@ -85,7 +84,7 @@ class TouchFeedBack extends StatelessWidget {
     this.onExit,
     this.onHover,
     super.key,
-  }): this.forcePlatform = forceAndroid
+  }) : this.forcePlatform = forceAndroid
             ? PlatformOverwrite.android
             : forceIOS
                 ? PlatformOverwrite.iOS
@@ -93,7 +92,8 @@ class TouchFeedBack extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isAndroid = (forcePlatform != PlatformOverwrite.iOS && context.isAndroidTheme) || forcePlatform == PlatformOverwrite.android;
+    final isAndroid = (forcePlatform != PlatformOverwrite.iOS && context.isAndroidTheme) ||
+        forcePlatform == PlatformOverwrite.android;
     final isMobile = isAndroid || context.isIOSTheme || forcePlatform == PlatformOverwrite.iOS;
 
     Widget touchManager = TouchManager(
