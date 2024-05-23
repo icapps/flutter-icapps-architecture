@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:icapps_architecture/icapps_architecture.dart';
 import 'package:icapps_architecture/src/widget/touch_feedback/touch_manager.dart';
@@ -47,11 +49,14 @@ class TouchFeedBack extends StatelessWidget {
   final Color? shadowColor;
   final ShapeBorder? shapeBorder;
   final Color? androidSplashColor;
-  final bool forceAndroid;
-  final bool forceIOS;
   final bool isAndroidDark;
   final bool isIosDark;
   final bool animateAwait;
+  final MouseCursor cursor;
+  final PlatformOverwrite? forcePlatform;
+  final ValueChanged<PointerEnterEvent>? onEnter;
+  final ValueChanged<PointerExitEvent>? onExit;
+  final ValueChanged<PointerHoverEvent>? onHover;
 
   /// Custom touch effect builders will be show on top of the child in a stack
   final List<TouchEffectBuilder> touchEffectBuilders;
@@ -70,48 +75,73 @@ class TouchFeedBack extends StatelessWidget {
     this.shadowColor,
     this.shapeBorder,
     this.androidSplashColor,
-    this.forceAndroid = false,
-    this.forceIOS = false,
+    @Deprecated('Use forcePlatform instead') bool forceAndroid = false,
+    @Deprecated('Use forcePlatform instead') bool forceIOS = false,
+    PlatformOverwrite? forcePlatform,
     this.waitUntilOnTappedFinishesIOS = true,
     this.animateAwait = true,
+    this.cursor = MouseCursor.defer,
+    this.onEnter,
+    this.onExit,
+    this.onHover,
     super.key,
-  });
+  }) : this.forcePlatform = forceAndroid
+            ? PlatformOverwrite.android
+            : forceIOS
+                ? PlatformOverwrite.iOS
+                : forcePlatform;
 
   @override
   Widget build(BuildContext context) {
-    final isAndroid = (!forceIOS && context.isAndroidTheme) || forceAndroid;
+    final isAndroid =
+        (forcePlatform != PlatformOverwrite.iOS && context.isAndroidTheme) ||
+            forcePlatform == PlatformOverwrite.android;
+    final isMobile = isAndroid ||
+        forcePlatform != PlatformOverwrite.web &&
+            (context.isIOSTheme || forcePlatform == PlatformOverwrite.iOS);
+
+    Widget touchManager = TouchManager(
+      animateAwait: animateAwait,
+      borderRadius: borderRadius,
+      onTap: onTapped,
+      tapColor: tapColor ?? _getTapColor(isAndroid),
+      touchEffectBuilders: [
+        if (isAndroid) ...[
+          (context, info) => RippleTouchEffect(
+                isTouched: info.isTouched,
+                touchPosition: info.touchPosition,
+                animationController: info.animationController,
+                durationSeconds: info.durationInSeconds,
+                borderRadius: info.borderRadius,
+                rippleColor: isAndroidDark
+                    ? androidDarkRippleColor
+                    : androidLightRippleColor,
+              ),
+        ],
+        ...touchEffectBuilders,
+      ],
+      child: Material(
+        color: color,
+        shape: shapeBorder,
+        elevation: elevation,
+        shadowColor: shadowColor,
+        borderRadius: borderRadius,
+        child: child,
+      ),
+    );
+
     return Semantics(
       label: semanticsLabel,
       button: true,
-      child: TouchManager(
-        animateAwait: animateAwait,
-        borderRadius: borderRadius,
-        onTap: onTapped,
-        tapColor: tapColor ?? _getTapColor(isAndroid),
-        touchEffectBuilders: [
-          if (isAndroid) ...[
-            (context, info) => RippleTouchEffect(
-                  isTouched: info.isTouched,
-                  touchPosition: info.touchPosition,
-                  animationController: info.animationController,
-                  durationSeconds: info.durationInSeconds,
-                  borderRadius: info.borderRadius,
-                  rippleColor: isAndroidDark
-                      ? androidDarkRippleColor
-                      : androidLightRippleColor,
-                ),
-          ],
-          ...touchEffectBuilders,
-        ],
-        child: Material(
-          color: color,
-          shape: shapeBorder,
-          elevation: elevation,
-          shadowColor: shadowColor,
-          borderRadius: borderRadius,
-          child: child,
-        ),
-      ),
+      child: isMobile
+          ? touchManager
+          : MouseRegion(
+              cursor: cursor,
+              onEnter: onEnter,
+              onExit: onExit,
+              onHover: onHover,
+              child: touchManager,
+            ),
     );
   }
 

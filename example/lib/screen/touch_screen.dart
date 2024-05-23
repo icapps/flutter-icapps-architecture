@@ -20,6 +20,12 @@ class _TouchScreenState extends State<TouchScreen> {
   bool forceIOS = false;
   bool isDark = true;
 
+  PlatformOverwrite? get _forcePlatform => forceAndroid
+      ? PlatformOverwrite.android
+      : forceIOS
+          ? PlatformOverwrite.iOS
+          : null;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,8 +101,7 @@ class _TouchScreenState extends State<TouchScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TouchFeedBack(
-                    forceAndroid: forceAndroid,
-                    forceIOS: forceIOS,
+                    forcePlatform: _forcePlatform,
                     onTapped: () {},
                     child: Icon(
                       Icons.plus_one,
@@ -105,8 +110,7 @@ class _TouchScreenState extends State<TouchScreen> {
                   ),
                   const SizedBox(width: 8),
                   TouchFeedBack(
-                    forceAndroid: forceAndroid,
-                    forceIOS: forceIOS,
+                    forcePlatform: _forcePlatform,
                     onTapped: () {},
                     child: Text(
                       'Tap me',
@@ -121,8 +125,7 @@ class _TouchScreenState extends State<TouchScreen> {
             Center(
               child: TouchFeedBack(
                 onTapped: () async => Future.delayed(Duration(seconds: 1)),
-                forceAndroid: forceAndroid,
-                forceIOS: forceIOS,
+                forcePlatform: _forcePlatform,
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                   child: Text(
@@ -146,8 +149,7 @@ class _TouchScreenState extends State<TouchScreen> {
   Widget _createButtons(Map<Color, int> counters) {
     if (counters.isEmpty) return const SizedBox();
     return TouchFeedBack(
-      forceAndroid: forceAndroid,
-      forceIOS: forceIOS,
+      forcePlatform: _forcePlatform,
       onTapped: () {
         setState(() {
           _counters.update(counters.keys.first, (value) => value + 1);

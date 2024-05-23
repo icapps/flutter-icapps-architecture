@@ -32,3 +32,4 @@ export 'src/widget/provider/theme_provider_widget.dart';
 export 'src/widget/responsive/responsive_widget.dart';
 export 'src/widget/touch_feedback/ripple_touch_effect.dart';
 export 'src/widget/touch_feedback/touch_feedback.dart';
+export 'src/model/platform/platform_overwrite_enum.dart';

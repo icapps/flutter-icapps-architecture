@@ -1,4 +1,8 @@
 # Changelog
+## [2.2.3] - 2024-05-21
+### Updated
+- Added MouseRegion parentwidget for touchfeedback on web and macos & forceIOS and forceAndroid is now deprecated.
+
 ## [2.2.2] - 2024-05-17
 ### Updated
 - Pass named super.key parameter in BaseThemeProviderWidget constructor
