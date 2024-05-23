@@ -105,11 +105,7 @@ class _TouchScreenState extends State<TouchScreen> {
                   ),
                   const SizedBox(width: 8),
                   TouchFeedBack(
-                    forcePlatform: forceAndroid
-                        ? PlatformOverwrite.android
-                        : forceIOS
-                            ? PlatformOverwrite.iOS
-                            : PlatformOverwrite.web,
+                    forcePlatform: _forcePlatform,
                     onTapped: () {},
                     child: Text(
                       'Tap me',
