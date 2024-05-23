@@ -97,8 +97,8 @@ class TouchFeedBack extends StatelessWidget {
         (forcePlatform != PlatformOverwrite.iOS && context.isAndroidTheme) ||
             forcePlatform == PlatformOverwrite.android;
     final isMobile = isAndroid ||
-        (forcePlatform != PlatformOverwrite.web) && context.isIOSTheme ||
-        forcePlatform == PlatformOverwrite.iOS;
+        forcePlatform != PlatformOverwrite.web &&
+            (context.isIOSTheme || forcePlatform == PlatformOverwrite.iOS);
 
     Widget touchManager = TouchManager(
       animateAwait: animateAwait,
