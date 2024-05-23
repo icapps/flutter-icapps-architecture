@@ -144,11 +144,7 @@ class _TouchScreenState extends State<TouchScreen> {
   Widget _createButtons(Map<Color, int> counters) {
     if (counters.isEmpty) return const SizedBox();
     return TouchFeedBack(
-      forcePlatform: forceAndroid
-          ? PlatformOverwrite.android
-          : forceIOS
-              ? PlatformOverwrite.iOS
-              : PlatformOverwrite.web,
+      forcePlatform: _forcePlatform,
       onTapped: () {
         setState(() {
           _counters.update(counters.keys.first, (value) => value + 1);
