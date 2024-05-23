@@ -2,5 +2,7 @@ enum PlatformOverwrite {
   android,
   iOS,
   web,
-  desktop,
+  macos,
+  linux,
+  windows,
 }

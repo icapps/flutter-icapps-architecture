@@ -20,6 +20,12 @@ class _TouchScreenState extends State<TouchScreen> {
   bool forceIOS = false;
   bool isDark = true;
 
+  PlatformOverwrite? get _forcePlatform => forceAndroid
+      ? PlatformOverwrite.android
+      : forceIOS
+          ? PlatformOverwrite.iOS
+          : null;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,8 +40,7 @@ class _TouchScreenState extends State<TouchScreen> {
               children: [
                 Checkbox(
                   value: forceAndroid,
-                  onChanged: (value) =>
-                      setState(() => forceAndroid = value ?? false),
+                  onChanged: (value) => setState(() => forceAndroid = value ?? false),
                 ),
                 Text('Force Android'),
               ],
@@ -45,8 +50,7 @@ class _TouchScreenState extends State<TouchScreen> {
               children: [
                 Checkbox(
                   value: forceIOS,
-                  onChanged: (value) =>
-                      setState(() => forceIOS = value ?? false),
+                  onChanged: (value) => setState(() => forceIOS = value ?? false),
                 ),
                 Text('Force iOS'),
               ],
@@ -75,10 +79,7 @@ class _TouchScreenState extends State<TouchScreen> {
                     onTapped: () {},
                     child: Text(
                       '0x${color.value.toRadixString(16).padLeft(8, '0')}: $count',
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineMedium!
-                          .copyWith(color: color),
+                      style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: color),
                     ),
                   ),
                 );
@@ -95,11 +96,7 @@ class _TouchScreenState extends State<TouchScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TouchFeedBack(
-                    forcePlatform: forceAndroid
-                        ? PlatformOverwrite.android
-                        : forceIOS
-                            ? PlatformOverwrite.iOS
-                            : PlatformOverwrite.web,
+                    forcePlatform: _forcePlatform,
                     onTapped: () {},
                     child: Icon(
                       Icons.plus_one,
@@ -127,11 +124,7 @@ class _TouchScreenState extends State<TouchScreen> {
             Center(
               child: TouchFeedBack(
                 onTapped: () async => Future.delayed(Duration(seconds: 1)),
-                forcePlatform: forceAndroid
-                    ? PlatformOverwrite.android
-                    : forceIOS
-                        ? PlatformOverwrite.iOS
-                        : PlatformOverwrite.web,
+                forcePlatform: _forcePlatform,
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                   child: Text(

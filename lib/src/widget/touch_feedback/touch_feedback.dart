@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:icapps_architecture/icapps_architecture.dart';
@@ -74,9 +75,9 @@ class TouchFeedBack extends StatelessWidget {
     this.shadowColor,
     this.shapeBorder,
     this.androidSplashColor,
-    @Deprecated('Use platform instead') bool forceAndroid = false,
-    @Deprecated('Use platform instead') bool forceIOS = false,
-    PlatformOverwrite forcePlatform = PlatformOverwrite.web,
+    @Deprecated('Use forcePlatform instead') bool forceAndroid = false,
+    @Deprecated('Use forcePlatform instead') bool forceIOS = false,
+    PlatformOverwrite? forcePlatform,
     this.waitUntilOnTappedFinishesIOS = true,
     this.animateAwait = true,
     this.cursor = MouseCursor.defer,
@@ -92,12 +93,9 @@ class TouchFeedBack extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isAndroid =
-        (forcePlatform != PlatformOverwrite.iOS && context.isAndroidTheme) ||
-            forcePlatform == PlatformOverwrite.android;
-    final isMobile = isAndroid ||
-        context.isIOSTheme ||
-        forcePlatform == PlatformOverwrite.iOS;
+    final isAndroid = (forcePlatform != PlatformOverwrite.iOS && context.isAndroidTheme) ||
+        forcePlatform == PlatformOverwrite.android;
+    final isMobile = isAndroid || context.isIOSTheme || forcePlatform == PlatformOverwrite.iOS;
 
     Widget touchManager = TouchManager(
       animateAwait: animateAwait,
