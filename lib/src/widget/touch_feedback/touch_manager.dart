@@ -1,41 +1,53 @@
 import 'dart:async';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:icapps_architecture/icapps_architecture.dart';
 import 'package:icapps_architecture/src/widget/touch_feedback/color_touch_effect.dart';
 
-typedef TouchEffectBuilder = Widget Function(
-    BuildContext context, TouchEffectInfo touchInfo);
+typedef TouchEffectBuilder = Widget Function(BuildContext context, TouchEffectInfo touchInfo);
 
 class TouchManager extends StatefulWidget {
   final Color color;
   final Color tapColor;
+  final Color? hoverColor;
   final Widget child;
   final bool animateAwait;
+  final bool isMobile;
   final FutureOr<void> Function()? onTap;
   final BorderRadius? borderRadius;
   final HitTestBehavior? behavior;
+  final MouseCursor cursor;
+  final ValueChanged<PointerEnterEvent>? onEnter;
+  final ValueChanged<PointerExitEvent>? onExit;
+  final ValueChanged<PointerHoverEvent>? onHover;
   final List<TouchEffectBuilder> touchEffectBuilders;
 
   const TouchManager({
-    required this.child,
-    required this.touchEffectBuilders,
-    required this.tapColor,
-    required this.animateAwait,
-    this.onTap,
-    this.behavior,
-    this.borderRadius,
+    Key? key,
     this.color = Colors.transparent,
-    super.key,
-  });
+    required this.tapColor,
+    required this.child,
+    required this.animateAwait,
+    this.hoverColor,
+    this.isMobile = true,
+    this.onTap,
+    this.borderRadius,
+    this.behavior,
+    this.cursor = MouseCursor.defer,
+    this.onEnter,
+    this.onExit,
+    this.onHover,
+    required this.touchEffectBuilders,
+  }) : super(key: key);
 
   @override
   State<TouchManager> createState() => _TouchManagerState();
 }
 
-class _TouchManagerState extends State<TouchManager>
-    with SingleTickerProviderStateMixin {
+class _TouchManagerState extends State<TouchManager> with SingleTickerProviderStateMixin {
   var _isTouched = false;
+  var _isHovering = false;
   var _touchPosition = Offset.zero;
   static const durationSeconds = 10;
 
@@ -77,14 +89,12 @@ class _TouchManagerState extends State<TouchManager>
     do {
       ancestor?.ignoreTouch = true;
       if (!mounted) return;
-      ancestor =
-          ancestor?.context.findAncestorStateOfType<_TouchManagerState>();
+      ancestor = ancestor?.context.findAncestorStateOfType<_TouchManagerState>();
     } while (ancestor != null);
   }
 
   FutureOr<void> _onTapUp(TapUpDetails details) async {
-    if (_isTouched)
-      widget.animateAwait ? await widget.onTap?.call() : widget.onTap?.call();
+    if (_isTouched) widget.animateAwait ? await widget.onTap?.call() : widget.onTap?.call();
     if (!mounted) return;
     _isTouched = false;
     setState(() {});
@@ -99,7 +109,7 @@ class _TouchManagerState extends State<TouchManager>
   @override
   Widget build(BuildContext context) {
     if (widget.onTap == null) return widget.child;
-    return GestureDetector(
+    final Widget detector = GestureDetector(
       behavior: widget.behavior,
       onTapDown: (details) => _onTapDown(details, context),
       onTapUp: _onTapUp,
@@ -131,12 +141,34 @@ class _TouchManagerState extends State<TouchManager>
         child: ColorTouchEffect(
           isTouched: _isTouched,
           color: widget.tapColor,
-          child: Container(
-            color: widget.color,
-            child: widget.child,
+          child: ColorTouchEffect(
+            isTouched: _isHovering && !widget.isMobile,
+            color: widget.hoverColor ?? widget.tapColor,
+            child: Container(
+              color: widget.color,
+              child: widget.child,
+            ),
           ),
         ),
       ),
+    );
+    if (widget.isMobile) return detector;
+    return MouseRegion(
+      cursor: widget.cursor,
+      onEnter: (event) {
+        widget.onEnter?.call(event);
+        setState(() {
+          _isHovering = true;
+        });
+      },
+      onExit: (event) {
+        widget.onExit?.call(event);
+        setState(() {
+          _isHovering = false;
+        });
+      },
+      onHover: widget.onHover,
+      child: detector,
     );
   }
 }

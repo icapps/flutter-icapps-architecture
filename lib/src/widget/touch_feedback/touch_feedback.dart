@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:icapps_architecture/icapps_architecture.dart';
@@ -44,6 +43,7 @@ class TouchFeedBack extends StatelessWidget {
   final String? semanticsLabel;
   final Color color;
   final Color? tapColor;
+  final Color? hoverColor;
   final BorderRadius? borderRadius;
   final double elevation;
   final Color? shadowColor;
@@ -52,8 +52,8 @@ class TouchFeedBack extends StatelessWidget {
   final bool isAndroidDark;
   final bool isIosDark;
   final bool animateAwait;
-  final MouseCursor cursor;
   final PlatformOverwrite? forcePlatform;
+  final MouseCursor cursor;
   final ValueChanged<PointerEnterEvent>? onEnter;
   final ValueChanged<PointerExitEvent>? onExit;
   final ValueChanged<PointerHoverEvent>? onHover;
@@ -68,6 +68,7 @@ class TouchFeedBack extends StatelessWidget {
     this.isAndroidDark = true,
     this.isIosDark = true,
     this.tapColor,
+    this.hoverColor,
     this.semanticsLabel,
     this.color = Colors.transparent,
     this.elevation = 0,
@@ -93,57 +94,49 @@ class TouchFeedBack extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isAndroid =
-        (forcePlatform != PlatformOverwrite.iOS && context.isAndroidTheme) ||
-            forcePlatform == PlatformOverwrite.android;
-    final isMobile = isAndroid ||
-        forcePlatform != PlatformOverwrite.web &&
-            (context.isIOSTheme || forcePlatform == PlatformOverwrite.iOS);
-
-    Widget touchManager = TouchManager(
-      animateAwait: animateAwait,
-      borderRadius: borderRadius,
-      onTap: onTapped,
-      tapColor: tapColor ?? _getTapColor(isAndroid),
-      touchEffectBuilders: [
-        if (isAndroid) ...[
-          (context, info) => RippleTouchEffect(
-                isTouched: info.isTouched,
-                touchPosition: info.touchPosition,
-                animationController: info.animationController,
-                durationSeconds: info.durationInSeconds,
-                borderRadius: info.borderRadius,
-                rippleColor: isAndroidDark
-                    ? androidDarkRippleColor
-                    : androidLightRippleColor,
-              ),
-        ],
-        ...touchEffectBuilders,
-      ],
-      child: Material(
-        color: color,
-        shape: shapeBorder,
-        elevation: elevation,
-        shadowColor: shadowColor,
-        borderRadius: borderRadius,
-        child: child,
-      ),
-    );
+    final isAndroid = (forcePlatform != PlatformOverwrite.iOS && context.isAndroidTheme) || forcePlatform == PlatformOverwrite.android;
+    final isMobile = isAndroid || forcePlatform != PlatformOverwrite.web && (context.isIOSTheme || forcePlatform == PlatformOverwrite.iOS);
 
     return Semantics(
       label: semanticsLabel,
       button: true,
-      child: isMobile
-          ? touchManager
-          : MouseRegion(
-              cursor: cursor,
-              onEnter: onEnter,
-              onExit: onExit,
-              onHover: onHover,
-              child: touchManager,
-            ),
+      child: TouchManager(
+        animateAwait: animateAwait,
+        borderRadius: borderRadius,
+        onTap: onTapped,
+        tapColor: tapColor ?? _getTapColor(isAndroid),
+        hoverColor: _hoverColor,
+        isMobile: isMobile,
+        cursor: cursor,
+        onEnter: onEnter,
+        onExit: onExit,
+        onHover: onHover,
+        touchEffectBuilders: [
+          if (isAndroid) ...[
+            (context, info) => RippleTouchEffect(
+                  isTouched: info.isTouched,
+                  touchPosition: info.touchPosition,
+                  animationController: info.animationController,
+                  durationSeconds: info.durationInSeconds,
+                  borderRadius: info.borderRadius,
+                  rippleColor: isAndroidDark ? androidDarkRippleColor : androidLightRippleColor,
+                ),
+          ],
+          ...touchEffectBuilders,
+        ],
+        child: Material(
+          color: color,
+          shape: shapeBorder,
+          elevation: elevation,
+          shadowColor: shadowColor,
+          borderRadius: borderRadius,
+          child: child,
+        ),
+      ),
     );
   }
+
+  Color get _hoverColor => hoverColor ?? (isAndroidDark ? androidDarkTapColor : androidLightTapColor);
 
   Color _getTapColor(bool isAndroid) {
     if (isAndroid) {
