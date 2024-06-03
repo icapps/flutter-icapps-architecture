@@ -25,22 +25,22 @@ class TouchManager extends StatefulWidget {
   final List<TouchEffectBuilder> touchEffectBuilders;
 
   const TouchManager({
-    Key? key,
-    this.color = Colors.transparent,
     required this.tapColor,
     required this.child,
     required this.animateAwait,
+    required this.touchEffectBuilders,
     this.hoverColor,
     this.isMobile = true,
     this.onTap,
     this.borderRadius,
     this.behavior,
     this.cursor = MouseCursor.defer,
+    this.color = Colors.transparent,
     this.onEnter,
     this.onExit,
     this.onHover,
-    required this.touchEffectBuilders,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<TouchManager> createState() => _TouchManagerState();
@@ -159,20 +159,26 @@ class _TouchManagerState extends State<TouchManager>
     if (widget.isMobile) return detector;
     return MouseRegion(
       cursor: widget.cursor,
-      onEnter: (event) {
-        widget.onEnter?.call(event);
-        setState(() {
-          _isHovering = true;
-        });
-      },
-      onExit: (event) {
-        widget.onExit?.call(event);
-        setState(() {
-          _isHovering = false;
-        });
-      },
+      onEnter: _onEnter,
+      onExit: _onExit,
       onHover: widget.onHover,
       child: detector,
     );
+  }
+
+  void _onExit(event) {
+    widget.onExit?.call(event);
+    if (!mounted) return;
+    setState(() {
+      _isHovering = false;
+    });
+  }
+
+  void _onEnter(event) {
+    widget.onEnter?.call(event);
+    if (!mounted) return;
+    setState(() {
+      _isHovering = true;
+    });
   }
 }
