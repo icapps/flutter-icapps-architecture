@@ -150,6 +150,7 @@ class _TouchScreenState extends State<TouchScreen> {
     if (counters.isEmpty) return const SizedBox();
     return TouchFeedBack(
       forcePlatform: _forcePlatform,
+      hoverColor: Colors.transparent,
       onTapped: () {
         setState(() {
           _counters.update(counters.keys.first, (value) => value + 1);

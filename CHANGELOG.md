@@ -1,7 +1,9 @@
 # Changelog
 ## [2.2.3] - 2024-05-21
 ### Updated
-- Added MouseRegion parentwidget for touchfeedback on web and macos & forceIOS and forceAndroid is now deprecated.
+- Added MouseRegion for TouchFeedback for non-mobile
+- Added `hoverColor` for TouchFeedback for non-mobile
+- Deprecated forceIOS and forceAndroid in favor of forcePlatform
 
 ## [2.2.2] - 2024-05-17
 ### Updated
