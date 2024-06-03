@@ -261,10 +261,11 @@ void testWithLogger() {
               '\\d+:\\d+:\\d+\\.\\d+\\s+#0   Declarer.test.<anonymous closure>.<anonymous closure> \\(package:test_api/src/backend/declarer.dart:\\d+:\\d+\\)'));
       expect(messages[4].lines[3],
           matches('\\d+:\\d+:\\d+\\.\\d+\\s+#1   <asynchronous suspension>'));
+      // Note: This is what the stack trace looks like on the CI, it might be different on your machine
       expect(
           messages[4].lines[4],
           matches(
-              '\\d+:\\d+:\\d+\\.\\d+\\s+#2   StackZoneSpecification._registerUnaryCallback.<anonymous closure> \\(package:stack_trace/src/stack_zone_specification.dart:\\d+:\\d+\\)'));
+              '\\d+:\\d+:\\d+\\.\\d+\\s+#2   Declarer.test.<anonymous closure> \\(package:test_api/src/backend/declarer.dart:\\d+:\\d+\\)'));
       expect(messages[4].lines[5],
           matches('\\d+:\\d+:\\d+\\.\\d+\\s+#3   <asynchronous suspension>'));
     });
