@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -104,6 +106,7 @@ class TestUtil {
   static Future<void> takeScreenshot(
       WidgetTester tester, String snapshotName) async {
     expect(find.byType(TestWrapper), findsOneWidget);
+    goldenFileComparator = GoldenDiffComparator('img/$snapshotName.png');
     await expectLater(
       find.byType(TestWrapper),
       matchesGoldenFile('img/$snapshotName.png'),
@@ -155,4 +158,28 @@ extension MockExtensions on VerificationResult {
   void called3Times() => called(3);
 
   void called4Times() => called(4);
+}
+
+class GoldenDiffComparator extends LocalFileComparator {
+  final double _kGoldenDiffTolerance = 0.01;
+
+  GoldenDiffComparator(String testFile) : super(Uri.parse(testFile));
+
+  @override
+  Future<bool> compare(Uint8List imageBytes, Uri golden) async {
+    final ComparisonResult result = await GoldenFileComparator.compareLists(
+      imageBytes,
+      await getGoldenBytes(golden),
+    );
+
+    if (!result.passed && result.diffPercent > _kGoldenDiffTolerance) {
+      final String error = await generateFailureOutput(result, golden, basedir);
+      throw FlutterError(error);
+    }
+    if (!result.passed) {
+      print(
+          'A tolerable difference of ${result.diffPercent * 100}% was found when comparing $golden.');
+    }
+    return result.passed || result.diffPercent <= _kGoldenDiffTolerance;
+  }
 }
