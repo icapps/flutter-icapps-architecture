@@ -14,7 +14,7 @@ extension IterableExtension<T> on Iterable<T> {
 
   /// Sums the result of [valueProvider] for each item
   E sum<E extends num>(E Function(T) valueProducer) {
-    num value = 0;
+    num value = (E == double ? 0.0 : 0) as E;
     forEach((e) => value = (value + valueProducer(e)) as E);
     return value as E;
   }

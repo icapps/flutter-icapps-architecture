@@ -1,4 +1,8 @@
 # Changelog
+## [2.2.4] - 2025-10-15
+### Updated
+- Fixed issue where sum would not work for an empty list of double values
+
 ## [2.2.3] - 2024-05-21
 ### Updated
 - Added MouseRegion for TouchFeedback for non-mobile
