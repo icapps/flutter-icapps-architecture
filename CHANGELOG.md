@@ -1,4 +1,10 @@
 # Changelog
+## [2.2.5] - 2025-12-30
+### Updated
+- Dependencies
+- Connectivity Plus to v7
+- Device Info Plus to v12
+
 ## [2.2.4] - 2025-10-15
 ### Updated
 - Fixed issue where sum would not work for an empty list of double values
