@@ -3,15 +3,15 @@ description: icapps architecture components for flutter projects. Contains commo
 homepage: https://github.com/icapps/flutter-icapps-architecture
 repository: https://github.com/icapps/flutter-icapps-architecture
 issue_tracker: https://github.com/icapps/flutter-icapps-architecture/issues
-version: 2.2.4
+version: 2.2.5
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
   computer: ^3.2.1
-  connectivity_plus: ^5.0.2
-  device_info_plus: ^9.1.2
+  connectivity_plus: ^7.0.0
+  device_info_plus: ^12.3.0
   dio: ^5.4.0
   flutter:
     sdk: flutter
@@ -25,6 +25,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   mockito: ^5.4.4
-  flutter_lints: ^2.0.3
+  flutter_lints: ^6.0.0
 
 flutter:

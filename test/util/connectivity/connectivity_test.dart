@@ -17,7 +17,7 @@ void main() {
   group('Connectivity tests', () {
     test('Test connectivity mobile', () async {
       when(connectivity.checkConnectivity())
-          .thenAnswer((_) => Future.value(ConnectivityResult.mobile));
+          .thenAnswer((_) => Future.value([ConnectivityResult.mobile]));
       expect(
           await ConnectivityHelper(connectivityProvider: () => connectivity)
               .hasConnection(),
@@ -25,7 +25,7 @@ void main() {
     });
     test('Test connectivity wifi', () async {
       when(connectivity.checkConnectivity())
-          .thenAnswer((_) => Future.value(ConnectivityResult.wifi));
+          .thenAnswer((_) => Future.value([ConnectivityResult.wifi]));
       expect(
           await ConnectivityHelper(connectivityProvider: () => connectivity)
               .hasConnection(),
@@ -33,7 +33,7 @@ void main() {
     });
     test('Test connectivity none', () async {
       when(connectivity.checkConnectivity())
-          .thenAnswer((_) => Future.value(ConnectivityResult.none));
+          .thenAnswer((_) => Future.value([ConnectivityResult.none]));
       expect(
           await ConnectivityHelper(connectivityProvider: () => connectivity)
               .hasConnection(),
@@ -41,7 +41,7 @@ void main() {
     });
     test('Test connectivity stream none', () async {
       when(connectivity.onConnectivityChanged)
-          .thenAnswer((_) => Stream.value(ConnectivityResult.none));
+          .thenAnswer((_) => Stream.value([ConnectivityResult.none]));
       expect(
           await ConnectivityHelper(connectivityProvider: () => connectivity)
               .monitorConnection()
@@ -50,7 +50,7 @@ void main() {
     });
     test('Test connectivity stream wifi', () async {
       when(connectivity.onConnectivityChanged)
-          .thenAnswer((_) => Stream.value(ConnectivityResult.wifi));
+          .thenAnswer((_) => Stream.value([ConnectivityResult.wifi]));
       expect(
           await ConnectivityHelper(connectivityProvider: () => connectivity)
               .monitorConnection()
@@ -59,7 +59,7 @@ void main() {
     });
     test('Test connectivity stream mobile', () async {
       when(connectivity.onConnectivityChanged)
-          .thenAnswer((_) => Stream.value(ConnectivityResult.mobile));
+          .thenAnswer((_) => Stream.value([ConnectivityResult.mobile]));
       expect(
           await ConnectivityHelper(connectivityProvider: () => connectivity)
               .monitorConnection()

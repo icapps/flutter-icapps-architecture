@@ -80,7 +80,7 @@ class _TouchScreenState extends State<TouchScreen> {
                   child: TouchFeedBack(
                     onTapped: () {},
                     child: Text(
-                      '0x${color.value.toRadixString(16).padLeft(8, '0')}: $count',
+                      '0x${color.toARGB32().toRadixString(16).padLeft(8, '0')}: $count',
                       style: Theme.of(context)
                           .textTheme
                           .headlineMedium!

@@ -14,7 +14,6 @@ import 'os_config_test.mocks.dart';
   DeviceInfoPlugin,
   AndroidBuildVersion,
   IosUtsname,
-  AndroidDisplayMetrics,
 ])
 void main() {
   group('OS config tests', () {
@@ -79,6 +78,11 @@ void main() {
                   'sdkInt': 10,
                   'securityPatch': 'securityPatch',
                 },
+                'freeDiskSize': 1024,
+                'totalDiskSize': 2048,
+                'isLowRamDevice': false,
+                'physicalRamSize': 2048,
+                'availableRamSize': 1024,
               })));
       final info = await io.initOsConfig(
         deviceInfoPluginProvider: () => mock,
@@ -106,6 +110,13 @@ void main() {
               'version': 'version',
               'machine': 'machine',
             },
+            'modelName': "iPhone 17",
+            'isiOSAppOnMac': false,
+            'freeDiskSize': 1024,
+            'totalDiskSize': 2048,
+            'isLowRamDevice': false,
+            'physicalRamSize': 2048,
+            'availableRamSize': 1024,
           })));
       final info = await io.initOsConfig(
         deviceInfoPluginProvider: () => mock,
