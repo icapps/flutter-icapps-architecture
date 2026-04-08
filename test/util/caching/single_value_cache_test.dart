@@ -5,8 +5,9 @@ void main() {
   group('SingleValueCache', () {
     test('Cache should return the cached value in value mode', () async {
       var counter = 0;
-      final cache =
-          SingleValueCache<String>(provider: () async => 'test ${++counter}');
+      final cache = SingleValueCache<String>(
+        provider: () async => 'test ${++counter}',
+      );
 
       expect(await cache.value, 'test 1');
       expect(await cache.value, 'test 1');
@@ -24,13 +25,16 @@ void main() {
     });
     test('Using getOrFetch in value mode should throw', () async {
       final cache = SingleValueCache<String>(provider: () async => 'test');
-      expect(() async => await cache.getOrFetch(() async => 'test2'),
-          throwsA(isA<ArgumentError>()));
+      expect(
+        () async => await cache.getOrFetch(() async => 'test2'),
+        throwsA(isA<ArgumentError>()),
+      );
     });
     test('Cache should return a new value after clear', () async {
       var counter = 0;
-      final cache =
-          SingleValueCache<String>(provider: () async => 'test ${++counter}');
+      final cache = SingleValueCache<String>(
+        provider: () async => 'test ${++counter}',
+      );
 
       expect(await cache.value, 'test 1');
       cache.clear();

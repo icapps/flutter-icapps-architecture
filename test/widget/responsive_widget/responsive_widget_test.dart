@@ -12,12 +12,16 @@ void main() {
     final sut = MediaQuery(
       data: const MediaQueryData(size: phoneSize),
       child: ResponsiveWidget(
-          builder: (context, sizeInfo) => const Text('builder')),
+        builder: (context, sizeInfo) => const Text('builder'),
+      ),
     );
     final testWidget = await TestUtil.loadWidgetWithText(tester, sut);
     await TestUtil.takeScreenshotForScreenType(
-        tester, testWidget, 'responsive_widget_builder',
-        screen: ScreenType.IPHONE11);
+      tester,
+      testWidget,
+      'responsive_widget_builder',
+      screen: ScreenType.IPHONE11,
+    );
   });
 
   testWidgets('ResponsiveWidget test builder on mobile', (tester) async {
@@ -42,16 +46,21 @@ void main() {
     final sut = MediaQuery(
       data: const MediaQueryData(size: tabletSize),
       child: ResponsiveWidget(
-          builder: (context, sizeInfo) => const Text('builder')),
+        builder: (context, sizeInfo) => const Text('builder'),
+      ),
     );
     final testWidget = await TestUtil.loadWidgetWithText(tester, sut);
     await TestUtil.takeScreenshotForScreenType(
-        tester, testWidget, 'responsive_widget_builder',
-        screen: ScreenType.IPADPRO);
+      tester,
+      testWidget,
+      'responsive_widget_builder',
+      screen: ScreenType.IPADPRO,
+    );
   });
 
-  testWidgets('ResponsiveWidget test landscape mobileBuilder on mobile',
-      (tester) async {
+  testWidgets('ResponsiveWidget test landscape mobileBuilder on mobile', (
+    tester,
+  ) async {
     final sut = MediaQuery(
       data: MediaQueryData(
         size: Size(phoneSize.height, phoneSize.width), //trigger landscape
@@ -63,12 +72,16 @@ void main() {
     );
     final testWidget = await TestUtil.loadWidgetWithText(tester, sut);
     await TestUtil.takeScreenshotForScreenType(
-        tester, testWidget, 'responsive_widget_landscape_builder',
-        screen: ScreenType.IPHONE11);
+      tester,
+      testWidget,
+      'responsive_widget_landscape_builder',
+      screen: ScreenType.IPHONE11,
+    );
   });
 
-  testWidgets('ResponsiveWidget test landscape mobileBuilder on tablet',
-      (tester) async {
+  testWidgets('ResponsiveWidget test landscape mobileBuilder on tablet', (
+    tester,
+  ) async {
     final sut = MediaQuery(
       data: MediaQueryData(
         size: Size(tabletSize.height, tabletSize.width), //trigger landscape
@@ -80,8 +93,11 @@ void main() {
     );
     final testWidget = await TestUtil.loadWidgetWithText(tester, sut);
     await TestUtil.takeScreenshotForScreenType(
-        tester, testWidget, 'responsive_widget_landscape_builder',
-        screen: ScreenType.IPADPRO);
+      tester,
+      testWidget,
+      'responsive_widget_landscape_builder',
+      screen: ScreenType.IPADPRO,
+    );
   });
 
   testWidgets('ResponsiveWidget test tabletBuilder on mobile', (tester) async {
@@ -95,12 +111,16 @@ void main() {
     );
     final testWidget = await TestUtil.loadWidgetWithText(tester, sut);
     await TestUtil.takeScreenshotForScreenType(
-        tester, testWidget, 'responsive_widget_tablet_builder',
-        screen: ScreenType.IPHONE11);
+      tester,
+      testWidget,
+      'responsive_widget_tablet_builder',
+      screen: ScreenType.IPHONE11,
+    );
   });
 
-  testWidgets('ResponsiveWidget test landscape mobileBuilder on tablet',
-      (tester) async {
+  testWidgets('ResponsiveWidget test landscape mobileBuilder on tablet', (
+    tester,
+  ) async {
     final sut = MediaQuery(
       data: const MediaQueryData(size: tabletSize),
       child: ResponsiveWidget(
@@ -111,8 +131,11 @@ void main() {
     );
     final testWidget = await TestUtil.loadWidgetWithText(tester, sut);
     await TestUtil.takeScreenshotForScreenType(
-        tester, testWidget, 'responsive_widget_tablet_builder',
-        screen: ScreenType.IPADPRO);
+      tester,
+      testWidget,
+      'responsive_widget_tablet_builder',
+      screen: ScreenType.IPADPRO,
+    );
   });
 
   testWidgets('ResponsiveWidget test tabletBuilder on mobile', (tester) async {
@@ -130,12 +153,16 @@ void main() {
     );
     final testWidget = await TestUtil.loadWidgetWithText(tester, sut);
     await TestUtil.takeScreenshotForScreenType(
-        tester, testWidget, 'responsive_widget_landscape_tablet_builder',
-        screen: ScreenType.IPHONE11);
+      tester,
+      testWidget,
+      'responsive_widget_landscape_tablet_builder',
+      screen: ScreenType.IPHONE11,
+    );
   });
 
-  testWidgets('ResponsiveWidget test landscape mobileBuilder on tablet',
-      (tester) async {
+  testWidgets('ResponsiveWidget test landscape mobileBuilder on tablet', (
+    tester,
+  ) async {
     final sut = MediaQuery(
       data: MediaQueryData(
         size: Size(tabletSize.height, tabletSize.width), //trigger landscape
@@ -150,7 +177,10 @@ void main() {
     );
     final testWidget = await TestUtil.loadWidgetWithText(tester, sut);
     await TestUtil.takeScreenshotForScreenType(
-        tester, testWidget, 'responsive_widget_landscape_tablet_builder',
-        screen: ScreenType.IPADPRO);
+      tester,
+      testWidget,
+      'responsive_widget_landscape_tablet_builder',
+      screen: ScreenType.IPADPRO,
+    );
   });
 }

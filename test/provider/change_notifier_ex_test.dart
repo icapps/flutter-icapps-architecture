@@ -29,8 +29,9 @@ void main() {
     test('DisposeAware did not run', () {
       final disposeAware = MockDisposeAware();
       expect(
-          (TestableChangeNotifier()..registerDispose(disposeAware)).isDisposed,
-          false);
+        (TestableChangeNotifier()..registerDispose(disposeAware)).isDisposed,
+        false,
+      );
       verifyNever(disposeAware.dispose());
     });
     test('DisposeAware did run', () {
@@ -56,9 +57,10 @@ void main() {
     test('Stream cancel did not run', () {
       final subscription = MockStreamSubscription();
       expect(
-          (TestableChangeNotifier()..registerDisposeStream(subscription))
-              .isDisposed,
-          false);
+        (TestableChangeNotifier()..registerDisposeStream(subscription))
+            .isDisposed,
+        false,
+      );
       verifyNever(subscription.cancel());
     });
     test('Stream cancel did run', () {
@@ -82,10 +84,11 @@ void main() {
     });
     test('Double dispose throws', () {
       expect(
-          () => TestableChangeNotifier()
-            ..dispose()
-            ..dispose(),
-          throwsA(isInstanceOf<FlutterError>()));
+        () => TestableChangeNotifier()
+          ..dispose()
+          ..dispose(),
+        throwsA(isInstanceOf<FlutterError>()),
+      );
     });
   });
   group('Change notifier listeners', () {
@@ -93,36 +96,41 @@ void main() {
       expect(TestableChangeNotifier().testHasListeners, false);
     });
     test('Set any listener', () {
-      expect((TestableChangeNotifier()..addListener(() {})).testHasListeners,
-          true);
+      expect(
+        (TestableChangeNotifier()..addListener(() {})).testHasListeners,
+        true,
+      );
     });
     test('Remove listener', () {
       final listener = () {};
       expect(
-          (TestableChangeNotifier()
-                ..addListener(listener)
-                ..removeListener(listener))
-              .testHasListeners,
-          false);
+        (TestableChangeNotifier()
+              ..addListener(listener)
+              ..removeListener(listener))
+            .testHasListeners,
+        false,
+      );
     });
     test('Add listener after dispose not allowed', () {
       expect(
-          () => TestableChangeNotifier()
-            ..dispose()
-            ..addListener(() {}),
-          throwsA(isInstanceOf<FlutterError>()));
+        () => TestableChangeNotifier()
+          ..dispose()
+          ..addListener(() {}),
+        throwsA(isInstanceOf<FlutterError>()),
+      );
     });
     test('Throw within listener', () {
       FlutterError.onError = (details) {
         throw details.exception;
       };
       expect(
-          () => TestableChangeNotifier()
-            ..addListener(() {
-              throw ArgumentError();
-            })
-            ..notifyListeners(),
-          throwsA(isInstanceOf<ArgumentError>()));
+        () => TestableChangeNotifier()
+          ..addListener(() {
+            throw ArgumentError();
+          })
+          ..notifyListeners(),
+        throwsA(isInstanceOf<ArgumentError>()),
+      );
     });
     test('Listener called', () {
       var counter = 0;

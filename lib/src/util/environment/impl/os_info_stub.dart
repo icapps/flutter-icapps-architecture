@@ -1,8 +1,5 @@
-Future<OsConfigInfo> initOsConfig() => Future.value(OsConfigInfo(
-      androidSdk: 0,
-      iosVersion: 0,
-      isWeb: true,
-    ));
+Future<OsConfigInfo> initOsConfig() =>
+    Future.value(OsConfigInfo(androidSdk: 0, iosVersion: 0, isWeb: true));
 
 class OsConfigInfo {
   final int androidSdk;

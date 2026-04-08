@@ -33,29 +33,33 @@ void main() {
       streamController.close();
     });
 
-    test('Test can not listen multiple times to non-broadcast stream',
-        () async {
-      final streamController = StreamControllerWithInitialValue<int>();
-      dynamic error;
-      try {
-        var hasFirstValue = false;
-        streamController.stream.listen((value) {});
-        await for (final _ in streamController.stream) {
-          if (hasFirstValue) break;
-          hasFirstValue = true;
-          streamController.add(1);
+    test(
+      'Test can not listen multiple times to non-broadcast stream',
+      () async {
+        final streamController = StreamControllerWithInitialValue<int>();
+        dynamic error;
+        try {
+          var hasFirstValue = false;
+          streamController.stream.listen((value) {});
+          await for (final _ in streamController.stream) {
+            if (hasFirstValue) break;
+            hasFirstValue = true;
+            streamController.add(1);
+          }
+        } catch (e) {
+          error = e;
         }
-      } catch (e) {
-        error = e;
-      }
-      expect(error, isNotNull);
-      expect(error, isA<StateError>());
-      if (error is Exception) {
-        expect(error.toString(),
-            'StateError:<Bad state: Stream has already been listened to.');
-      }
-      streamController.close();
-    });
+        expect(error, isNotNull);
+        expect(error, isA<StateError>());
+        if (error is Exception) {
+          expect(
+            error.toString(),
+            'StateError:<Bad state: Stream has already been listened to.',
+          );
+        }
+        streamController.close();
+      },
+    );
 
     test('Test stream with value in constructor', () {
       final streamController = StreamControllerWithInitialValue<int>(value: 1);

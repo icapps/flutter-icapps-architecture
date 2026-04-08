@@ -18,10 +18,7 @@ class KeyValueCache<K, V> {
 
   final _cache = <K, SingleValueCache<V>>{};
 
-  KeyValueCache({
-    this.maxAge,
-    this.provider,
-  });
+  KeyValueCache({this.maxAge, this.provider});
 
   /// Convenience operator that delegates to [get]
   Future<V> operator [](K key) => get(key);
@@ -39,9 +36,10 @@ class KeyValueCache<K, V> {
     }
     return _cache
         .putIfAbsent(
-            key,
-            () => SingleValueCache(
-                maxAge: maxAge, provider: () => provider!(key)))
+          key,
+          () =>
+              SingleValueCache(maxAge: maxAge, provider: () => provider!(key)),
+        )
         .value;
   }
 
@@ -56,10 +54,7 @@ class KeyValueCache<K, V> {
       );
     }
     return _cache
-        .putIfAbsent(
-          key,
-          () => SingleValueCache(maxAge: maxAge),
-        )
+        .putIfAbsent(key, () => SingleValueCache(maxAge: maxAge))
         .getOrFetch(provider);
   }
 

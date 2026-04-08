@@ -29,32 +29,34 @@ class ResponsiveWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-    return LayoutBuilder(builder: (context, boxSizing) {
-      final info = SizeInformation(
-        orientation: mediaQuery.orientation,
-        deviceType: getDeviceType(mediaQuery),
-        screenSize: mediaQuery.size,
-        localWidgetSize: Size(boxSizing.maxWidth, boxSizing.maxHeight),
-      );
-      final tabletLandscapeB = tabletLandscapeBuilder;
-      final tabletB = tabletBuilder;
-      final landscapeB = landscapeBuilder;
-      final portraitBuilder = builder;
-      if (info.orientation == Orientation.landscape &&
-          info.deviceType == DeviceScreenType.Tablet &&
-          tabletLandscapeB != null) {
-        return tabletLandscapeB(context, info);
-      } else if (info.deviceType == DeviceScreenType.Tablet &&
-          tabletB != null) {
-        return tabletB(context, info);
-      } else if (info.orientation == Orientation.landscape &&
-          landscapeB != null) {
-        return landscapeB(context, info);
-      } else if (portraitBuilder != null) {
-        return portraitBuilder(context, info);
-      }
-      throw Exception('Failed to build Responsive Widget');
-    });
+    return LayoutBuilder(
+      builder: (context, boxSizing) {
+        final info = SizeInformation(
+          orientation: mediaQuery.orientation,
+          deviceType: getDeviceType(mediaQuery),
+          screenSize: mediaQuery.size,
+          localWidgetSize: Size(boxSizing.maxWidth, boxSizing.maxHeight),
+        );
+        final tabletLandscapeB = tabletLandscapeBuilder;
+        final tabletB = tabletBuilder;
+        final landscapeB = landscapeBuilder;
+        final portraitBuilder = builder;
+        if (info.orientation == Orientation.landscape &&
+            info.deviceType == DeviceScreenType.Tablet &&
+            tabletLandscapeB != null) {
+          return tabletLandscapeB(context, info);
+        } else if (info.deviceType == DeviceScreenType.Tablet &&
+            tabletB != null) {
+          return tabletB(context, info);
+        } else if (info.orientation == Orientation.landscape &&
+            landscapeB != null) {
+          return landscapeB(context, info);
+        } else if (portraitBuilder != null) {
+          return portraitBuilder(context, info);
+        }
+        throw Exception('Failed to build Responsive Widget');
+      },
+    );
   }
 
   /// Returns the device screen type based on the [mediaQuery].

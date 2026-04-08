@@ -63,12 +63,15 @@ class CombiningSmartInterceptor implements Interceptor {
 
   @override
   Future<void> onError(
-      DioException err, ErrorInterceptorHandler handler) async {
+    DioException err,
+    ErrorInterceptorHandler handler,
+  ) async {
     NetworkError? finalResult;
     for (final interceptor in _interceptors.reversed) {
       try {
-        final dynamic res = await interceptor
-            .onError(finalResult is DioException ? finalResult! : err);
+        final dynamic res = await interceptor.onError(
+          finalResult is DioException ? finalResult! : err,
+        );
         if (res is Response) {
           handler.resolve(res);
           return;
@@ -82,8 +85,9 @@ class CombiningSmartInterceptor implements Interceptor {
         handler.next(e);
         return;
       } catch (e) {
-        handler
-            .next(DioException(requestOptions: err.requestOptions, error: e));
+        handler.next(
+          DioException(requestOptions: err.requestOptions, error: e),
+        );
         return;
       }
     }
@@ -92,7 +96,9 @@ class CombiningSmartInterceptor implements Interceptor {
 
   @override
   Future<void> onRequest(
-      RequestOptions options, RequestInterceptorHandler handler) async {
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) async {
     var intermediate = options;
     for (final interceptor in _interceptors) {
       try {
@@ -117,7 +123,9 @@ class CombiningSmartInterceptor implements Interceptor {
 
   @override
   Future<void> onResponse(
-      Response response, ResponseInterceptorHandler handler) async {
+    Response response,
+    ResponseInterceptorHandler handler,
+  ) async {
     var intermediate = response;
     for (final interceptor in _interceptors.reversed) {
       try {
@@ -134,7 +142,8 @@ class CombiningSmartInterceptor implements Interceptor {
         return;
       } catch (e) {
         handler.reject(
-            DioException(requestOptions: response.requestOptions, error: e));
+          DioException(requestOptions: response.requestOptions, error: e),
+        );
         return;
       }
     }

@@ -11,8 +11,11 @@ class ComputePoolImpl implements ComputePool {
   ComputePoolImpl._();
 
   @override
-  Future<R> compute<Q, R>(ComputeCallback<Q, R> callback, Q message,
-      {String? debugLabel}) {
+  Future<R> compute<Q, R>(
+    ComputeCallback<Q, R> callback,
+    Q message, {
+    String? debugLabel,
+  }) {
     if (_shutdown)
       return Future.error(ArgumentError('Compute pool has been shut down'));
 

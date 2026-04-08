@@ -3,10 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:icapps_architecture/src/exception/network_error.dart';
 
 class TestableNetworkError extends NetworkError {
-  TestableNetworkError(
-    DioException dioException, {
-    String? statusCodeValue,
-  }) : super(dioException, statusCodeValue: statusCodeValue);
+  TestableNetworkError(DioException dioException, {String? statusCodeValue})
+      : super(dioException, statusCodeValue: statusCodeValue);
 
   @override
   String? get getErrorCode => "Test";
@@ -22,9 +20,10 @@ void main() {
     source = DioException(
       requestOptions: RequestOptions(path: '/'),
       response: Response(
-          requestOptions: RequestOptions(path: '/'),
-          statusCode: 404,
-          statusMessage: "Not found"),
+        requestOptions: RequestOptions(path: '/'),
+        statusCode: 404,
+        statusMessage: "Not found",
+      ),
       error: ArgumentError('Test'),
       type: DioExceptionType.badResponse,
     );

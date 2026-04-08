@@ -17,14 +17,21 @@ class ProviderWidget<T extends ChangeNotifier>
     Widget? child,
     Widget Function(BuildContext context, Theme theme, Locale localization)?
         childBuilder,
-    Widget Function(BuildContext context, T viewModel, Theme theme,
-            Locale localization)?
-        childBuilderWithViewModel,
+    Widget Function(
+      BuildContext context,
+      T viewModel,
+      Theme theme,
+      Locale localization,
+    )? childBuilderWithViewModel,
     Widget? consumerChild,
     Widget Function(BuildContext context, T viewModel, Widget? child)? consumer,
-    Widget Function(BuildContext context, T viewModel, Widget? child,
-            Theme theme, Locale localization)?
-        consumerWithThemeAndLocalization,
+    Widget Function(
+      BuildContext context,
+      T viewModel,
+      Widget? child,
+      Theme theme,
+      Locale localization,
+    )? consumerWithThemeAndLocalization,
     bool lazy = true,
   }) : super(
           create: create,
@@ -42,14 +49,21 @@ class ProviderWidget<T extends ChangeNotifier>
     Widget? child,
     Widget Function(BuildContext context, Theme theme, Locale localization)?
         childBuilder,
-    Widget Function(BuildContext context, T viewModel, Theme theme,
-            Locale localization)?
-        childBuilderWithViewModel,
+    Widget Function(
+      BuildContext context,
+      T viewModel,
+      Theme theme,
+      Locale localization,
+    )? childBuilderWithViewModel,
     Widget? consumerChild,
     Widget Function(BuildContext context, T viewModel, Widget? child)? consumer,
-    Widget Function(BuildContext context, T viewModel, Widget? child,
-            Theme theme, Locale localization)?
-        consumerWithThemeAndLocalization,
+    Widget Function(
+      BuildContext context,
+      T viewModel,
+      Widget? child,
+      Theme theme,
+      Locale localization,
+    )? consumerWithThemeAndLocalization,
   }) : super.value(
           value: value,
           child: child,
@@ -73,9 +87,7 @@ void main() {
 
   group('Provider widget tests', () {
     testWidgets('ProviderWidget throw exception', (tester) async {
-      final sut = ProviderWidget<TestViewModel>(
-        create: () => TestViewModel(),
-      );
+      final sut = ProviderWidget<TestViewModel>(create: () => TestViewModel());
       await TestUtil.loadWidgetWithText(tester, sut);
       expect(tester.takeException(), isInstanceOf<ArgumentError>());
     });
@@ -90,8 +102,9 @@ void main() {
       await TestUtil.takeScreenshot(tester, 'provider_widget_child');
     });
 
-    testWidgets('ProviderWidget should show childbuilder with viewmodel',
-        (tester) async {
+    testWidgets('ProviderWidget should show childbuilder with viewmodel', (
+      tester,
+    ) async {
       final sut = ProviderWidget<TestViewModel>(
         childBuilderWithViewModel: (context, item, _, __) =>
             const Material(child: Text('Test')),
@@ -102,18 +115,22 @@ void main() {
       await TestUtil.takeScreenshot(tester, 'provider_widget_child_builder');
     });
 
-    testWidgets('ProviderWidget.value should show childbuilder with viewmodel',
-        (tester) async {
-      final sut = ProviderWidget<TestViewModel>.value(
-        childBuilderWithViewModel: (context, item, _, __) =>
-            const Material(child: Text('Test')),
-        value: TestViewModel(),
-      );
+    testWidgets(
+      'ProviderWidget.value should show childbuilder with viewmodel',
+      (tester) async {
+        final sut = ProviderWidget<TestViewModel>.value(
+          childBuilderWithViewModel: (context, item, _, __) =>
+              const Material(child: Text('Test')),
+          value: TestViewModel(),
+        );
 
-      await TestUtil.loadWidgetWithText(tester, sut);
-      await TestUtil.takeScreenshot(
-          tester, 'provider_widget_value_child_builder');
-    });
+        await TestUtil.loadWidgetWithText(tester, sut);
+        await TestUtil.takeScreenshot(
+          tester,
+          'provider_widget_value_child_builder',
+        );
+      },
+    );
 
     testWidgets('ProviderWidget.value create should throw', (tester) async {
       final sut = ProviderWidget<TestViewModel>.value(
@@ -125,8 +142,9 @@ void main() {
       expect(() => sut.create(), throwsA(isInstanceOf<UnimplementedError>()));
     });
 
-    testWidgets('ProviderWidget should show childbuilder with consumer',
-        (tester) async {
+    testWidgets('ProviderWidget should show childbuilder with consumer', (
+      tester,
+    ) async {
       final sut = ProviderWidget<TestViewModel>(
         consumer: (context, viewModel, widget) =>
             const Material(child: Text('Hello')),
@@ -138,52 +156,55 @@ void main() {
     });
 
     testWidgets(
-        'ProviderWidget should show childbuilder with consumerWithThemeAndLocalization',
-        (tester) async {
-      final sut = ProviderWidget<TestViewModel>(
-        consumerWithThemeAndLocalization: (context, viewModel, widget, _, __) =>
-            const Material(child: Text('Hello')),
-        create: () => TestViewModel(),
-      );
+      'ProviderWidget should show childbuilder with consumerWithThemeAndLocalization',
+      (tester) async {
+        final sut = ProviderWidget<TestViewModel>(
+          consumerWithThemeAndLocalization:
+              (context, viewModel, widget, _, __) =>
+                  const Material(child: Text('Hello')),
+          create: () => TestViewModel(),
+        );
 
-      await TestUtil.loadWidgetWithText(tester, sut);
-      await TestUtil.takeScreenshot(
-          tester, 'provider_widget_consumer_with_theme_and_localization');
-    });
+        await TestUtil.loadWidgetWithText(tester, sut);
+        await TestUtil.takeScreenshot(
+          tester,
+          'provider_widget_consumer_with_theme_and_localization',
+        );
+      },
+    );
 
     testWidgets(
-        'ProviderWidget should show childbuilder with consumer and consumerChild',
-        (tester) async {
-      final sut = ProviderWidget<TestViewModel>(
-        consumerChild: const Text('Hallo 2'),
-        consumer: (context, viewModel, child) => Material(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text('Hello'),
-              child ?? Container(),
-            ],
+      'ProviderWidget should show childbuilder with consumer and consumerChild',
+      (tester) async {
+        final sut = ProviderWidget<TestViewModel>(
+          consumerChild: const Text('Hallo 2'),
+          consumer: (context, viewModel, child) => Material(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [const Text('Hello'), child ?? Container()],
+            ),
           ),
-        ),
-        create: () => TestViewModel(),
-      );
+          create: () => TestViewModel(),
+        );
 
-      await TestUtil.loadWidgetWithText(tester, sut);
-      await TestUtil.takeScreenshot(
-          tester, 'provider_widget_consumer_and_consumer_child');
-    });
+        await TestUtil.loadWidgetWithText(tester, sut);
+        await TestUtil.takeScreenshot(
+          tester,
+          'provider_widget_consumer_and_consumer_child',
+        );
+      },
+    );
 
-    testWidgets('ProviderWidget should show childbuilder with childBuilder',
-        (tester) async {
+    testWidgets('ProviderWidget should show childbuilder with childBuilder', (
+      tester,
+    ) async {
       final sut = ProviderWidget<TestViewModel>(
         childBuilder: (context, viewModel, locale) => Material(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text('Hello'),
-            ],
+            children: [const Text('Hello')],
           ),
         ),
         create: () => TestViewModel(),
@@ -191,7 +212,9 @@ void main() {
 
       await TestUtil.loadWidgetWithText(tester, sut);
       await TestUtil.takeScreenshot(
-          tester, 'provider_widget_consumer_childbuilder');
+        tester,
+        'provider_widget_consumer_childbuilder',
+      );
     });
   });
 }

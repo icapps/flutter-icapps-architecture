@@ -138,15 +138,15 @@ class MockLog extends _i1.Mock implements _i2.Log {
 
   @override
   void logNetworkError(_i2.NetworkError? error) => super.noSuchMethod(
-    Invocation.method(#logNetworkError, [error]),
-    returnValueForMissingStub: null,
-  );
+        Invocation.method(#logNetworkError, [error]),
+        returnValueForMissingStub: null,
+      );
 
   @override
   void logNetworkRequest(_i3.RequestOptions? request) => super.noSuchMethod(
-    Invocation.method(#logNetworkRequest, [request]),
-    returnValueForMissingStub: null,
-  );
+        Invocation.method(#logNetworkRequest, [request]),
+        returnValueForMissingStub: null,
+      );
 
   @override
   void logNetworkResponse(_i3.Response<dynamic>? response) =>

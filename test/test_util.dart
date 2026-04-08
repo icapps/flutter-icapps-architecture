@@ -46,16 +46,15 @@ class TestUtil {
   // This method should be used when taking screenshot tests of a widget that should display text
   // Widget snapshot tests
   static Future<Widget> loadWidgetWithText(
-      WidgetTester tester, Widget widget) async {
+    WidgetTester tester,
+    Widget widget,
+  ) async {
     return _internalLoadWidget(
       tester,
       MaterialApp(
         theme: ThemeData(),
         home: Center(
-          child: Material(
-            child: widget,
-            color: Colors.transparent,
-          ),
+          child: Material(child: widget, color: Colors.transparent),
         ),
         debugShowCheckedModeBanner: false,
       ),
@@ -65,30 +64,39 @@ class TestUtil {
   // This method should be used when taking screenshot tests of a single screen
   // Screen integration tests
   static Future<Widget> loadScreen(WidgetTester tester, Widget widget) async {
-    return _internalLoadWidget(
-      tester,
-      widget,
-    );
+    return _internalLoadWidget(tester, widget);
   }
 
   static Future<Widget> _internalLoadWidget(
-      WidgetTester tester, Widget widget) async {
+    WidgetTester tester,
+    Widget widget,
+  ) async {
     final testWidget = TestWrapper(child: widget);
     await tester.pumpWidget(testWidget);
     return testWidget;
   }
 
   static Future<void> takeScreenshotForAllSizes(
-      WidgetTester tester, Widget widget, String snapshotName) async {
+    WidgetTester tester,
+    Widget widget,
+    String snapshotName,
+  ) async {
     for (final screen in ScreenType.values) {
-      await takeScreenshotForScreenType(tester, widget, snapshotName,
-          screen: screen);
+      await takeScreenshotForScreenType(
+        tester,
+        widget,
+        snapshotName,
+        screen: screen,
+      );
     }
   }
 
   static Future<void> takeScreenshotForScreenType(
-      WidgetTester tester, Widget widget, String snapshotName,
-      {ScreenType screen = ScreenType.IPHONE11}) async {
+    WidgetTester tester,
+    Widget widget,
+    String snapshotName, {
+    ScreenType screen = ScreenType.IPHONE11,
+  }) async {
     tester.view.physicalSize = screen.size;
     expect(widget.runtimeType, equals(TestWrapper));
     await tester.pumpWidget(widget);
@@ -98,7 +106,9 @@ class TestUtil {
   }
 
   static Future<void> takeScreenshot(
-      WidgetTester tester, String snapshotName) async {
+    WidgetTester tester,
+    String snapshotName,
+  ) async {
     expect(find.byType(TestWrapper), findsOneWidget);
     goldenFileComparator = GoldenDiffComparator('img/$snapshotName.png');
     await expectLater(
@@ -125,20 +135,24 @@ class TestWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
-      child: RepaintBoundary(
-        child: child,
-      ),
+      child: RepaintBoundary(child: child),
     );
   }
 }
 
 extension WidgetControllerExtension on WidgetController {
-  Future<void> touchAndCancel(Finder finder,
-      {int? pointer, int buttons = kPrimaryButton}) {
+  Future<void> touchAndCancel(
+    Finder finder, {
+    int? pointer,
+    int buttons = kPrimaryButton,
+  }) {
     final location = getCenter(finder);
     return TestAsyncUtils.guard<void>(() async {
-      final TestGesture gesture =
-          await startGesture(location, pointer: pointer, buttons: buttons);
+      final TestGesture gesture = await startGesture(
+        location,
+        pointer: pointer,
+        buttons: buttons,
+      );
       await gesture.cancel();
     });
   }
@@ -172,7 +186,8 @@ class GoldenDiffComparator extends LocalFileComparator {
     }
     if (!result.passed) {
       print(
-          'A tolerable difference of ${result.diffPercent * 100}% was found when comparing $golden.');
+        'A tolerable difference of ${result.diffPercent * 100}% was found when comparing $golden.',
+      );
     }
     return result.passed || result.diffPercent <= _kGoldenDiffTolerance;
   }

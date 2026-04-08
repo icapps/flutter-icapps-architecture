@@ -10,11 +10,7 @@ import 'package:mockito/mockito.dart';
 
 import 'os_config_test.mocks.dart';
 
-@GenerateMocks([
-  DeviceInfoPlugin,
-  AndroidBuildVersion,
-  IosUtsname,
-])
+@GenerateMocks([DeviceInfoPlugin, AndroidBuildVersion, IosUtsname])
 void main() {
   group('OS config tests', () {
     test('OS config from io, unknown', () async {
@@ -41,49 +37,52 @@ void main() {
     });
     test('OS config from io, android', () async {
       final mock = MockDeviceInfoPlugin();
-      when(mock.androidInfo)
-          .thenAnswer((_) => Future.value(AndroidDeviceInfo.fromMap({
-                'isPhysicalDevice': true,
-                'board': 'surf',
-                'supportedAbis': ['x256-powermaxx'],
-                'systemFeatures': ['fishingrod'],
-                'display': 'iMAX',
-                'device': 'yes',
-                'model': 'hot',
-                'bootloader': 'not loaded',
-                'hardware': 'soft',
-                'supported64BitAbis': [],
-                'product': 'placement',
-                'supported32BitAbis': [],
-                'tags': 'dog',
-                'brand': 'no',
-                'manufacturer': 'your m*m',
-                'id': '8 (twice the androidId)',
-                'type': 'space station',
-                'host': 'Joan Calamazzo',
-                'fingerprint': '*boop*',
-                'serialNumber': 'serialNumber',
-                'displayMetrics': {
-                  'widthPx': 1080.0,
-                  'heightPx': 1920.0,
-                  'xDpi': 420.0,
-                  'yDpi': 420.0,
-                },
-                'version': {
-                  'baseOS': 'base',
-                  'codename': 'codename',
-                  'incremental': 'incremental',
-                  'previewSdkInt': 10,
-                  'release': 'release',
-                  'sdkInt': 10,
-                  'securityPatch': 'securityPatch',
-                },
-                'freeDiskSize': 1024,
-                'totalDiskSize': 2048,
-                'isLowRamDevice': false,
-                'physicalRamSize': 2048,
-                'availableRamSize': 1024,
-              })));
+      when(mock.androidInfo).thenAnswer(
+        (_) => Future.value(
+          AndroidDeviceInfo.fromMap({
+            'isPhysicalDevice': true,
+            'board': 'surf',
+            'supportedAbis': ['x256-powermaxx'],
+            'systemFeatures': ['fishingrod'],
+            'display': 'iMAX',
+            'device': 'yes',
+            'model': 'hot',
+            'bootloader': 'not loaded',
+            'hardware': 'soft',
+            'supported64BitAbis': [],
+            'product': 'placement',
+            'supported32BitAbis': [],
+            'tags': 'dog',
+            'brand': 'no',
+            'manufacturer': 'your m*m',
+            'id': '8 (twice the androidId)',
+            'type': 'space station',
+            'host': 'Joan Calamazzo',
+            'fingerprint': '*boop*',
+            'serialNumber': 'serialNumber',
+            'displayMetrics': {
+              'widthPx': 1080.0,
+              'heightPx': 1920.0,
+              'xDpi': 420.0,
+              'yDpi': 420.0,
+            },
+            'version': {
+              'baseOS': 'base',
+              'codename': 'codename',
+              'incremental': 'incremental',
+              'previewSdkInt': 10,
+              'release': 'release',
+              'sdkInt': 10,
+              'securityPatch': 'securityPatch',
+            },
+            'freeDiskSize': 1024,
+            'totalDiskSize': 2048,
+            'isLowRamDevice': false,
+            'physicalRamSize': 2048,
+            'availableRamSize': 1024,
+          }),
+        ),
+      );
       final info = await io.initOsConfig(
         deviceInfoPluginProvider: () => mock,
         isAndroidOverride: true,
@@ -95,7 +94,9 @@ void main() {
     });
     test('OS config from io, ios', () async {
       final mock = MockDeviceInfoPlugin();
-      when(mock.iosInfo).thenAnswer((_) => Future.value(IosDeviceInfo.fromMap({
+      when(mock.iosInfo).thenAnswer(
+        (_) => Future.value(
+          IosDeviceInfo.fromMap({
             'name': 'Jeoff',
             'systemName': 'et äpple',
             'systemVersion': '14.4.2',
@@ -117,7 +118,10 @@ void main() {
             'isLowRamDevice': false,
             'physicalRamSize': 2048,
             'availableRamSize': 1024,
-          })));
+            'isiOSAppOnVision': false,
+          }),
+        ),
+      );
       final info = await io.initOsConfig(
         deviceInfoPluginProvider: () => mock,
         isAndroidOverride: false,

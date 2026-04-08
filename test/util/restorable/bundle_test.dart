@@ -101,8 +101,10 @@ void main() {
       expect(bundle.getStringList('stringList'), ['test1', 'test2']);
       expect(bundle.getBundle('bundle').getInt('int'), 2);
 
-      expect(() => bundle.getBundle('not a bundle'),
-          throwsA(isA<FormatException>()));
+      expect(
+        () => bundle.getBundle('not a bundle'),
+        throwsA(isA<FormatException>()),
+      );
     });
     test('Test hasKey', () {
       final bundle = Bundle();

@@ -7,10 +7,8 @@ import '../../test_util.dart';
 class TestWidget extends StatefulWidget {
   final VoidCallback afterLayoutCalled;
 
-  const TestWidget({
-    required this.afterLayoutCalled,
-    Key? key,
-  }) : super(key: key);
+  const TestWidget({required this.afterLayoutCalled, Key? key})
+      : super(key: key);
 
   @override
   _TestWidgetState createState() => _TestWidgetState();
@@ -19,13 +17,7 @@ class TestWidget extends StatefulWidget {
 class _TestWidgetState extends State<TestWidget> with AfterLayout {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        width: 32,
-        height: 32,
-        color: Colors.green,
-      ),
-    );
+    return Center(child: Container(width: 32, height: 32, color: Colors.green));
   }
 
   @override
@@ -43,7 +35,10 @@ void main() {
         TestWidget(afterLayoutCalled: () => ++afterLayoutCalled),
       );
       await TestUtil.takeScreenshotForAllSizes(
-          tester, widget, 'after_layout_called');
+        tester,
+        widget,
+        'after_layout_called',
+      );
       expect(afterLayoutCalled, 1);
     });
   });

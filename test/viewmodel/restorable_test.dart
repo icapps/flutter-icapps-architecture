@@ -46,7 +46,8 @@ void main() {
       );
 
       viewModelHolder.initWithValue(
-          viewModelHolder.fromPrimitives(<Object?, Object?>{'test': 2}));
+        viewModelHolder.fromPrimitives(<Object?, Object?>{'test': 2}),
+      );
       expect(viewModelHolder.viewModel.restoredValue, 2);
       expect(whenCreatedCalledAt, 1);
       expect(restoreCalledAt, 2);
@@ -82,10 +83,7 @@ void main() {
 
     test('Test dispose', () {
       final viewModelHolder = RestorableViewModelHolder<_TestViewModel>(
-        create: () => _TestViewModel(
-          restoreCalled: () {},
-          saveCalled: () {},
-        ),
+        create: () => _TestViewModel(restoreCalled: () {}, saveCalled: () {}),
         init: (vm) {},
         whenCreated: (vm) {},
       );
@@ -97,10 +95,7 @@ void main() {
 
     test('Test default no ops', () {
       final viewModelHolder = RestorableViewModelHolder<_TestViewModel>(
-        create: () => _TestViewModel(
-          restoreCalled: () {},
-          saveCalled: () {},
-        ),
+        create: () => _TestViewModel(restoreCalled: () {}, saveCalled: () {}),
       );
       viewModelHolder.initWithValue(viewModelHolder.createDefaultValue());
 
@@ -110,10 +105,7 @@ void main() {
     test('Test lifecycle change triggers save', () {
       var notifyCalled = false;
       final viewModelHolder = RestorableViewModelHolder<_TestViewModel>(
-        create: () => _TestViewModel(
-          restoreCalled: () {},
-          saveCalled: () {},
-        ),
+        create: () => _TestViewModel(restoreCalled: () {}, saveCalled: () {}),
       );
       viewModelHolder.addListener(() {
         notifyCalled = true;

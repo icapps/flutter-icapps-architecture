@@ -20,10 +20,14 @@ void main() {
     final requestOptions = RequestOptions(path: '');
     final handler = RequestInterceptorHandler();
     await sut.onRequest(requestOptions, handler);
-    expect(interceptor1.onRequestCalled.isBefore(interceptor2.onRequestCalled),
-        true);
-    expect(interceptor2.onRequestCalled.isBefore(interceptor3.onRequestCalled),
-        true);
+    expect(
+      interceptor1.onRequestCalled.isBefore(interceptor2.onRequestCalled),
+      true,
+    );
+    expect(
+      interceptor2.onRequestCalled.isBefore(interceptor3.onRequestCalled),
+      true,
+    );
   });
 
   test('CombiningSmartInterceptor test sequence onrequest', () async {
@@ -38,10 +42,14 @@ void main() {
     final requestOptions = RequestOptions(path: '');
     final handler = RequestInterceptorHandler();
     await sut.onRequest(requestOptions, handler);
-    expect(interceptor1.onRequestCalled.isBefore(interceptor2.onRequestCalled),
-        true);
-    expect(interceptor2.onRequestCalled.isBefore(interceptor3.onRequestCalled),
-        true);
+    expect(
+      interceptor1.onRequestCalled.isBefore(interceptor2.onRequestCalled),
+      true,
+    );
+    expect(
+      interceptor2.onRequestCalled.isBefore(interceptor3.onRequestCalled),
+      true,
+    );
   });
 
   test('CombiningSmartInterceptor test sequence onresponse', () async {
@@ -56,10 +64,14 @@ void main() {
     final response = Response<void>(requestOptions: RequestOptions(path: ''));
     final handler = ResponseInterceptorHandler();
     await sut.onResponse(response, handler);
-    expect(interceptor1.onResponseCalled.isAfter(interceptor2.onResponseCalled),
-        true);
-    expect(interceptor2.onResponseCalled.isAfter(interceptor3.onResponseCalled),
-        true);
+    expect(
+      interceptor1.onResponseCalled.isAfter(interceptor2.onResponseCalled),
+      true,
+    );
+    expect(
+      interceptor2.onResponseCalled.isAfter(interceptor3.onResponseCalled),
+      true,
+    );
   });
 
   test('CombiningSmartInterceptor test sequence onError', () async {
@@ -81,14 +93,19 @@ void main() {
       expect(copy.data, error);
     }
     expect(
-        interceptor1.onErrorCalled.isAfter(interceptor2.onErrorCalled), true);
+      interceptor1.onErrorCalled.isAfter(interceptor2.onErrorCalled),
+      true,
+    );
     expect(
-        interceptor2.onErrorCalled.isAfter(interceptor3.onErrorCalled), true);
+      interceptor2.onErrorCalled.isAfter(interceptor3.onErrorCalled),
+      true,
+    );
   });
 
   test('CombiningSmartInterceptor test sequence onError response', () async {
     final interceptor1 = TestInterceptor(
-        errorResponse: Response(requestOptions: RequestOptions(path: '/')));
+      errorResponse: Response(requestOptions: RequestOptions(path: '/')),
+    );
     sut..addInterceptor(interceptor1);
 
     final error = DioException(requestOptions: RequestOptions(path: ''));
@@ -97,43 +114,51 @@ void main() {
     expect((await handler.future).data, isInstanceOf<Response>());
   });
 
-  test('CombiningSmartInterceptor test sequence onError throws dio error',
-      () async {
-    final interceptor1 = TestInterceptor(
-        throws: DioException(requestOptions: RequestOptions(path: '/')));
-    sut..addInterceptor(interceptor1);
+  test(
+    'CombiningSmartInterceptor test sequence onError throws dio error',
+    () async {
+      final interceptor1 = TestInterceptor(
+        throws: DioException(requestOptions: RequestOptions(path: '/')),
+      );
+      sut..addInterceptor(interceptor1);
 
-    final error = DioException(requestOptions: RequestOptions(path: ''));
-    final handler = ErrorInterceptorHandler();
-    await sut.onError(error, handler);
+      final error = DioException(requestOptions: RequestOptions(path: ''));
+      final handler = ErrorInterceptorHandler();
+      await sut.onError(error, handler);
 
-    try {
-      await handler.future;
-      // ignore: nullable_type_in_catch_clause
-    } on dynamic catch (e) {
-      expect(e.data, isInstanceOf<DioException>());
-    }
-  });
+      try {
+        await handler.future;
+        // ignore: nullable_type_in_catch_clause
+      } on dynamic catch (e) {
+        expect(e.data, isInstanceOf<DioException>());
+      }
+    },
+  );
 
-  test('CombiningSmartInterceptor test sequence onError throws error',
-      () async {
-    final interceptor1 =
-        TestInterceptor(throws: UnimplementedError('Not implemented'));
-    sut..addInterceptor(interceptor1);
+  test(
+    'CombiningSmartInterceptor test sequence onError throws error',
+    () async {
+      final interceptor1 = TestInterceptor(
+        throws: UnimplementedError('Not implemented'),
+      );
+      sut..addInterceptor(interceptor1);
 
-    final error = DioException(requestOptions: RequestOptions(path: ''));
-    final handler = ErrorInterceptorHandler();
-    await sut.onError(error, handler);
+      final error = DioException(requestOptions: RequestOptions(path: ''));
+      final handler = ErrorInterceptorHandler();
+      await sut.onError(error, handler);
 
-    try {
-      await handler.future;
-      // ignore: nullable_type_in_catch_clause
-    } on dynamic catch (e) {
-      expect(e.data, isInstanceOf<DioException>());
-      expect(
-          (e.data as DioException).error, isInstanceOf<UnimplementedError>());
-    }
-  });
+      try {
+        await handler.future;
+        // ignore: nullable_type_in_catch_clause
+      } on dynamic catch (e) {
+        expect(e.data, isInstanceOf<DioException>());
+        expect(
+          (e.data as DioException).error,
+          isInstanceOf<UnimplementedError>(),
+        );
+      }
+    },
+  );
 
   test('CombiningSmartInterceptor test onRequest returns error', () async {
     final interceptor1 = TestInterceptor(
@@ -181,7 +206,9 @@ void main() {
     } on dynamic catch (e) {
       expect(e.data, isInstanceOf<DioException>());
       expect(
-          (e.data as DioException).error, isInstanceOf<UnimplementedError>());
+        (e.data as DioException).error,
+        isInstanceOf<UnimplementedError>(),
+      );
     }
   });
 
@@ -234,7 +261,9 @@ void main() {
     } on dynamic catch (e) {
       expect(e.data, isInstanceOf<DioException>());
       expect(
-          (e.data as DioException).error, isInstanceOf<UnimplementedError>());
+        (e.data as DioException).error,
+        isInstanceOf<UnimplementedError>(),
+      );
     }
   });
 }

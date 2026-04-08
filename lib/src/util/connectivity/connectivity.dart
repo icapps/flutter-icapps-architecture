@@ -11,14 +11,19 @@ class ConnectivityHelper {
 
   /// Returns true if the device is connected to an IP network
   Future<bool> hasConnection() async {
-    return (await getConnectivityResult()).where((e) => e != ConnectivityResult.none).isNotEmpty;
+    return (await getConnectivityResult())
+        .where((e) => e != ConnectivityResult.none)
+        .isNotEmpty;
   }
 
   /// Returns a stream that monitors the connectivity state of the device
   Stream<bool> monitorConnection() {
     return (_connectivityProvider?.call() ?? Connectivity())
         .onConnectivityChanged
-        .map((event) => event.where((e) => e != ConnectivityResult.none).isNotEmpty);
+        .map(
+          (event) =>
+              event.where((e) => e != ConnectivityResult.none).isNotEmpty,
+        );
   }
 
   /// Returns the method used to connect e.g: Bluetooth, WiFi, Ethernet, Mobile or None

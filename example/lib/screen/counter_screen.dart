@@ -11,22 +11,17 @@ class CounterScreen extends StatelessWidget {
       create: () => CounterViewModel(),
       childBuilderWithViewModel: (context, viewModel, theme, localization) =>
           Scaffold(
-        appBar: AppBar(
-          title: Text('Counter'),
-        ),
+        appBar: AppBar(title: Text('Counter')),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
-                'You have pushed the button this many times:',
-              ),
+              Text('You have pushed the button this many times:'),
               Text(
                 '${viewModel.current}',
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineMedium!
-                    .copyWith(color: theme.baseColor),
+                style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                      color: theme.baseColor,
+                    ),
               ),
             ],
           ),

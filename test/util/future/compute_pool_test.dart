@@ -24,9 +24,13 @@ void main() {
     });
 
     runTestsOnPool(
-        'native', () => native.ComputePoolImpl.createWith(workersCount: 2));
+      'native',
+      () => native.ComputePoolImpl.createWith(workersCount: 2),
+    );
     runTestsOnPool(
-        'web', () => web.ComputePoolImpl.createWith(workersCount: 2));
+      'web',
+      () => web.ComputePoolImpl.createWith(workersCount: 2),
+    );
   });
 }
 
@@ -65,8 +69,10 @@ void runTestsOnPool(String name, ComputePool Function() create) {
       final pool = create();
       pool.shutdown();
 
-      expect(() async => pool.compute(_makeMessage, 'world'),
-          throwsA(isA<ArgumentError>()));
+      expect(
+        () async => pool.compute(_makeMessage, 'world'),
+        throwsA(isA<ArgumentError>()),
+      );
     });
     test('Test pool shutdown throws on compute after success', () async {
       final pool = create();
@@ -74,8 +80,10 @@ void runTestsOnPool(String name, ComputePool Function() create) {
       pool.shutdown();
 
       expect(result, 'Hello world');
-      expect(() async => pool.compute(_makeMessage, 'world'),
-          throwsA(isA<ArgumentError>()));
+      expect(
+        () async => pool.compute(_makeMessage, 'world'),
+        throwsA(isA<ArgumentError>()),
+      );
     });
     test('Test pool propagates errors', () async {
       final pool = create();

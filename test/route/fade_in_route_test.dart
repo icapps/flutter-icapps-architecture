@@ -13,11 +13,7 @@ void main() {
           initialRoute: '',
           onGenerateRoute: (_) => FadeInRoute(
             child: Center(
-              child: Container(
-                width: 32,
-                height: 32,
-                color: Colors.green,
-              ),
+              child: Container(width: 32, height: 32, color: Colors.green),
             ),
           ),
         ),

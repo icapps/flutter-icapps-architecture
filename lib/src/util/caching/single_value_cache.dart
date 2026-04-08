@@ -19,10 +19,7 @@ class SingleValueCache<T> {
   // when the cache has expired
   var _generationCount = 0;
 
-  SingleValueCache({
-    this.maxAge,
-    this.provider,
-  });
+  SingleValueCache({this.maxAge, this.provider});
 
   /// Uses [provider] to get the value if it is not cached, or returns the
   /// cached value if it was. If [provider] is not set, this will throw an
@@ -41,7 +38,8 @@ class SingleValueCache<T> {
   Future<T> getOrFetch(Future<T> Function() provider) async {
     if (this.provider != null) {
       throw ArgumentError(
-          'Cannot call getOrFetch when provider is set in the constructor');
+        'Cannot call getOrFetch when provider is set in the constructor',
+      );
     }
     return _getUsingProvider(provider);
   }
@@ -68,12 +66,14 @@ class SingleValueCache<T> {
     final generation = ++_generationCount;
 
     _lastFetch = DateTime.now();
-    completer.complete(provider().then((value) {
-      if (generation == _generationCount) {
-        _lastFetch = DateTime.now();
-      }
-      return value;
-    }));
+    completer.complete(
+      provider().then((value) {
+        if (generation == _generationCount) {
+          _lastFetch = DateTime.now();
+        }
+        return value;
+      }),
+    );
     return completer.future;
   }
 

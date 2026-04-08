@@ -148,10 +148,7 @@ class _TouchManagerState extends State<TouchManager>
           child: ColorTouchEffect(
             isTouched: _isHovering && !widget.isMobile,
             color: widget.hoverColor ?? widget.tapColor,
-            child: Container(
-              color: widget.color,
-              child: widget.child,
-            ),
+            child: Container(color: widget.color, child: widget.child),
           ),
         ),
       ),
