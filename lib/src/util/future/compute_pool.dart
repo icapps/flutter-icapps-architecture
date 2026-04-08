@@ -27,6 +27,9 @@ abstract class ComputePool {
   void shutdown();
 
   /// Submit a task to be executed on an isolate in this pool
-  Future<R> compute<Q, R>(ComputeCallback<Q, R> callback, Q message,
-      {String? debugLabel});
+  Future<R> compute<Q, R>(
+    ComputeCallback<Q, R> callback,
+    Q message, {
+    String? debugLabel,
+  });
 }

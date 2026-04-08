@@ -28,8 +28,9 @@ class OurPrettyPrinter extends LogPrinter {
   /// Matches a stacktrace line as generated on Android/iOS devices.
   /// For example:
   /// #1      Logger.log (package:logger/src/logger.dart:115:29)
-  static final _deviceStackTraceRegex =
-      RegExp(r'#[0-9]+[\s]+(.+) \(([^\s]+)\)');
+  static final _deviceStackTraceRegex = RegExp(
+    r'#[0-9]+[\s]+(.+) \(([^\s]+)\)',
+  );
 
   /// The index which to begin the stack trace at
   ///
@@ -184,10 +185,12 @@ class OurPrettyPrinter extends LogPrinter {
     if (error != null) {
       var errorColor = _getErrorColor(level);
       for (var line in error.split('\n')) {
-        buffer.add((time == null ? '' : color(timeInfix)) +
-            errorColor.resetForeground +
-            errorColor(line) +
-            errorColor.resetBackground);
+        buffer.add(
+          (time == null ? '' : color(timeInfix)) +
+              errorColor.resetForeground +
+              errorColor(line) +
+              errorColor.resetBackground,
+        );
       }
     }
 

@@ -11,8 +11,9 @@ class BaseThemeData {
       pageTransitionsTheme: PageTransitionsTheme(
         builders: {
           TargetPlatform.iOS: const CupertinoPageTransitionsBuilder(),
-          TargetPlatform.android:
-              getCorrectPageTransitionBuilder(OsInfo.instance),
+          TargetPlatform.android: getCorrectPageTransitionBuilder(
+            OsInfo.instance,
+          ),
         },
       ),
     );

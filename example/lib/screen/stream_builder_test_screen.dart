@@ -11,16 +11,12 @@ class StreamBuilderTestScreen extends StatelessWidget {
       create: () => StreamTestViewModel()..init(),
       childBuilderWithViewModel: (context, viewModel, theme, localization) =>
           Scaffold(
-        appBar: AppBar(
-          title: Text('Counter'),
-        ),
+        appBar: AppBar(title: Text('Counter')),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
-                'You have pushed the button this many times:',
-              ),
+              Text('You have pushed the button this many times:'),
               StreamBuilder(
                 stream: viewModel.counterStream,
                 builder: (context, snapshot) => Text(
@@ -34,7 +30,7 @@ class StreamBuilderTestScreen extends StatelessWidget {
               TextButton(
                 onPressed: viewModel.addStream,
                 child: Text('Add stream'),
-              )
+              ),
             ],
           ),
         ),

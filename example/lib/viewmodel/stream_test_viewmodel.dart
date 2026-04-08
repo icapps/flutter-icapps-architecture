@@ -1,8 +1,9 @@
 import 'package:icapps_architecture/icapps_architecture.dart';
 
 class StreamTestViewModel with ChangeNotifierEx {
-  final _counterStream =
-      StreamControllerWithInitialValue<int>.broadcast(value: 0);
+  final _counterStream = StreamControllerWithInitialValue<int>.broadcast(
+    value: 0,
+  );
   var _current = 0;
 
   int get current => _current;

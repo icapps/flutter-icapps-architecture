@@ -12,13 +12,9 @@ typedef LocaleFilter = bool Function(String languageCode);
 class LocalizationDelegate extends LocalizationsDelegate<Localization> {
   static LocaleFilter? localeFilter;
   static const defaultLocale = Locale('en');
-  static const _supportedLanguages = [
-    'en',
-  ];
+  static const _supportedLanguages = ['en'];
 
-  static const _supportedLocales = [
-    Locale('en'),
-  ];
+  static const _supportedLocales = [Locale('en')];
 
   static List<String> get supportedLanguages {
     if (localeFilter == null) return _supportedLanguages;
@@ -52,8 +48,10 @@ class LocalizationDelegate extends LocalizationsDelegate<Localization> {
   Future<Localization> load(Locale locale) async {
     final newActiveLocale = newLocale ?? locale;
     activeLocale = newActiveLocale;
-    return Localization.load(newActiveLocale,
-        showLocalizationKeys: showLocalizationKeys);
+    return Localization.load(
+      newActiveLocale,
+      showLocalizationKeys: showLocalizationKeys,
+    );
   }
 
   @override

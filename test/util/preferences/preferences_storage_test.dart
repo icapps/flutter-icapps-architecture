@@ -16,16 +16,21 @@ void main() {
     sharedPreferences = MockSharedPreferences();
     sut = SharedPreferenceStorage(sharedPreferences);
 
-    when(sharedPreferences.setString(any, any))
-        .thenAnswer((_) => Future.value(true));
-    when(sharedPreferences.setDouble(any, any))
-        .thenAnswer((_) => Future.value(true));
-    when(sharedPreferences.setBool(any, any))
-        .thenAnswer((_) => Future.value(true));
-    when(sharedPreferences.setStringList(any, any))
-        .thenAnswer((_) => Future.value(true));
-    when(sharedPreferences.setInt(any, any))
-        .thenAnswer((_) => Future.value(true));
+    when(
+      sharedPreferences.setString(any, any),
+    ).thenAnswer((_) => Future.value(true));
+    when(
+      sharedPreferences.setDouble(any, any),
+    ).thenAnswer((_) => Future.value(true));
+    when(
+      sharedPreferences.setBool(any, any),
+    ).thenAnswer((_) => Future.value(true));
+    when(
+      sharedPreferences.setStringList(any, any),
+    ).thenAnswer((_) => Future.value(true));
+    when(
+      sharedPreferences.setInt(any, any),
+    ).thenAnswer((_) => Future.value(true));
     when(sharedPreferences.getString(any)).thenReturn(null);
     when(sharedPreferences.getDouble(any)).thenReturn(null);
     when(sharedPreferences.getBool(any)).thenReturn(null);

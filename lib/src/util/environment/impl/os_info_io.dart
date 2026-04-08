@@ -23,7 +23,10 @@ Future<OsConfigInfo> initOsConfig({
         : iosVersion;
     final iosVersionValue = double.tryParse(version) ?? 0;
     return OsConfigInfo(
-        androidSdk: 0, iosVersion: iosVersionValue, isWeb: false);
+      androidSdk: 0,
+      iosVersion: iosVersionValue,
+      isWeb: false,
+    );
   } else {
     return OsConfigInfo(androidSdk: 0, iosVersion: 0, isWeb: false);
   }

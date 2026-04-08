@@ -27,7 +27,7 @@ import 'package:mockito/src/dummies.dart' as _i3;
 
 class _FakeFuture_0<T1> extends _i1.SmartFake implements _i2.Future<T1> {
   _FakeFuture_0(Object parent, Invocation parentInvocation)
-    : super(parent, parentInvocation);
+      : super(parent, parentInvocation);
 }
 
 /// A class which mocks [StreamSubscription].
@@ -45,62 +45,57 @@ class MockStreamSubscription<T> extends _i1.Mock
           as bool);
 
   @override
-  _i2.Future<void> cancel() =>
-      (super.noSuchMethod(
-            Invocation.method(#cancel, []),
-            returnValue: _i2.Future<void>.value(),
-            returnValueForMissingStub: _i2.Future<void>.value(),
-          )
-          as _i2.Future<void>);
+  _i2.Future<void> cancel() => (super.noSuchMethod(
+        Invocation.method(#cancel, []),
+        returnValue: _i2.Future<void>.value(),
+        returnValueForMissingStub: _i2.Future<void>.value(),
+      ) as _i2.Future<void>);
 
   @override
   void onData(void Function(T)? handleData) => super.noSuchMethod(
-    Invocation.method(#onData, [handleData]),
-    returnValueForMissingStub: null,
-  );
+        Invocation.method(#onData, [handleData]),
+        returnValueForMissingStub: null,
+      );
 
   @override
   void onError(Function? handleError) => super.noSuchMethod(
-    Invocation.method(#onError, [handleError]),
-    returnValueForMissingStub: null,
-  );
+        Invocation.method(#onError, [handleError]),
+        returnValueForMissingStub: null,
+      );
 
   @override
   void onDone(void Function()? handleDone) => super.noSuchMethod(
-    Invocation.method(#onDone, [handleDone]),
-    returnValueForMissingStub: null,
-  );
+        Invocation.method(#onDone, [handleDone]),
+        returnValueForMissingStub: null,
+      );
 
   @override
   void pause([_i2.Future<void>? resumeSignal]) => super.noSuchMethod(
-    Invocation.method(#pause, [resumeSignal]),
-    returnValueForMissingStub: null,
-  );
+        Invocation.method(#pause, [resumeSignal]),
+        returnValueForMissingStub: null,
+      );
 
   @override
   void resume() => super.noSuchMethod(
-    Invocation.method(#resume, []),
-    returnValueForMissingStub: null,
-  );
+        Invocation.method(#resume, []),
+        returnValueForMissingStub: null,
+      );
 
   @override
-  _i2.Future<E> asFuture<E>([E? futureValue]) =>
-      (super.noSuchMethod(
-            Invocation.method(#asFuture, [futureValue]),
-            returnValue:
-                _i3.ifNotNull(
-                  _i3.dummyValueOrNull<E>(
-                    this,
-                    Invocation.method(#asFuture, [futureValue]),
-                  ),
-                  (E v) => _i2.Future<E>.value(v),
-                ) ??
-                _FakeFuture_0<E>(
-                  this,
-                  Invocation.method(#asFuture, [futureValue]),
-                ),
-          )
-          as _i2.Future<E>);
+  _i2.Future<E> asFuture<E>([E? futureValue]) => (super.noSuchMethod(
+        Invocation.method(#asFuture, [futureValue]),
+        returnValue: _i3.ifNotNull(
+              _i3.dummyValueOrNull<E>(
+                this,
+                Invocation.method(#asFuture, [futureValue]),
+              ),
+              (E v) => _i2.Future<E>.value(v),
+            ) ??
+            _FakeFuture_0<E>(
+              this,
+              Invocation.method(#asFuture, [futureValue]),
+            ),
+      ) as _i2.Future<E>);
 }
 
 /// A class which mocks [DisposeAware].
@@ -113,7 +108,7 @@ class MockDisposeAware extends _i1.Mock implements _i4.DisposeAware {
 
   @override
   void dispose() => super.noSuchMethod(
-    Invocation.method(#dispose, []),
-    returnValueForMissingStub: null,
-  );
+        Invocation.method(#dispose, []),
+        returnValueForMissingStub: null,
+      );
 }

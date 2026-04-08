@@ -16,55 +16,70 @@ void main() {
 
   group('Connectivity tests', () {
     test('Test connectivity mobile', () async {
-      when(connectivity.checkConnectivity())
-          .thenAnswer((_) => Future.value([ConnectivityResult.mobile]));
+      when(
+        connectivity.checkConnectivity(),
+      ).thenAnswer((_) => Future.value([ConnectivityResult.mobile]));
       expect(
-          await ConnectivityHelper(connectivityProvider: () => connectivity)
-              .hasConnection(),
-          true);
+        await ConnectivityHelper(
+          connectivityProvider: () => connectivity,
+        ).hasConnection(),
+        true,
+      );
     });
     test('Test connectivity wifi', () async {
-      when(connectivity.checkConnectivity())
-          .thenAnswer((_) => Future.value([ConnectivityResult.wifi]));
+      when(
+        connectivity.checkConnectivity(),
+      ).thenAnswer((_) => Future.value([ConnectivityResult.wifi]));
       expect(
-          await ConnectivityHelper(connectivityProvider: () => connectivity)
-              .hasConnection(),
-          true);
+        await ConnectivityHelper(
+          connectivityProvider: () => connectivity,
+        ).hasConnection(),
+        true,
+      );
     });
     test('Test connectivity none', () async {
-      when(connectivity.checkConnectivity())
-          .thenAnswer((_) => Future.value([ConnectivityResult.none]));
+      when(
+        connectivity.checkConnectivity(),
+      ).thenAnswer((_) => Future.value([ConnectivityResult.none]));
       expect(
-          await ConnectivityHelper(connectivityProvider: () => connectivity)
-              .hasConnection(),
-          false);
+        await ConnectivityHelper(
+          connectivityProvider: () => connectivity,
+        ).hasConnection(),
+        false,
+      );
     });
     test('Test connectivity stream none', () async {
-      when(connectivity.onConnectivityChanged)
-          .thenAnswer((_) => Stream.value([ConnectivityResult.none]));
+      when(
+        connectivity.onConnectivityChanged,
+      ).thenAnswer((_) => Stream.value([ConnectivityResult.none]));
       expect(
-          await ConnectivityHelper(connectivityProvider: () => connectivity)
-              .monitorConnection()
-              .first,
-          false);
+        await ConnectivityHelper(
+          connectivityProvider: () => connectivity,
+        ).monitorConnection().first,
+        false,
+      );
     });
     test('Test connectivity stream wifi', () async {
-      when(connectivity.onConnectivityChanged)
-          .thenAnswer((_) => Stream.value([ConnectivityResult.wifi]));
+      when(
+        connectivity.onConnectivityChanged,
+      ).thenAnswer((_) => Stream.value([ConnectivityResult.wifi]));
       expect(
-          await ConnectivityHelper(connectivityProvider: () => connectivity)
-              .monitorConnection()
-              .first,
-          true);
+        await ConnectivityHelper(
+          connectivityProvider: () => connectivity,
+        ).monitorConnection().first,
+        true,
+      );
     });
     test('Test connectivity stream mobile', () async {
-      when(connectivity.onConnectivityChanged)
-          .thenAnswer((_) => Stream.value([ConnectivityResult.mobile]));
+      when(
+        connectivity.onConnectivityChanged,
+      ).thenAnswer((_) => Stream.value([ConnectivityResult.mobile]));
       expect(
-          await ConnectivityHelper(connectivityProvider: () => connectivity)
-              .monitorConnection()
-              .first,
-          true);
+        await ConnectivityHelper(
+          connectivityProvider: () => connectivity,
+        ).monitorConnection().first,
+        true,
+      );
     });
   });
 }

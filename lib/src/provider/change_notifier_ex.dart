@@ -82,27 +82,31 @@ mixin class ChangeNotifierEx implements ChangeNotifier {
     assert(_debugAssertNotDisposed());
     if (_listeners!.isEmpty) return;
 
-    final List<_ListenerEntry> localListeners =
-        List<_ListenerEntry>.from(_listeners!);
+    final List<_ListenerEntry> localListeners = List<_ListenerEntry>.from(
+      _listeners!,
+    );
 
     for (final _ListenerEntry entry in localListeners) {
       try {
         if (entry.list != null) entry.listener();
       } catch (exception, stack) {
-        FlutterError.reportError(FlutterErrorDetails(
-          exception: exception,
-          stack: stack,
-          library: 'foundation library',
-          context: ErrorDescription(
-              'while dispatching notifications for $runtimeType'),
-          informationCollector: () sync* {
-            yield DiagnosticsProperty<ChangeNotifier>(
-              'The $runtimeType sending notification was',
-              this,
-              style: DiagnosticsTreeStyle.errorProperty,
-            );
-          },
-        ));
+        FlutterError.reportError(
+          FlutterErrorDetails(
+            exception: exception,
+            stack: stack,
+            library: 'foundation library',
+            context: ErrorDescription(
+              'while dispatching notifications for $runtimeType',
+            ),
+            informationCollector: () sync* {
+              yield DiagnosticsProperty<ChangeNotifier>(
+                'The $runtimeType sending notification was',
+                this,
+                style: DiagnosticsTreeStyle.errorProperty,
+              );
+            },
+          ),
+        );
       }
     }
   }
@@ -110,8 +114,10 @@ mixin class ChangeNotifierEx implements ChangeNotifier {
   bool _debugAssertNotDisposed() {
     assert(() {
       if (_listeners == null) {
-        throw FlutterError('A $runtimeType was used after being disposed.\n'
-            'Once you have called dispose() on a $runtimeType, it can no longer be used.');
+        throw FlutterError(
+          'A $runtimeType was used after being disposed.\n'
+          'Once you have called dispose() on a $runtimeType, it can no longer be used.',
+        );
       }
       return true;
     }());

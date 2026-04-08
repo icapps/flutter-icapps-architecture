@@ -33,8 +33,11 @@ class ComputePoolImpl implements ComputePool {
   }
 
   @override
-  Future<R> compute<Q, R>(ComputeCallback<Q, R> callback, Q message,
-      {String? debugLabel}) {
+  Future<R> compute<Q, R>(
+    ComputeCallback<Q, R> callback,
+    Q message, {
+    String? debugLabel,
+  }) {
     if (_shutdown)
       return Future.error(ArgumentError('Compute pool has been shut down'));
 
@@ -71,9 +74,5 @@ class _Task {
   final dynamic param;
   final Completer completer;
 
-  _Task({
-    required this.task,
-    required this.completer,
-    this.param,
-  });
+  _Task({required this.task, required this.completer, this.param});
 }

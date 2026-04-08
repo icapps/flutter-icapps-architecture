@@ -5,14 +5,13 @@ import 'package:icapps_architecture/icapps_architecture.dart';
 import '../../test_util.dart';
 
 void main() {
-  final alpha = 128 / 255; // Old withOpacity rounds the values differently so we need to do exactly the same here for screenshot testing
+  final alpha = 128 /
+      255; // Old withOpacity rounds the values differently so we need to do exactly the same here for screenshot testing
   testWidgets('TouchFeedBack on Android', (tester) async {
     final sut = Theme(
       data: ThemeData(platform: TargetPlatform.android),
       child: TouchFeedBack(
-        child: Container(
-            color: Colors.amber.withValues(alpha: alpha,),
-        ),
+        child: Container(color: Colors.amber.withValues(alpha: alpha)),
         onTapped: () {},
       ),
     );
@@ -24,9 +23,7 @@ void main() {
     final sut = Theme(
       data: ThemeData(platform: TargetPlatform.android),
       child: TouchFeedBack(
-        child: Container(
-          color: Colors.amber.withValues(alpha: alpha,),
-        ),
+        child: Container(color: Colors.amber.withValues(alpha: alpha)),
         onTapped: null,
       ),
     );
@@ -38,9 +35,7 @@ void main() {
     final sut = Theme(
       data: ThemeData(platform: TargetPlatform.iOS),
       child: TouchFeedBack(
-        child: Container(
-          color: Colors.amber.withValues(alpha: alpha,),
-        ),
+        child: Container(color: Colors.amber.withValues(alpha: alpha)),
         onTapped: () {},
       ),
     );
@@ -54,9 +49,7 @@ void main() {
       final sut = Theme(
         data: ThemeData(platform: TargetPlatform.android),
         child: TouchFeedBack(
-          child: Container(
-            color: Colors.amber.withValues(alpha: alpha,),
-          ),
+          child: Container(color: Colors.amber.withValues(alpha: alpha)),
           onTapped: () {
             onClickCalled = true;
           },
@@ -75,9 +68,7 @@ void main() {
       final sut = Theme(
         data: ThemeData(platform: TargetPlatform.iOS),
         child: TouchFeedBack(
-          child: Container(
-            color: Colors.amber.withValues(alpha: alpha,),
-          ),
+          child: Container(color: Colors.amber.withValues(alpha: alpha)),
           onTapped: () {
             onClickCalled = true;
           },
@@ -95,9 +86,7 @@ void main() {
       final sut = Theme(
         data: ThemeData(platform: TargetPlatform.iOS),
         child: TouchFeedBack(
-          child: Container(
-            color: Colors.amber.withValues(alpha: alpha,),
-          ),
+          child: Container(color: Colors.amber.withValues(alpha: alpha)),
           onTapped: () {
             onClickCalled = true;
           },
@@ -115,9 +104,7 @@ void main() {
       final sut = Theme(
         data: ThemeData(platform: TargetPlatform.iOS),
         child: TouchFeedBack(
-          child: Container(
-            color: Colors.amber.withValues(alpha: alpha,),
-          ),
+          child: Container(color: Colors.amber.withValues(alpha: alpha)),
           onTapped: () {
             onClickCalled = true;
           },

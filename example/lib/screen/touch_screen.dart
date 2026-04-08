@@ -10,10 +10,7 @@ class TouchScreen extends StatefulWidget {
 
 class _TouchScreenState extends State<TouchScreen> {
   Map<Color, int> _counters = Colors.primaries.asMap().map(
-        (key, value) => MapEntry(
-          value,
-          0,
-        ),
+        (key, value) => MapEntry(value, 0),
       );
 
   bool forceAndroid = false;
@@ -29,9 +26,7 @@ class _TouchScreenState extends State<TouchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Touch'),
-      ),
+      appBar: AppBar(title: Text('Touch')),
       body: Center(
         child: ListView(
           children: [
@@ -67,33 +62,24 @@ class _TouchScreenState extends State<TouchScreen> {
                 Text('Is Dark'),
               ],
             ),
-            Center(
-              child: Text(
-                'You have pushed the buttons this many times:',
-              ),
-            ),
-            ..._counters.entries.map(
-              (entry) {
-                final color = entry.key;
-                final count = entry.value;
-                return Center(
-                  child: TouchFeedBack(
-                    onTapped: () {},
-                    child: Text(
-                      '0x${color.toARGB32().toRadixString(16).padLeft(8, '0')}: $count',
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineMedium!
-                          .copyWith(color: color),
-                    ),
+            Center(child: Text('You have pushed the buttons this many times:')),
+            ..._counters.entries.map((entry) {
+              final color = entry.key;
+              final count = entry.value;
+              return Center(
+                child: TouchFeedBack(
+                  onTapped: () {},
+                  child: Text(
+                    '0x${color.toARGB32().toRadixString(16).padLeft(8, '0')}: $count',
+                    style: Theme.of(
+                      context,
+                    ).textTheme.headlineMedium!.copyWith(color: color),
                   ),
-                );
-              },
-            ),
+                ),
+              );
+            }),
             const SizedBox(height: 16),
-            Center(
-              child: _createButtons(_counters),
-            ),
+            Center(child: _createButtons(_counters)),
             const SizedBox(height: 16),
             Padding(
               padding: EdgeInsets.all(16),
@@ -103,19 +89,13 @@ class _TouchScreenState extends State<TouchScreen> {
                   TouchFeedBack(
                     forcePlatform: _forcePlatform,
                     onTapped: () {},
-                    child: Icon(
-                      Icons.plus_one,
-                      size: 32,
-                    ),
+                    child: Icon(Icons.plus_one, size: 32),
                   ),
                   const SizedBox(width: 8),
                   TouchFeedBack(
                     forcePlatform: _forcePlatform,
                     onTapped: () {},
-                    child: Text(
-                      'Tap me',
-                      style: TextStyle(fontSize: 20),
-                    ),
+                    child: Text('Tap me', style: TextStyle(fontSize: 20)),
                   ),
                   const SizedBox(width: 8),
                 ],
@@ -160,12 +140,11 @@ class _TouchScreenState extends State<TouchScreen> {
         color: counters.entries.first.key,
         padding: const EdgeInsets.all(16),
         child: _createButtons(
-          counters.entries.skip(1).toList().asMap().map(
-                (key, value) => MapEntry(
-                  value.key,
-                  value.value,
-                ),
-              ),
+          counters.entries
+              .skip(1)
+              .toList()
+              .asMap()
+              .map((key, value) => MapEntry(value.key, value.value)),
         ),
       ),
     );

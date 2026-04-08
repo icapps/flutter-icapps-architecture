@@ -42,25 +42,32 @@ void main() {
       await TestUtil.takeScreenshot(tester, 'theme_provider_widget_theme');
     });
 
-    testWidgets('ThemeProviderWidget should build with localization',
-        (tester) async {
+    testWidgets('ThemeProviderWidget should build with localization', (
+      tester,
+    ) async {
       final sut = ThemeProviderWidget(
         childBuilderLocalization: (context, _) =>
             const Material(child: Text('Test')),
       );
       await TestUtil.loadWidgetWithText(tester, sut);
       await TestUtil.takeScreenshot(
-          tester, 'theme_provider_widget_localization');
+        tester,
+        'theme_provider_widget_localization',
+      );
     });
 
-    testWidgets('ThemeProviderWidget should build with theme and localization',
-        (tester) async {
-      final sut = ThemeProviderWidget(
-        childBuilder: (context, _, __) => const Material(child: Text('Test')),
-      );
-      await TestUtil.loadWidgetWithText(tester, sut);
-      await TestUtil.takeScreenshot(
-          tester, 'theme_provider_widget_theme_and_localization');
-    });
+    testWidgets(
+      'ThemeProviderWidget should build with theme and localization',
+      (tester) async {
+        final sut = ThemeProviderWidget(
+          childBuilder: (context, _, __) => const Material(child: Text('Test')),
+        );
+        await TestUtil.loadWidgetWithText(tester, sut);
+        await TestUtil.takeScreenshot(
+          tester,
+          'theme_provider_widget_theme_and_localization',
+        );
+      },
+    );
   });
 }

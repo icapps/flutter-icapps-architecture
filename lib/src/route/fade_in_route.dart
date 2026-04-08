@@ -17,9 +17,6 @@ class FadeInRoute<T> extends PageRouteBuilder<T> {
           settings: settings,
           transitionDuration: isInTest ? const Duration(seconds: 0) : duration,
           transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-              FadeTransition(
-            opacity: animation,
-            child: child,
-          ),
+              FadeTransition(opacity: animation, child: child),
         );
 }

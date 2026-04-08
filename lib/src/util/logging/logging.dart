@@ -55,10 +55,8 @@ abstract class Log {
 }
 
 extension LoggerExtension on Object {
-  Log get logger => PrefixLogger(
-        runtimeType.toString(),
-        LoggingFactory.provide(),
-      );
+  Log get logger =>
+      PrefixLogger(runtimeType.toString(), LoggingFactory.provide());
 }
 
 Log get staticLogger => LoggingFactory.provide();
@@ -71,12 +69,14 @@ class LoggingFactory {
   }
 
   static Log configure(LoggingConfiguration configuration) {
-    return resetWithLogger(configuration.isEnabled
-        ? LoggerLogImpl(
-            _makeLogger(configuration),
-            logNetworkInfo: configuration.shouldLogNetworkInfo,
-          )
-        : VoidLogger());
+    return resetWithLogger(
+      configuration.isEnabled
+          ? LoggerLogImpl(
+              _makeLogger(configuration),
+              logNetworkInfo: configuration.shouldLogNetworkInfo,
+            )
+          : VoidLogger(),
+    );
   }
 
   static Log resetWithLogger(Log logger) {
@@ -168,7 +168,8 @@ class LoggerLogImpl extends Log {
         ..writeln('response.headers | ${response.headers}');
     }
     message.writeln(
-        '<--------------- ${request.method} - url: ${request.uri} - status code: ${response?.statusCode ?? 'N/A'}');
+      '<--------------- ${request.method} - url: ${request.uri} - status code: ${response?.statusCode ?? 'N/A'}',
+    );
     this.error(message.toString());
   }
 
@@ -182,7 +183,8 @@ class LoggerLogImpl extends Log {
   void logNetworkResponse(Response response) {
     if (!logNetworkInfo) return;
     debug(
-        '<--------------- ${response.requestOptions.method} - url: ${response.requestOptions.uri} - status code: ${response.statusCode ?? 'N/A'}');
+      '<--------------- ${response.requestOptions.method} - url: ${response.requestOptions.uri} - status code: ${response.statusCode ?? 'N/A'}',
+    );
   }
 }
 
@@ -242,8 +244,11 @@ class PrefixLogger extends Log {
 
   @override
   void error(String message, {Object? error, StackTrace? stackTrace}) =>
-      _delegate.error('[$_name] $message',
-          error: error, stackTrace: stackTrace);
+      _delegate.error(
+        '[$_name] $message',
+        error: error,
+        stackTrace: stackTrace,
+      );
 
   @override
   void info(String message, {error, StackTrace? stackTrace}) =>
