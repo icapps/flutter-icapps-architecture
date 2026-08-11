@@ -1,4 +1,8 @@
 # Changelog
+## [2.2.7] - 2026-08-11
+### Updated
+- Updated `CombiningSmartInterceptor` to extend `Interceptor`
+
 ## [2.2.6] - 2026-07-14
 ### Updated
 - Updated `BaseThemeData` theming imports for Flutter 3.44 compatibility
