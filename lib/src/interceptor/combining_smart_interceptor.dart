@@ -45,7 +45,7 @@ abstract class SimpleInterceptor {
 /// Dio [Interceptor] implementation which calls the interceptors in the logical
 /// order (request in the interceptor order, responses and errors in the reverse
 /// order)
-class CombiningSmartInterceptor implements Interceptor {
+class CombiningSmartInterceptor extends Interceptor {
   final _interceptors = <SimpleInterceptor>[];
 
   /// Constructor taking an optional [initial] collection of interceptors to
